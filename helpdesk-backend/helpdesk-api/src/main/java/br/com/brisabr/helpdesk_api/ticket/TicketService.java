@@ -1,11 +1,15 @@
 package br.com.brisabr.helpdesk_api.ticket;
 
 import br.com.brisabr.helpdesk_api.dto.DashboardStatsDTO;
+import br.com.brisabr.helpdesk_api.exception.AttachmentNotFoundException;
+import br.com.brisabr.helpdesk_api.exception.InvalidTicketStateException;
+import br.com.brisabr.helpdesk_api.exception.TicketNotFoundException;
+import br.com.brisabr.helpdesk_api.exception.UnauthorizedOperationException;
+import br.com.brisabr.helpdesk_api.exception.UserNotFoundException;
 import br.com.brisabr.helpdesk_api.user.User;
 import br.com.brisabr.helpdesk_api.user.UserRepository;
 import br.com.brisabr.helpdesk_api.util.FileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +44,7 @@ public class TicketService {
     @Transactional(readOnly = true)
     public AnexoChamado getAnexoById(Long id) {
         return anexoChamadoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Anexo não encontrado com o ID: " + id));
+                .orElseThrow(() -> new AttachmentNotFoundException(id));
     }
 
     @Transactional
@@ -80,18 +84,18 @@ public class TicketService {
     @Transactional(readOnly = true)
     public TicketResponseDTO findTicketById(Long id) {
         Ticket ticket = ticketRepository.findByIdWithAnexos(id)
-                .orElseThrow(() -> new RuntimeException("Chamado não encontrado com o ID: " + id));
+                .orElseThrow(() -> new TicketNotFoundException(id));
         return new TicketResponseDTO(ticket);
     }
 
     @Transactional
     public TicketResponseDTO reopenTicket(Long ticketId, TicketReopenDTO data, User currentUser) {
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         if (!Objects.equals(ticket.getSolicitante().getId(), currentUser.getId())) {
-            throw new AccessDeniedException("Apenas o solicitante do chamado pode reabri-lo.");
+            throw new UnauthorizedOperationException("Apenas o solicitante do chamado pode reabri-lo.");
         }
         if (!List.of("Resolvido", "Encerrado", "Fechado").contains(ticket.getStatus())) {
-            throw new RuntimeException("Apenas chamados finalizados podem ser reabertos.");
+            throw new InvalidTicketStateException("Apenas chamados finalizados podem ser reabertos.");
         }
         ticket.setStatus("Aberto");
         ticket.setFoiReaberto(true);
@@ -127,7 +131,7 @@ public class TicketService {
 
     @Transactional
     public HistoricoItemDTO addComment(Long ticketId, CommentCreateDTO data, User autor) {
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         HistoricoChamado novoHistorico = new HistoricoChamado();
         novoHistorico.setTicket(ticket);
         novoHistorico.setAutor(autor);
@@ -138,9 +142,9 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO assignTicketToSelf(Long ticketId, User currentUser) {
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         if (!"Aberto".equals(ticket.getStatus())) {
-            throw new RuntimeException("Este chamado não está mais aberto para captura.");
+            throw new InvalidTicketStateException("Este chamado não está mais aberto para captura.");
         }
         ticket.setAtribuido(currentUser);
         ticket.setStatus("Em Andamento");
@@ -154,21 +158,21 @@ public class TicketService {
     public TicketResponseDTO assignTicketToTechnician(Long ticketId, Long technicianId, User currentUser) {
         // 1. Validação de permissão
         if (!"admin".equals(currentUser.getPerfil()) && !"manager".equals(currentUser.getPerfil())) {
-            throw new AccessDeniedException("Apenas administradores ou gestores podem atribuir chamados.");
+            throw new UnauthorizedOperationException("Apenas administradores ou gestores podem atribuir chamados.");
         }
 
         
         Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+                .orElseThrow(() -> new TicketNotFoundException(ticketId));
 
         
         if (!"Aberto".equals(ticket.getStatus())) {
-            throw new RuntimeException("Este chamado não está mais aberto para atribuição.");
+            throw new InvalidTicketStateException("Este chamado não está mais aberto para atribuição.");
         }
 
         
         User technician = userRepository.findById(technicianId)
-                .orElseThrow(() -> new RuntimeException("Técnico não encontrado"));
+                .orElseThrow(() -> new UserNotFoundException(technicianId));
 
         
         ticket.setAtribuido(technician);
@@ -184,11 +188,11 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO closeTicket(Long ticketId, CloseTicketDTO data, User currentUser) {
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         boolean isAdminOrManager = "admin".equals(currentUser.getPerfil()) || "manager".equals(currentUser.getPerfil());
         boolean isOwner = ticket.getAtribuido() != null && Objects.equals(ticket.getAtribuido().getId(), currentUser.getId());
         if (!isAdminOrManager && !isOwner) {
-            throw new AccessDeniedException("Apenas o técnico responsável ou um gestor pode encerrar o chamado.");
+            throw new UnauthorizedOperationException("Apenas o técnico responsável ou um gestor pode encerrar o chamado.");
         }
         ticket.setSolucao(data.getSolucao());
         ticket.setStatus("Resolvido");

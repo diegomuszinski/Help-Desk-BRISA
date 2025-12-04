@@ -114,7 +114,107 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Trata RuntimeException genérica
+     * Trata Ticket não encontrado
+     */
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTicketNotFoundException(
+            TicketNotFoundException ex,
+            WebRequest request) {
+        
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Chamado não encontrado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Ticket não encontrado: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    /**
+     * Trata estado inválido do ticket
+     */
+    @ExceptionHandler(InvalidTicketStateException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidTicketStateException(
+            InvalidTicketStateException ex,
+            WebRequest request) {
+        
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Estado inválido do chamado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Estado inválido do ticket: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    /**
+     * Trata usuário não encontrado
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(
+            UserNotFoundException ex,
+            WebRequest request) {
+        
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Usuário não encontrado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Usuário não encontrado: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    /**
+     * Trata anexo não encontrado
+     */
+    @ExceptionHandler(AttachmentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAttachmentNotFoundException(
+            AttachmentNotFoundException ex,
+            WebRequest request) {
+        
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Anexo não encontrado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Anexo não encontrado: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    /**
+     * Trata operação não autorizada
+     */
+    @ExceptionHandler(UnauthorizedOperationException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedOperationException(
+            UnauthorizedOperationException ex,
+            WebRequest request) {
+        
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.FORBIDDEN.value(),
+                "Operação não autorizada",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Operação não autorizada: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    /**
+     * Trata RuntimeException genérica (fallback para exceções não customizadas)
      */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(
@@ -129,7 +229,7 @@ public class GlobalExceptionHandler {
                 request.getDescription(false).replace("uri=", "")
         );
 
-        logger.error("RuntimeException: {}", ex.getMessage(), ex);
+        logger.error("RuntimeException não tratada: {}", ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
