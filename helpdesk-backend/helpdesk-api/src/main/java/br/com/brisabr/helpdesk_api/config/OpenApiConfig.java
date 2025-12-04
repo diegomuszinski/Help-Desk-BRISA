@@ -29,26 +29,30 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Help Desk API")
                         .version("1.0.0")
-                        .description("API REST para sistema de Help Desk com gerenciamento de tickets, usuários e relatórios.\n\n" +
-                                "### Recursos principais:\n" +
-                                "- **Autenticação JWT** com refresh tokens\n" +
-                                "- **Gerenciamento de Tickets** (CRUD completo)\n" +
-                                "- **Sistema de Usuários** com perfis (ADMIN, MANAGER, TECHNICIAN, USER)\n" +
-                                "- **Dashboard** com estatísticas e KPIs\n" +
-                                "- **Relatórios** de satisfação e SLA\n" +
-                                "- **Anexos** em tickets\n" +
-                                "- **Histórico** de interações\n" +
-                                "- **Rate Limiting** para segurança\n" +
-                                "- **Audit Logs** para rastreabilidade\n\n" +
-                                "### Como usar:\n" +
-                                "1. Faça login em `/api/auth/login` para obter o token JWT\n" +
-                                "2. Use o botão 'Authorize' acima e cole o token\n" +
-                                "3. Teste os endpoints disponíveis\n\n" +
-                                "### Credenciais de teste:\n" +
-                                "- **Admin**: admin@admin.net / 123456\n" +
-                                "- **Manager**: sonia.lima@gestor.net / 1234546\n" +
-                                "- **Técnico**: mariana@tecnico.net / 123456\n" +
-                                "- **Usuário**: usuario@teste.net / 123456")
+                        .description("""
+                                API REST para sistema de Help Desk com gerenciamento de tickets, usuários e relatórios.
+                                
+                                ### Recursos principais:
+                                - **Autenticação JWT** com refresh tokens
+                                - **Gerenciamento de Tickets** (CRUD completo)
+                                - **Sistema de Usuários** com perfis (ADMIN, MANAGER, TECHNICIAN, USER)
+                                - **Dashboard** com estatísticas e KPIs
+                                - **Relatórios** de satisfação e SLA
+                                - **Anexos** em tickets
+                                - **Histórico** de interações
+                                - **Rate Limiting** para segurança
+                                - **Audit Logs** para rastreabilidade
+                                
+                                ### Como usar:
+                                1. Faça login em `/api/auth/login` para obter o token JWT
+                                2. Use o botão 'Authorize' acima e cole o token
+                                3. Teste os endpoints disponíveis
+                                
+                                ### Credenciais de teste:
+                                - **Admin**: admin@admin.net / 123456
+                                - **Manager**: sonia.lima@gestor.net / 1234546
+                                - **Técnico**: mariana@tecnico.net / 123456
+                                - **Usuário**: usuario@teste.net / 123456""")
                         .contact(new Contact()
                                 .name("Help Desk Team")
                                 .email("suporte@helpdesk.com"))

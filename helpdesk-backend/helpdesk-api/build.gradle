@@ -6,7 +6,7 @@ plugins {
 group = 'br.com.brisabr'
 version = '0.0.1-SNAPSHOT'
 java {
-	sourceCompatibility = '17'
+	sourceCompatibility = '21'
 }
 repositories {
 	mavenCentral()
@@ -24,8 +24,8 @@ dependencies {
 	// Swagger/OpenAPI para documentacao automatica da API
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 	
-	compileOnly 'org.projectlombok:lombok:1.18.34'
-	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+	compileOnly 'org.projectlombok:lombok:1.18.42'
+	annotationProcessor 'org.projectlombok:lombok:1.18.42'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

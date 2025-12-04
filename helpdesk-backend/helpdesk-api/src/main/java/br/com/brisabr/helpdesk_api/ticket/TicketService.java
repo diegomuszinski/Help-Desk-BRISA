@@ -50,7 +50,7 @@ public class TicketService {
         
         Ticket newTicket = new Ticket();
         long countThisYear = ticketRepository.countByYear(Year.now().getValue());
-        String numeroChamado = Year.now().getValue() + "-" + String.format("%03d", countThisYear + 1);
+        String numeroChamado = Year.now().getValue() + "-" + "%03d".formatted(countThisYear + 1);
 
         newTicket.setNumeroChamado(numeroChamado);
         newTicket.setDescricao(data.getDescription());
