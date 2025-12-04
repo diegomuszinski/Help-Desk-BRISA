@@ -6,7 +6,6 @@ import br.com.brisabr.helpdesk_api.dto.RelatorioMensalDTO;
 import br.com.brisabr.helpdesk_api.service.ReportService;
 import br.com.brisabr.helpdesk_api.ticket.Ticket;
 import br.com.brisabr.helpdesk_api.ticket.TicketResponseDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

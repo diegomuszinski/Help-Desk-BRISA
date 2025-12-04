@@ -28,7 +28,6 @@ import java.util.UUID;
 public class MdcFilter implements Filter {
     
     private static final String REQUEST_ID = "requestId";
-    private static final String USER_ID = "userId";
     private static final String REQUEST_URI = "requestUri";
     private static final String REQUEST_METHOD = "requestMethod";
     

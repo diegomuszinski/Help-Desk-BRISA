@@ -1,6 +1,5 @@
 package br.com.brisabr.helpdesk_api.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

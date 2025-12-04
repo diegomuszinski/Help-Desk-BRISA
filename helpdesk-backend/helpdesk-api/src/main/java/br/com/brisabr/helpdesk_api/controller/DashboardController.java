@@ -2,7 +2,6 @@ package br.com.brisabr.helpdesk_api.controller;
 
 import br.com.brisabr.helpdesk_api.dto.DashboardStatsDTO;
 import br.com.brisabr.helpdesk_api.ticket.TicketService; 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
