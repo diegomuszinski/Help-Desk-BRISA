@@ -1,0 +1,77 @@
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+})
+
+// Interceptor de REQUEST: Adiciona Authorization header
+api.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// Interceptor de RESPONSE: Trata erros 401 (token expirado) e 429 (rate limit)
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config
+
+    // Se receber 401 (token expirado) e ainda não tentou refresh
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      try {
+        const refreshToken = sessionStorage.getItem('refreshToken')
+
+        if (!refreshToken) {
+          // Sem refresh token, redirecionar para login
+          sessionStorage.clear()
+          window.location.href = '/login'
+          return Promise.reject(error)
+        }
+
+        // Tentar renovar tokens
+        const response = await axios.post('http://localhost:8080/api/auth/refresh', {
+          refreshToken
+        })
+
+        const { accessToken, refreshToken: newRefreshToken } = response.data
+
+        // Salvar novos tokens
+        sessionStorage.setItem('token', accessToken)
+        sessionStorage.setItem('refreshToken', newRefreshToken)
+
+        // Atualizar header da requisição original
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`
+
+        // Retentar requisição original
+        return api(originalRequest)
+      } catch (refreshError) {
+        // Falha no refresh, fazer logout
+        sessionStorage.clear()
+        window.location.href = '/login'
+        return Promise.reject(refreshError)
+      }
+    }
+
+    // Se receber 429 (rate limit)
+    if (error.response?.status === 429) {
+      const message = error.response.data || 'Muitas tentativas. Aguarde 1 minuto.'
+      console.warn('Rate limit atingido:', message)
+      // Propagar erro para ser tratado no componente
+      error.userMessage = message
+    }
+
+    return Promise.reject(error)
+  }
+)
+
+export default api

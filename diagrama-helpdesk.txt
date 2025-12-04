@@ -1,0 +1,254 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    DIAGRAMA ER - SISTEMA HELP DESK                           ║
+║                      Copie e Cole no Lucidchart                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────┐
+│         CATEGORIAS              │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│    nome              VARCHAR(255)│
+│                      UNIQUE      │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│         PRIORIDADES             │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│    nome              VARCHAR(255)│
+│                      UNIQUE      │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│           EQUIPES               │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│    nome_equipe       VARCHAR(255)│
+│                      UNIQUE      │
+│ 🔗 id_gestor (FK)    INTEGER    │
+│    → Usuarios.id                │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│          USUARIOS               │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│    nome              VARCHAR(255)│
+│    email             VARCHAR(255)│
+│                      UNIQUE      │
+│    senha             VARCHAR(255)│
+│    perfil            VARCHAR(50) │
+│    (ADMIN, MANAGER,              │
+│     TECHNICIAN, USER)            │
+│ 🔗 id_equipe (FK)    INTEGER    │
+│    → Equipes.id                 │
+│    data_criacao      TIMESTAMP  │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│          CHAMADOS               │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│    numero_chamado    VARCHAR(50) │
+│                      UNIQUE      │
+│    descricao         TEXT        │
+│    status            VARCHAR(50) │
+│    data_abertura     TIMESTAMP   │
+│    data_fechamento   TIMESTAMP   │
+│    solucao           TEXT        │
+│ 🔗 id_solicitante(FK)INTEGER    │
+│    → Usuarios.id     NOT NULL   │
+│ 🔗 id_tecnico_atribuido(FK)     │
+│    INTEGER                       │
+│    → Usuarios.id                │
+│    foi_reaberto      BOOLEAN    │
+│ 🔗 id_categoria (FK) INTEGER    │
+│    → Categorias.id              │
+│ 🔗 id_prioridade(FK) INTEGER    │
+│    → Prioridades.id             │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│      ANEXOS_CHAMADOS            │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│    nome_arquivo      VARCHAR(255)│
+│    tipo_arquivo      VARCHAR(100)│
+│    dados             TEXT        │
+│ 🔗 id_chamado (FK)   INTEGER    │
+│    → Chamados.id                │
+│    (CASCADE DELETE)             │
+│    data_upload       TIMESTAMP  │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│     HISTORICO_CHAMADOS          │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│ 🔗 id_chamado (FK)   INTEGER    │
+│    → Chamados.id                │
+│    (CASCADE DELETE)             │
+│ 🔗 id_autor (FK)     INTEGER    │
+│    → Usuarios.id                │
+│    comentario        TEXT        │
+│    data_ocorrencia   TIMESTAMP  │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│    PESQUISAS_SATISFACAO         │
+├─────────────────────────────────┤
+│ 🔑 id (PK)           SERIAL     │
+│ 🔗 id_chamado (FK)   INTEGER    │
+│    → Chamados.id                │
+│    UNIQUE (CASCADE DELETE)      │
+│    nota              INTEGER    │
+│    CHECK (nota >= 1 AND <= 5)  │
+│    comentario        TEXT        │
+│    data_resposta     TIMESTAMP  │
+└─────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                              RELACIONAMENTOS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. EQUIPES ──────► USUARIOS (Gestor)
+   Equipes.id_gestor → Usuarios.id
+   Cardinalidade: 1:0..1 (Uma equipe pode ter 0 ou 1 gestor)
+
+2. USUARIOS ──────► EQUIPES (Membro)
+   Usuarios.id_equipe → Equipes.id
+   Cardinalidade: N:0..1 (Vários usuários podem estar em 0 ou 1 equipe)
+
+3. USUARIOS ──────► CHAMADOS (Solicitante)
+   Chamados.id_solicitante → Usuarios.id
+   Cardinalidade: 1:N (Um usuário pode ter vários chamados como solicitante)
+   ⚠️ NOT NULL - Obrigatório
+
+4. USUARIOS ──────► CHAMADOS (Técnico)
+   Chamados.id_tecnico_atribuido → Usuarios.id
+   Cardinalidade: 0..1:N (Um técnico pode ter vários chamados atribuídos)
+
+5. CATEGORIAS ──────► CHAMADOS
+   Chamados.id_categoria → Categorias.id
+   Cardinalidade: 1:N (Uma categoria pode ter vários chamados)
+
+6. PRIORIDADES ──────► CHAMADOS
+   Chamados.id_prioridade → Prioridades.id
+   Cardinalidade: 1:N (Uma prioridade pode ter vários chamados)
+
+7. CHAMADOS ──────► ANEXOS_CHAMADOS
+   AnexosChamados.id_chamado → Chamados.id
+   Cardinalidade: 1:N (Um chamado pode ter vários anexos)
+   🗑️ CASCADE DELETE
+
+8. CHAMADOS ──────► HISTORICO_CHAMADOS
+   HistoricoChamados.id_chamado → Chamados.id
+   Cardinalidade: 1:N (Um chamado pode ter vários históricos)
+   🗑️ CASCADE DELETE
+
+9. USUARIOS ──────► HISTORICO_CHAMADOS (Autor)
+   HistoricoChamados.id_autor → Usuarios.id
+   Cardinalidade: 0..1:N (Um usuário pode ser autor de vários históricos)
+
+10. CHAMADOS ──────► PESQUISAS_SATISFACAO
+    PesquisasSatisfacao.id_chamado → Chamados.id
+    Cardinalidade: 1:0..1 (Um chamado pode ter 0 ou 1 pesquisa)
+    ⭐ UNIQUE - Apenas uma pesquisa por chamado
+    🗑️ CASCADE DELETE
+
+═══════════════════════════════════════════════════════════════════════════════
+                          DADOS INICIAIS (SEED DATA)
+═══════════════════════════════════════════════════════════════════════════════
+
+CATEGORIAS:
+- Toner/Cartucho
+- Software (Office, Adobe, etc.)
+- Software (Sistema Operacional)
+- Hardware (HD, memória, etc.)
+- Permissão de acesso (pasta, arquivo)
+- Dúvidas/Outros
+
+PRIORIDADES:
+- Baixa
+- Média
+- Alta
+- Crítica
+
+USUARIOS:
+┌────────┬──────────────────────────┬─────────────────────────┬──────────┐
+│ Perfil │ Nome                     │ Email                   │ Senha    │
+├────────┼──────────────────────────┼─────────────────────────┼──────────┤
+│ ADMIN  │ Administrador do Sistema │ admin@admin.net         │ 123456   │
+│ MANAGER│ Sônia Lima               │ sonia.lima@gestor.net   │ 1234546  │
+│ TECH   │ Mariana Silva            │ mariana@tecnico.net     │ 123456   │
+│ USER   │ Usuário de Teste         │ usuario@teste.net       │ 123456   │
+└────────┴──────────────────────────┴─────────────────────────┴──────────┘
+
+EQUIPES:
+- Equipe Suporte Técnico (Gestora: Sônia Lima)
+
+═══════════════════════════════════════════════════════════════════════════════
+                          INSTRUÇÕES PARA LUCIDCHART
+═══════════════════════════════════════════════════════════════════════════════
+
+OPÇÃO 1 - IMPORTAR CSV (Mais Rápido):
+1. Abra: https://www.lucidchart.com
+2. Crie novo documento: "Entity Relationship Diagram"
+3. Vá em: File → Import Data
+4. Selecione: lucidchart-entities.csv
+5. Ajuste layout conforme necessário
+
+OPÇÃO 2 - CRIAR MANUALMENTE:
+1. Use a biblioteca "Entity Relationship" do Lucidchart
+2. Arraste uma "Entity" para cada tabela acima
+3. Adicione os campos conforme listado
+4. Use "Relationship" para conectar as entidades
+5. Configure as cardinalidades nos relacionamentos
+
+OPÇÃO 3 - USAR SQL PARA GERAR DIAGRAMA:
+1. Lucidchart → New Document
+2. Escolha "Import" → "SQL Database"
+3. Cole o conteúdo do arquivo init-database.sql
+4. O Lucidchart gerará o diagrama automaticamente
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎨 DICAS DE LAYOUT:
+
+POSICIONAMENTO SUGERIDO:
+                    
+         [Equipes]  ←→  [Usuarios]
+                           ↓
+    [Categorias]  →  [Chamados]  ←  [Prioridades]
+                      ↙  ↓  ↘
+           [Anexos] [Histórico] [Satisfação]
+
+CORES RECOMENDADAS:
+🟦 Azul Escuro    : Usuarios, Chamados (entidades principais)
+🟩 Verde          : Categorias, Prioridades (classificação)
+🟨 Amarelo        : Anexos, Histórico (recursos)
+🟧 Laranja        : Equipes (organização)
+🟪 Roxo           : PesquisasSatisfacao (métricas)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 ESTATÍSTICAS DO MODELO:
+
+✓ 8 Entidades (Tabelas)
+✓ 43 Atributos (Campos)
+✓ 10 Relacionamentos (Foreign Keys)
+✓ 8 Chaves Primárias (Primary Keys)
+✓ 4 Constraints UNIQUE
+✓ 1 Constraint CHECK (nota 1-5)
+✓ 3 Relacionamentos CASCADE DELETE
+✓ 1 Relacionamento Circular (Equipes ↔ Usuarios)
+✓ 2 FKs para mesma tabela (Chamados → Usuarios)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Criado: 07/11/2025
+Sistema: Help Desk Management System
+Banco: PostgreSQL 12+
+Versão: 1.0
+
+═══════════════════════════════════════════════════════════════════════════════

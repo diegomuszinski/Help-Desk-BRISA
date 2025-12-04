@@ -1,0 +1,75 @@
+package br.com.brisabr.helpdesk_api.ticket;
+
+import br.com.brisabr.helpdesk_api.user.User;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/tickets")
+public class TicketController {
+
+    @Autowired
+    private TicketService ticketService;
+
+    @PostMapping("/{id}/reopen")
+    public ResponseEntity<TicketResponseDTO> reopenTicket(@PathVariable Long id, @RequestBody @Valid TicketReopenDTO data, @AuthenticationPrincipal User user) {
+        TicketResponseDTO updatedTicket = ticketService.reopenTicket(id, data, user);
+        return ResponseEntity.ok(updatedTicket);
+    }
+
+    
+    @GetMapping
+    public ResponseEntity<List<TicketResponseDTO>> getAllTickets() {
+        return ResponseEntity.ok(ticketService.getAllTickets());
+    }
+
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<TicketResponseDTO> getTicketById(@PathVariable Long id) {
+        return ResponseEntity.ok(ticketService.findTicketById(id));
+    }
+
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<TicketResponseDTO> createTicket(
+            @RequestPart("ticket") @Valid TicketCreateDTO data,
+            @RequestPart(value = "anexos", required = false) List<MultipartFile> anexos,
+            @AuthenticationPrincipal User solicitante) {
+        try {
+            Ticket savedTicket = ticketService.createTicket(data, solicitante, anexos);
+            return ResponseEntity.created(URI.create("/api/tickets/" + savedTicket.getId())).body(new TicketResponseDTO(savedTicket));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/{id}/comments")
+    public ResponseEntity<HistoricoItemDTO> addComment(@PathVariable Long id, @RequestBody @Valid CommentCreateDTO data, @AuthenticationPrincipal User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ticketService.addComment(id, data, user));
+    }
+
+    @PostMapping("/{id}/assign-self")
+    public ResponseEntity<TicketResponseDTO> assignToSelf(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ticketService.assignTicketToSelf(id, user));
+    }
+
+    @PostMapping("/{ticketId}/assign/{technicianId}")
+    public ResponseEntity<TicketResponseDTO> assignToTechnician(
+            @PathVariable Long ticketId,
+            @PathVariable Long technicianId,
+            @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ticketService.assignTicketToTechnician(ticketId, technicianId, user));
+    }
+
+    @PostMapping("/{id}/close")
+    public ResponseEntity<TicketResponseDTO> closeTicket(@PathVariable Long id, @RequestBody @Valid CloseTicketDTO data, @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ticketService.closeTicket(id, data, user));
+    }
+}

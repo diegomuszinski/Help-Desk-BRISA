@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/main.ts",
+    "src/App.vue",
+    "src/router",
+    "src/stores",
+    "src/views",
+    "src/components",
+    "src/types",
+    "src/services",
+    "src/utils"
+  ],
+  "exclude": [],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

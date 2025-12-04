@@ -1,0 +1,12 @@
+package br.com.brisabr.helpdesk_api.auth;
+
+import lombok.Data;
+
+@Data
+public class LoginResponseDTO {
+    private String token;
+
+    public LoginResponseDTO(String token) {
+        this.token = token;
+    }
+}

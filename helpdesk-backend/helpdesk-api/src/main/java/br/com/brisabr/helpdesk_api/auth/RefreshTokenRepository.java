@@ -1,0 +1,26 @@
+package br.com.brisabr.helpdesk_api.auth;
+
+import br.com.brisabr.helpdesk_api.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Repository
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
+    
+    Optional<RefreshToken> findByToken(String token);
+    
+    Optional<RefreshToken> findByTokenAndRevokedFalse(String token);
+    
+    @Modifying
+    @Query("DELETE FROM RefreshToken rt WHERE rt.expiryDate < :now")
+    int deleteExpiredTokens(LocalDateTime now);
+    
+    @Modifying
+    @Query("UPDATE RefreshToken rt SET rt.revoked = true, rt.revokedAt = :now WHERE rt.user = :user AND rt.revoked = false")
+    void revokeAllUserTokens(User user, LocalDateTime now);
+}
