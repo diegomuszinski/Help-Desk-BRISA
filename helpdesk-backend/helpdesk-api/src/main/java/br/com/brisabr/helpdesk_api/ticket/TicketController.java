@@ -21,8 +21,11 @@ import java.util.List;
 @RequestMapping("/api/tickets")
 public class TicketController {
 
-    @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
+
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
 
     @PostMapping("/{id}/reopen")
     public ResponseEntity<TicketResponseDTO> reopenTicket(@PathVariable Long id, @RequestBody @Valid TicketReopenDTO data, @AuthenticationPrincipal User user) {

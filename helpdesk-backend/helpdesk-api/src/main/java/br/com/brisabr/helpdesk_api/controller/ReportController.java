@@ -23,8 +23,11 @@ import java.util.stream.Collectors;
 @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 public class ReportController {
 
-    @Autowired
-    private ReportService reportService;
+    private final ReportService reportService;
+
+    public ReportController(ReportService reportService) {
+        this.reportService = reportService;
+    }
 
     @GetMapping("/by-analyst")
     public ResponseEntity<List<RelatorioAnalistaDTO>> getChamadosPorAnalista(
