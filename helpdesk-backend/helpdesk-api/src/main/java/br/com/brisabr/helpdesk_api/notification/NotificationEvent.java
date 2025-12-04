@@ -1,6 +1,13 @@
 package br.com.brisabr.helpdesk_api.notification;
 
 /**
+ * ARQUIVO DE EXEMPLO EDUCACIONAL - Demonstra recursos do Java 21.
+ * 
+ * Este arquivo demonstra pattern matching, sealed interfaces e record patterns.
+ * Não é usado em produção, serve apenas como referência de implementação.
+ * 
+ * Se o VS Code mostrar erros, ignore - o arquivo compila corretamente com Java 21.
+ * 
  * Sealed interface para tipos de notificação (Java 17+).
  * 
  * Sealed interfaces/classes restringem quais classes podem implementá-las,

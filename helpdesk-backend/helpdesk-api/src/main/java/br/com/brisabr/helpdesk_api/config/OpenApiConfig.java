@@ -1,5 +1,10 @@
 package br.com.brisabr.helpdesk_api.config;
 
+// NOTA: Se VS Code mostrar erros de import aqui, ignore.
+// As dependências do Swagger estão corretas no build.gradle.
+// Execute: ./gradlew clean build --refresh-dependencies
+// Ou: Reload Window no VS Code (Ctrl+Shift+P > Reload Window)
+
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
