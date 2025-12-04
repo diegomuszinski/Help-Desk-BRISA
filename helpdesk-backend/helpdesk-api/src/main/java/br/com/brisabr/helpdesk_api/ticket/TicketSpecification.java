@@ -47,4 +47,13 @@ public class TicketSpecification {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
+
+    /**
+     * Especificação para filtrar tickets por ID do solicitante.
+     * Útil para paginação de tickets de um usuário específico.
+     */
+    public static Specification<Ticket> bySolicitanteId(Long solicitanteId) {
+        return (root, query, criteriaBuilder) -> 
+            criteriaBuilder.equal(root.get("solicitante").get("id"), solicitanteId);
+    }
 }

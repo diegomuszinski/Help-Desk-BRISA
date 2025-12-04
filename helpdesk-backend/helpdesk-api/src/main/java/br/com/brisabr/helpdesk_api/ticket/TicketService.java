@@ -10,6 +10,9 @@ import br.com.brisabr.helpdesk_api.user.User;
 import br.com.brisabr.helpdesk_api.user.UserRepository;
 import br.com.brisabr.helpdesk_api.util.FileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,6 +107,31 @@ public class TicketService {
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado reaberto. Motivo: " + data.getMotivo());
         return new TicketResponseDTO(ticket);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<TicketResponseDTO> getAllTicketsPaginated(Pageable pageable, User user) {
+        String perfil = user.getPerfil().toLowerCase();
+        
+        Page<Ticket> ticketPage;
+        switch (perfil) {
+            case "admin":
+            case "manager":
+            case "technician":
+                // Admin, Manager e Technician veem todos os tickets
+                ticketPage = ticketRepository.findAll(pageable);
+                break;
+            case "user":
+                // Usuário comum vê apenas seus próprios tickets
+                Specification<Ticket> spec = TicketSpecification.bySolicitanteId(user.getId());
+                ticketPage = ticketRepository.findAll(spec, pageable);
+                break;
+            default:
+                ticketPage = Page.empty(pageable);
+                break;
+        }
+        
+        return ticketPage.map(TicketResponseDTO::new);
     }
 
     @Transactional(readOnly = true)

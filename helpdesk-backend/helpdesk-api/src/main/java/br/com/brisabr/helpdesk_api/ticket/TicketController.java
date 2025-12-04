@@ -3,6 +3,10 @@ package br.com.brisabr.helpdesk_api.ticket;
 import br.com.brisabr.helpdesk_api.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,8 +29,32 @@ public class TicketController {
         return ResponseEntity.ok(updatedTicket);
     }
 
-    
+    /**
+     * Lista todos os tickets com paginação.
+     * 
+     * @param pageable Parâmetros de paginação (page, size, sort)
+     * @param user Usuário autenticado
+     * @return Página de tickets conforme permissão do usuário
+     * 
+     * Exemplos:
+     * - GET /api/tickets?page=0&size=10
+     * - GET /api/tickets?page=0&size=20&sort=dataAbertura,desc
+     * - GET /api/tickets?page=1&size=15&sort=prioridade.nome,asc&sort=dataAbertura,desc
+     */
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<TicketResponseDTO>> getAllTicketsPaginated(
+            @PageableDefault(size = 20, sort = "dataAbertura", direction = Sort.Direction.DESC) Pageable pageable,
+            @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ticketService.getAllTicketsPaginated(pageable, user));
+    }
+
+    /**
+     * Lista todos os tickets (sem paginação - mantido para compatibilidade).
+     * 
+     * @deprecated Use {@link #getAllTicketsPaginated(Pageable, User)} para melhor performance
+     */
     @GetMapping
+    @Deprecated
     public ResponseEntity<List<TicketResponseDTO>> getAllTickets() {
         return ResponseEntity.ok(ticketService.getAllTickets());
     }
