@@ -52,21 +52,38 @@ public class User implements UserDetails {
         this.equipe = equipe;
     }
 
+    /**
+     * Retorna as autoridades/roles do usuário usando Switch Expressions (Java 14+).
+     * 
+     * Switch Expressions eliminam a necessidade de break statements
+     * e tornam o código mais conciso e seguro (compilador garante que todos os casos retornam valor).
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.perfil == null) return List.of();
-        switch (this.perfil.toLowerCase()) {
-            case "admin":
-                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_MANAGER"), new SimpleGrantedAuthority("ROLE_TECHNICIAN"), new SimpleGrantedAuthority("ROLE_USER"));
-            case "manager":
-                return List.of(new SimpleGrantedAuthority("ROLE_MANAGER"), new SimpleGrantedAuthority("ROLE_TECHNICIAN"), new SimpleGrantedAuthority("ROLE_USER"));
-            case "technician":
-                return List.of(new SimpleGrantedAuthority("ROLE_TECHNICIAN"), new SimpleGrantedAuthority("ROLE_USER"));
-            case "user":
-                return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-            default:
-                return List.of();
-        }
+        
+        // Switch Expression (Java 14+) - mais conciso e type-safe
+        return switch (this.perfil.toLowerCase()) {
+            case "admin" -> List.of(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_TECHNICIAN"),
+                new SimpleGrantedAuthority("ROLE_USER")
+            );
+            case "manager" -> List.of(
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_TECHNICIAN"),
+                new SimpleGrantedAuthority("ROLE_USER")
+            );
+            case "technician" -> List.of(
+                new SimpleGrantedAuthority("ROLE_TECHNICIAN"),
+                new SimpleGrantedAuthority("ROLE_USER")
+            );
+            case "user" -> List.of(
+                new SimpleGrantedAuthority("ROLE_USER")
+            );
+            default -> List.of();
+        };
     }
 
     @Override public String getPassword() { return this.senha; }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -84,11 +85,13 @@ public class TicketController {
     }
 
     @PostMapping("/{id}/assign-self")
+    @PreAuthorize("hasAnyRole('TECHNICIAN', 'ADMIN', 'MANAGER')")
     public ResponseEntity<TicketResponseDTO> assignToSelf(@PathVariable Long id, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(ticketService.assignTicketToSelf(id, user));
     }
 
     @PostMapping("/{ticketId}/assign/{technicianId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<TicketResponseDTO> assignToTechnician(
             @PathVariable Long ticketId,
             @PathVariable Long technicianId,
@@ -97,6 +100,7 @@ public class TicketController {
     }
 
     @PostMapping("/{id}/close")
+    @PreAuthorize("hasAnyRole('TECHNICIAN', 'ADMIN', 'MANAGER')")
     public ResponseEntity<TicketResponseDTO> closeTicket(@PathVariable Long id, @RequestBody @Valid CloseTicketDTO data, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(ticketService.closeTicket(id, data, user));
     }

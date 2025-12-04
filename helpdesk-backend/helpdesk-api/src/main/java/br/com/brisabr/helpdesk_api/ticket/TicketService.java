@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Year;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(TicketService.class);
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -52,12 +56,16 @@ public class TicketService {
 
     @Transactional
     public Ticket createTicket(TicketCreateDTO data, User solicitante, List<MultipartFile> anexos) throws IOException {
+        logger.info("Criando novo ticket para usuário: {} (ID: {})", solicitante.getNome(), solicitante.getId());
+        
         // Validar arquivos ANTES de processar
         fileValidator.validateFiles(anexos);
         
         Ticket newTicket = new Ticket();
         long countThisYear = ticketRepository.countByYear(Year.now().getValue());
         String numeroChamado = Year.now().getValue() + "-" + "%03d".formatted(countThisYear + 1);
+        
+        logger.debug("Número do chamado gerado: {}", numeroChamado);
 
         newTicket.setNumeroChamado(numeroChamado);
         newTicket.setDescricao(data.getDescription());
@@ -80,6 +88,9 @@ public class TicketService {
 
         Ticket savedTicket = ticketRepository.saveAndFlush(newTicket);
         createHistoryEntry(savedTicket, solicitante, "Chamado criado.");
+        
+        logger.info("Ticket criado com sucesso: {} - ID: {}, Anexos: {}", 
+                    numeroChamado, savedTicket.getId(), anexos != null ? anexos.size() : 0);
 
         return ticketRepository.findByIdWithAnexos(savedTicket.getId()).orElse(savedTicket);
     }
@@ -93,11 +104,16 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO reopenTicket(Long ticketId, TicketReopenDTO data, User currentUser) {
+        logger.info("Usuário {} (ID: {}) reabrindo ticket ID: {}", 
+                    currentUser.getNome(), currentUser.getId(), ticketId);
+        
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         if (!Objects.equals(ticket.getSolicitante().getId(), currentUser.getId())) {
+            logger.warn("Tentativa não autorizada de reabrir ticket {} por usuário {}", ticketId, currentUser.getId());
             throw new UnauthorizedOperationException("Apenas o solicitante do chamado pode reabri-lo.");
         }
         if (!List.of("Resolvido", "Encerrado", "Fechado").contains(ticket.getStatus())) {
+            logger.warn("Tentativa de reabrir ticket {} com status inválido: {}", ticketId, ticket.getStatus());
             throw new InvalidTicketStateException("Apenas chamados finalizados podem ser reabertos.");
         }
         ticket.setStatus("Aberto");
@@ -106,6 +122,8 @@ public class TicketService {
         ticket.setSolucao(null);
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado reaberto. Motivo: " + data.getMotivo());
+        
+        logger.info("Ticket {} reaberto com sucesso. Motivo: {}", ticketId, data.getMotivo());
         return new TicketResponseDTO(ticket);
     }
 
@@ -170,25 +188,27 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO assignTicketToSelf(Long ticketId, User currentUser) {
+        logger.info("Técnico {} (ID: {}) capturando ticket ID: {}", 
+                    currentUser.getNome(), currentUser.getId(), ticketId);
+        
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         if (!"Aberto".equals(ticket.getStatus())) {
+            logger.warn("Tentativa de capturar ticket {} com status inválido: {}", ticketId, ticket.getStatus());
             throw new InvalidTicketStateException("Este chamado não está mais aberto para captura.");
         }
         ticket.setAtribuido(currentUser);
         ticket.setStatus("Em Andamento");
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado atribuído a " + currentUser.getNome() + ".");
+        
+        logger.info("Ticket {} atribuído com sucesso para {}", ticketId, currentUser.getNome());
         return new TicketResponseDTO(ticket);
     }
     
     
     @Transactional
     public TicketResponseDTO assignTicketToTechnician(Long ticketId, Long technicianId, User currentUser) {
-        // 1. Validação de permissão
-        if (!"admin".equals(currentUser.getPerfil()) && !"manager".equals(currentUser.getPerfil())) {
-            throw new UnauthorizedOperationException("Apenas administradores ou gestores podem atribuir chamados.");
-        }
-
+        // Validação de permissão agora é feita via @PreAuthorize no Controller
         
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new TicketNotFoundException(ticketId));
@@ -216,10 +236,14 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO closeTicket(Long ticketId, CloseTicketDTO data, User currentUser) {
+        logger.info("Usuário {} (ID: {}) fechando ticket ID: {}", 
+                    currentUser.getNome(), currentUser.getId(), ticketId);
+        
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         boolean isAdminOrManager = "admin".equals(currentUser.getPerfil()) || "manager".equals(currentUser.getPerfil());
         boolean isOwner = ticket.getAtribuido() != null && Objects.equals(ticket.getAtribuido().getId(), currentUser.getId());
         if (!isAdminOrManager && !isOwner) {
+            logger.warn("Tentativa não autorizada de fechar ticket {} por usuário {}", ticketId, currentUser.getId());
             throw new UnauthorizedOperationException("Apenas o técnico responsável ou um gestor pode encerrar o chamado.");
         }
         ticket.setSolucao(data.getSolucao());
@@ -227,6 +251,8 @@ public class TicketService {
         ticket.setDataFechamento(LocalDateTime.now());
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado Resolvido. Solução: " + data.getSolucao());
+        
+        logger.info("Ticket {} fechado com sucesso. Status: Resolvido", ticketId);
         return new TicketResponseDTO(ticket);
     }
 
