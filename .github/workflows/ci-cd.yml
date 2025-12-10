@@ -175,26 +175,42 @@ jobs:
       - name: Start backend server
         working-directory: ./backend-jar
         run: |
-          java -jar *.jar &
+          echo "Starting backend server..."
+          ls -la
+          nohup java -jar *.jar > backend.log 2>&1 &
           echo $! > backend.pid
+          echo "Backend PID: $(cat backend.pid)"
+          sleep 5
+          if ps -p $(cat backend.pid) > /dev/null; then
+            echo "Backend process is running"
+            echo "Initial logs:"
+            head -n 50 backend.log
+          else
+            echo "Backend process failed to start!"
+            cat backend.log
+            exit 1
+          fi
         env:
-          DATABASE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
-          DATABASE_USERNAME: postgres
-          DATABASE_PASSWORD: postgres
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
           SERVER_PORT: 8080
 
       - name: Wait for backend to be ready
         run: |
+          echo "Waiting for backend to be ready..."
           for i in {1..30}; do
-            if curl -f http://localhost:8080/actuator/health; then
-              echo "Backend is ready"
+            if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+              echo "✅ Backend is ready!"
               exit 0
             fi
-            echo "Waiting for backend... ($i/30)"
+            echo "⏳ Waiting for backend... ($i/30)"
             sleep 2
           done
-          echo "Backend failed to start"
+          echo "❌ Backend failed to start within timeout"
+          echo "Backend logs:"
+          cat ./backend-jar/backend.log
           exit 1
 
       - name: Install frontend dependencies
@@ -268,26 +284,42 @@ jobs:
       - name: Start backend server
         working-directory: ./backend-jar
         run: |
-          java -jar *.jar &
+          echo "Starting backend server..."
+          ls -la
+          nohup java -jar *.jar > backend.log 2>&1 &
           echo $! > backend.pid
+          echo "Backend PID: $(cat backend.pid)"
+          sleep 5
+          if ps -p $(cat backend.pid) > /dev/null; then
+            echo "Backend process is running"
+            echo "Initial logs:"
+            head -n 50 backend.log
+          else
+            echo "Backend process failed to start!"
+            cat backend.log
+            exit 1
+          fi
         env:
-          DATABASE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
-          DATABASE_USERNAME: postgres
-          DATABASE_PASSWORD: postgres
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
           SERVER_PORT: 8080
 
       - name: Wait for backend to be ready
         run: |
+          echo "Waiting for backend to be ready..."
           for i in {1..30}; do
-            if curl -f http://localhost:8080/actuator/health; then
-              echo "Backend is ready"
+            if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+              echo "✅ Backend is ready!"
               exit 0
             fi
-            echo "Waiting for backend... ($i/30)"
+            echo "⏳ Waiting for backend... ($i/30)"
             sleep 2
           done
-          echo "Backend failed to start"
+          echo "❌ Backend failed to start within timeout"
+          echo "Backend logs:"
+          cat ./backend-jar/backend.log
           exit 1
 
       - name: Install K6
