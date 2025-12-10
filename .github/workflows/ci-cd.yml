@@ -66,11 +66,9 @@ jobs:
 
       - name: Run backend tests
         working-directory: ./helpdesk-backend/helpdesk-api
-        run: ./gradlew test --no-daemon
+        run: ./gradlew test --no-daemon -Dspring.profiles.active=test
         env:
-          DATABASE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
-          DATABASE_USERNAME: postgres
-          DATABASE_PASSWORD: postgres
+          SPRING_PROFILES_ACTIVE: test
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
 
       - name: Upload backend test results
