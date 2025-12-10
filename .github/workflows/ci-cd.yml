@@ -300,9 +300,9 @@ jobs:
             exit 1
           fi
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
-          SPRING_DATASOURCE_USERNAME: postgres
-          SPRING_DATASOURCE_PASSWORD: postgres
+          DB_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
           SERVER_PORT: 8080
 
