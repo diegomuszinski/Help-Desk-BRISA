@@ -67,7 +67,6 @@ jobs:
       - name: Run backend tests
         working-directory: ./helpdesk-backend/helpdesk-api
         run: ./gradlew test --no-daemon -Dspring.profiles.active=test
-        continue-on-error: true
         env:
           SPRING_PROFILES_ACTIVE: test
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
