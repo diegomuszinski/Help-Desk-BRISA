@@ -1,0 +1,33 @@
+# This file defines code ownership for automated review requests
+
+# Default owners for everything in the repo
+* @diegomuszinski
+
+# Backend code
+/helpdesk-backend/ @diegomuszinski
+*.java @diegomuszinski
+build.gradle @diegomuszinski
+
+# Frontend code
+/help-desk-frontend/ @diegomuszinski
+*.vue @diegomuszinski
+*.ts @diegomuszinski
+package.json @diegomuszinski
+
+# CI/CD and DevOps
+/.github/ @diegomuszinski
+docker-compose*.yml @diegomuszinski
+Dockerfile @diegomuszinski
+
+# Configuration files
+*.properties @diegomuszinski
+*.yml @diegomuszinski
+*.yaml @diegomuszinski
+
+# Database
+*.sql @diegomuszinski
+/scripts/ @diegomuszinski
+
+# Documentation
+*.md @diegomuszinski
+/docs/ @diegomuszinski

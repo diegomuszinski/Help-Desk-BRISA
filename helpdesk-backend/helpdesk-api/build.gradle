@@ -17,16 +17,28 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // Jakarta Validation
 	implementation 'org.springframework.boot:spring-boot-starter-actuator' // Health checks e metricas
+	implementation 'org.springframework.boot:spring-boot-starter-cache' // Spring Cache
 	implementation 'com.auth0:java-jwt:4.4.0'
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
-	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8' // Rate limiting cache
-	
+	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8' // Caffeine cache (usado por Spring Cache e Rate Limiter)
+	implementation 'com.github.ben-manes.caffeine:jcache:3.1.8' // JCache API para Hibernate second-level cache
+	implementation 'com.bucket4j:bucket4j-core:8.7.0' // Bucket4j para rate limiting
+	implementation 'com.bucket4j:bucket4j-caffeine:8.7.0' // Integração Bucket4j com Caffeine
+
 	// Swagger/OpenAPI para documentacao automatica da API
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
-	
+
+	// Logstash Logback Encoder para logs estruturados em JSON
+	implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
+
+	// Micrometer Tracing para distributed tracing
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave:1.3.0'
+	implementation 'io.zipkin.reporter2:zipkin-reporter-brave:3.4.0'
+
 	compileOnly 'org.projectlombok:lombok:1.18.42'
 	annotationProcessor 'org.projectlombok:lombok:1.18.42'
 	runtimeOnly 'org.postgresql:postgresql'
+	testRuntimeOnly 'com.h2database:h2' // H2 database para testes
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }

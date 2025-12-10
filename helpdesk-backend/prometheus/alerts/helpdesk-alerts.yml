@@ -1,0 +1,388 @@
+groups:
+  - name: helpdesk_alerts
+    interval: 30s
+    rules:
+      # ==========================================
+      # APPLICATION HEALTH ALERTS
+      # ==========================================
+      
+      - alert: ApplicationDown
+        expr: up{job="helpdesk-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: application
+        annotations:
+          summary: "HelpDesk API is down"
+          description: "The HelpDesk API instance {{ $labels.instance }} has been down for more than 1 minute."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/application-down"
+
+      - alert: HighErrorRate
+        expr: rate(http_server_requests_seconds_count{status=~"5..",job="helpdesk-api"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          component: application
+        annotations:
+          summary: "High HTTP 5xx error rate"
+          description: "More than 5% of requests are failing with 5xx errors on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-error-rate"
+
+      - alert: HighClientErrorRate
+        expr: rate(http_server_requests_seconds_count{status=~"4..",job="helpdesk-api"}[5m]) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+          component: application
+        annotations:
+          summary: "High HTTP 4xx error rate"
+          description: "More than 10% of requests are resulting in 4xx errors on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-client-errors"
+
+      # ==========================================
+      # PERFORMANCE ALERTS
+      # ==========================================
+      
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_server_requests_seconds_bucket{job="helpdesk-api"}[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "High API response time (p95)"
+          description: "95th percentile response time is above 1 second on {{ $labels.instance }} (current: {{ $value }}s)."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-response-time"
+
+      - alert: VeryHighResponseTime
+        expr: histogram_quantile(0.99, rate(http_server_requests_seconds_bucket{job="helpdesk-api"}[5m])) > 3
+        for: 5m
+        labels:
+          severity: critical
+          component: performance
+        annotations:
+          summary: "Very high API response time (p99)"
+          description: "99th percentile response time is above 3 seconds on {{ $labels.instance }} (current: {{ $value }}s)."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/very-high-response-time"
+
+      - alert: SlowDatabaseQueries
+        expr: histogram_quantile(0.95, rate(hibernate_query_execution_seconds_bucket{job="helpdesk-api"}[5m])) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Slow database queries detected"
+          description: "95th percentile of database query time is above 500ms on {{ $labels.instance }} (current: {{ $value }}s)."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/slow-queries"
+
+      # ==========================================
+      # JVM ALERTS
+      # ==========================================
+      
+      - alert: HighMemoryUsage
+        expr: (jvm_memory_used_bytes{area="heap",job="helpdesk-api"} / jvm_memory_max_bytes{area="heap",job="helpdesk-api"}) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          component: jvm
+        annotations:
+          summary: "High JVM heap memory usage"
+          description: "JVM heap memory usage is above 85% on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-memory"
+
+      - alert: CriticalMemoryUsage
+        expr: (jvm_memory_used_bytes{area="heap",job="helpdesk-api"} / jvm_memory_max_bytes{area="heap",job="helpdesk-api"}) > 0.95
+        for: 2m
+        labels:
+          severity: critical
+          component: jvm
+        annotations:
+          summary: "Critical JVM heap memory usage"
+          description: "JVM heap memory usage is above 95% on {{ $labels.instance }} (current: {{ $value | humanizePercentage }}). Application may crash soon!"
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/critical-memory"
+
+      - alert: HighGCPressure
+        expr: rate(jvm_gc_pause_seconds_sum{job="helpdesk-api"}[5m]) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          component: jvm
+        annotations:
+          summary: "High garbage collection pressure"
+          description: "JVM is spending more than 50% of time in GC on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-gc-pressure"
+
+      - alert: TooManyThreads
+        expr: jvm_threads_live_threads{job="helpdesk-api"} > 500
+        for: 5m
+        labels:
+          severity: warning
+          component: jvm
+        annotations:
+          summary: "Too many JVM threads"
+          description: "Number of JVM threads is above 500 on {{ $labels.instance }} (current: {{ $value }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/too-many-threads"
+
+      # ==========================================
+      # DATABASE CONNECTION POOL ALERTS
+      # ==========================================
+      
+      - alert: LowConnectionPoolAvailability
+        expr: (hikaricp_connections_active{job="helpdesk-api"} / hikaricp_connections{job="helpdesk-api"}) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Low database connection pool availability"
+          description: "More than 80% of database connections are in use on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/connection-pool"
+
+      - alert: ConnectionPoolExhausted
+        expr: (hikaricp_connections_active{job="helpdesk-api"} / hikaricp_connections{job="helpdesk-api"}) > 0.95
+        for: 2m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "Database connection pool exhausted"
+          description: "More than 95% of database connections are in use on {{ $labels.instance }} (current: {{ $value | humanizePercentage }}). Requests may start failing!"
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/connection-pool-exhausted"
+
+      - alert: HighConnectionAcquisitionTime
+        expr: histogram_quantile(0.95, rate(hikaricp_connections_acquire_seconds_bucket{job="helpdesk-api"}[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High database connection acquisition time"
+          description: "95th percentile of connection acquisition time is above 1 second on {{ $labels.instance }} (current: {{ $value }}s)."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/slow-connection-acquisition"
+
+      - alert: ConnectionLeaks
+        expr: hikaricp_connections_timeout_total{job="helpdesk-api"} > 0
+        for: 5m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "Database connection leaks detected"
+          description: "Connection timeouts detected on {{ $labels.instance }}. This indicates connection leaks in the application code."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/connection-leaks"
+
+      # ==========================================
+      # RATE LIMITING ALERTS
+      # ==========================================
+      
+      - alert: HighRateLimitHitRate
+        expr: rate(rate_limiter_rejected_total{job="helpdesk-api"}[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High rate limit hit rate"
+          description: "More than 10 requests per second are being rate limited on {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-rate-limiting"
+
+      - alert: SuspiciousRateLimitActivity
+        expr: rate(rate_limiter_rejected_total{job="helpdesk-api"}[1m]) > 100
+        for: 2m
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "Suspicious rate limiting activity (possible DDoS)"
+          description: "More than 100 requests per second are being rate limited on {{ $labels.instance }}. This may indicate a DDoS attack."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/ddos-attack"
+
+      # ==========================================
+      # BUSINESS METRICS ALERTS
+      # ==========================================
+      
+      - alert: TicketCreationFailureRate
+        expr: rate(ticket_creation_failed_total{job="helpdesk-api"}[10m]) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "High ticket creation failure rate"
+          description: "More than 10% of ticket creation attempts are failing on {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/ticket-creation-failures"
+
+      - alert: NoTicketsCreated
+        expr: rate(ticket_created_total{job="helpdesk-api"}[1h]) == 0
+        for: 1h
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "No tickets created in the last hour"
+          description: "No tickets have been created in the last hour on {{ $labels.instance }}. This may indicate a problem."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/no-tickets"
+
+      - alert: HighAverageSLABreach
+        expr: avg_over_time(tickets_sla_breached_percentage{job="helpdesk-api"}[1h]) > 20
+        for: 30m
+        labels:
+          severity: critical
+          component: business
+        annotations:
+          summary: "High SLA breach rate"
+          description: "More than 20% of tickets are breaching SLA (current: {{ $value | humanizePercentage }})."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/sla-breach"
+
+      # ==========================================
+      # DISK & STORAGE ALERTS
+      # ==========================================
+      
+      - alert: HighDiskUsage
+        expr: (node_filesystem_avail_bytes{mountpoint="/",job="node-exporter"} / node_filesystem_size_bytes{mountpoint="/",job="node-exporter"}) < 0.15
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High disk usage on root partition"
+          description: "Less than 15% disk space available on {{ $labels.instance }} (current: {{ $value | humanizePercentage }} available)."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/high-disk-usage"
+
+      - alert: CriticalDiskUsage
+        expr: (node_filesystem_avail_bytes{mountpoint="/",job="node-exporter"} / node_filesystem_size_bytes{mountpoint="/",job="node-exporter"}) < 0.05
+        for: 2m
+        labels:
+          severity: critical
+          component: infrastructure
+        annotations:
+          summary: "Critical disk usage on root partition"
+          description: "Less than 5% disk space available on {{ $labels.instance }} (current: {{ $value | humanizePercentage }} available). Immediate action required!"
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/critical-disk-usage"
+
+      # ==========================================
+      # SECURITY ALERTS
+      # ==========================================
+      
+      - alert: HighAuthenticationFailureRate
+        expr: rate(authentication_failures_total{job="helpdesk-api"}[5m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High authentication failure rate"
+          description: "More than 5 authentication failures per second on {{ $labels.instance }}. Possible brute force attack."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/auth-failures"
+
+      - alert: UnauthorizedAccessAttempts
+        expr: rate(http_server_requests_seconds_count{status="403",job="helpdesk-api"}[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High rate of unauthorized access attempts"
+          description: "More than 10 unauthorized access attempts (403) per second on {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/unauthorized-access"
+
+      # ==========================================
+      # FILE UPLOAD ALERTS
+      # ==========================================
+      
+      - alert: HighFileUploadRejectionRate
+        expr: rate(file_upload_rejected_total{job="helpdesk-api"}[10m]) > 0.3
+        for: 10m
+        labels:
+          severity: warning
+          component: application
+        annotations:
+          summary: "High file upload rejection rate"
+          description: "More than 30% of file uploads are being rejected on {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/file-upload-rejections"
+
+      - alert: VirusDetectedInUploads
+        expr: increase(file_upload_virus_detected_total{job="helpdesk-api"}[10m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "Virus detected in file uploads"
+          description: "Virus has been detected in file uploads on {{ $labels.instance }}. Investigate immediately!"
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/virus-detected"
+
+      # ==========================================
+      # MONITORING & TRACING ALERTS
+      # ==========================================
+      
+      - alert: ZipkinDown
+        expr: up{job="zipkin"} == 0
+        for: 5m
+        labels:
+          severity: warning
+          component: monitoring
+        annotations:
+          summary: "Zipkin tracing service is down"
+          description: "Zipkin tracing service on {{ $labels.instance }} has been down for more than 5 minutes."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/zipkin-down"
+
+      - alert: PrometheusScrapeFailing
+        expr: up{job="helpdesk-api"} == 1 and scrape_samples_scraped{job="helpdesk-api"} < 100
+        for: 5m
+        labels:
+          severity: warning
+          component: monitoring
+        annotations:
+          summary: "Prometheus scrape returning few metrics"
+          description: "Prometheus is scraping fewer metrics than expected from {{ $labels.instance }}. Check actuator endpoints."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/prometheus-scrape-issue"
+
+      # ==========================================
+      # POSTGRESQL ALERTS
+      # ==========================================
+      
+      - alert: PostgreSQLDown
+        expr: up{job="postgresql"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "PostgreSQL database is down"
+          description: "PostgreSQL instance {{ $labels.instance }} has been down for more than 1 minute."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/postgresql-down"
+
+      - alert: PostgreSQLTooManyConnections
+        expr: sum(pg_stat_activity_count{job="postgresql"}) > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "PostgreSQL has too many connections"
+          description: "PostgreSQL has more than 80 active connections on {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/postgresql-connections"
+
+      - alert: PostgreSQLSlowQueries
+        expr: rate(pg_stat_statements_mean_time_seconds{job="postgresql"}[5m]) > 1
+        for: 10m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "PostgreSQL slow queries detected"
+          description: "Average query time is above 1 second on PostgreSQL {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/postgresql-slow-queries"
+
+      - alert: PostgreSQLDeadlocks
+        expr: increase(pg_stat_database_deadlocks{job="postgresql"}[10m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "PostgreSQL deadlocks detected"
+          description: "Deadlocks have been detected in PostgreSQL on {{ $labels.instance }}."
+          runbook_url: "https://github.com/diegomuszinski/HelpDesk/wiki/runbooks/postgresql-deadlocks"

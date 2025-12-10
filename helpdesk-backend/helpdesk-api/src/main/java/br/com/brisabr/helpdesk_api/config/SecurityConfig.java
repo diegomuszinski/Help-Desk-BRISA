@@ -1,6 +1,5 @@
 package br.com.brisabr.helpdesk_api.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,8 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
+
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,19 +31,29 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        // Auth endpoints - públicos (sem versão)
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/test/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/test/**").permitAll()
-                        
-                        .requestMatchers(HttpMethod.GET, "/api/categorias").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/prioridades").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/anexos/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
 
-                        
-                        .requestMatchers(HttpMethod.GET, "/api/tickets/**").authenticated()
-                        
-                        
+                        // API v1 - Endpoints públicos
+                        .requestMatchers(HttpMethod.POST, "/v1/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/api/test/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/api/test/**").permitAll()
+
+                        // Health checks e actuator endpoints - públicos para monitoramento
+                        .requestMatchers("/actuator/**").permitAll()
+
+                        // Swagger/OpenAPI - público em desenvolvimento
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                        // API v1 - Endpoints autenticados
+                        .requestMatchers(HttpMethod.GET, "/v1/api/categorias").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/v1/api/prioridades").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/v1/api/anexos/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/v1/api/tickets/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

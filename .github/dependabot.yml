@@ -1,0 +1,52 @@
+version: 2
+updates:
+  # Enable version updates for npm (Frontend)
+  - package-ecosystem: "npm"
+    directory: "/help-desk-frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "frontend"
+    assignees:
+      - "diegomuszinski"
+    reviewers:
+      - "diegomuszinski"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # Enable version updates for Gradle (Backend)
+  - package-ecosystem: "gradle"
+    directory: "/helpdesk-backend/helpdesk-api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "backend"
+    assignees:
+      - "diegomuszinski"
+    reviewers:
+      - "diegomuszinski"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

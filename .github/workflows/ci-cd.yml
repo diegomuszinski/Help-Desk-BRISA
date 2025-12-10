@@ -1,0 +1,479 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, appmod/** ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '21'
+  NODE_VERSION: '20'
+  POSTGRES_VERSION: '15'
+
+jobs:
+  # Job 1: Backend Build & Test
+  backend-build:
+    name: Backend - Build & Test
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: helpdesk_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Make gradlew executable
+        working-directory: ./helpdesk-backend/helpdesk-api
+        run: chmod +x gradlew
+
+      - name: Build backend
+        working-directory: ./helpdesk-backend/helpdesk-api
+        run: ./gradlew build --no-daemon -x test
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME }}
+
+      - name: Run backend tests
+        working-directory: ./helpdesk-backend/helpdesk-api
+        run: ./gradlew test --no-daemon
+        env:
+          DATABASE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: postgres
+          JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
+
+      - name: Upload backend test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-results
+          path: helpdesk-backend/helpdesk-api/build/reports/tests/
+          retention-days: 7
+
+      - name: Upload backend JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jar
+          path: helpdesk-backend/helpdesk-api/build/libs/*.jar
+          retention-days: 7
+
+  # Job 2: Frontend Build & Test
+  frontend-build:
+    name: Frontend - Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: help-desk-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./help-desk-frontend
+        run: npm ci
+
+      - name: Lint frontend
+        working-directory: ./help-desk-frontend
+        run: npm run lint || true
+
+      - name: Build frontend
+        working-directory: ./help-desk-frontend
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: help-desk-frontend/dist/
+          retention-days: 7
+
+  # Job 3: E2E Tests with Playwright
+  e2e-tests:
+    name: E2E Tests (Playwright)
+    runs-on: ubuntu-latest
+    needs: [backend-build, frontend-build]
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: helpdesk_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: help-desk-frontend/package-lock.json
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Download backend JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar
+          path: ./backend-jar
+
+      - name: Start backend server
+        working-directory: ./backend-jar
+        run: |
+          java -jar *.jar &
+          echo $! > backend.pid
+        env:
+          DATABASE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: postgres
+          JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
+          SERVER_PORT: 8080
+
+      - name: Wait for backend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:8080/v1/actuator/health; then
+              echo "Backend is ready"
+              exit 0
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 2
+          done
+          echo "Backend failed to start"
+          exit 1
+
+      - name: Install frontend dependencies
+        working-directory: ./help-desk-frontend
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: ./help-desk-frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        working-directory: ./help-desk-frontend
+        run: npm run test:e2e
+        env:
+          BASE_URL: http://localhost:5173
+          API_URL: http://localhost:8080
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: help-desk-frontend/playwright-report/
+          retention-days: 7
+
+      - name: Stop backend server
+        if: always()
+        run: |
+          if [ -f backend-jar/backend.pid ]; then
+            kill $(cat backend-jar/backend.pid) || true
+          fi
+
+  # Job 4: Load Testing with K6
+  load-tests:
+    name: Load Testing (K6)
+    runs-on: ubuntu-latest
+    needs: [backend-build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: helpdesk_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Download backend JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar
+          path: ./backend-jar
+
+      - name: Start backend server
+        working-directory: ./backend-jar
+        run: |
+          java -jar *.jar &
+          echo $! > backend.pid
+        env:
+          DATABASE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: postgres
+          JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
+          SERVER_PORT: 8080
+
+      - name: Wait for backend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:8080/v1/actuator/health; then
+              echo "Backend is ready"
+              exit 0
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 2
+          done
+          echo "Backend failed to start"
+          exit 1
+
+      - name: Install K6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Run K6 load test
+        working-directory: ./helpdesk-backend/k6-tests
+        run: k6 run load-test.js
+        env:
+          BASE_URL: http://localhost:8080
+
+      - name: Upload K6 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results
+          path: helpdesk-backend/k6-tests/results/
+          retention-days: 7
+
+      - name: Stop backend server
+        if: always()
+        run: |
+          if [ -f backend-jar/backend.pid ]; then
+            kill $(cat backend-jar/backend.pid) || true
+          fi
+
+  # Job 5: Security Scan
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: [backend-build, frontend-build]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner (Backend)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './helpdesk-backend'
+          format: 'sarif'
+          output: 'trivy-backend-results.sarif'
+
+      - name: Run Trivy vulnerability scanner (Frontend)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './help-desk-frontend'
+          format: 'sarif'
+          output: 'trivy-frontend-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: '.'
+
+  # Job 6: Code Quality Analysis
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    needs: [backend-build, frontend-build]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for better analysis
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: SonarCloud Scan
+        if: env.SONAR_TOKEN != ''
+        working-directory: ./helpdesk-backend/helpdesk-api
+        run: ./gradlew sonar --info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+
+  # Job 7: Deploy to Staging (on main branch)
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [backend-build, frontend-build, e2e-tests]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: staging
+      url: https://helpdesk-staging.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download backend JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar
+          path: ./deploy
+
+      - name: Download frontend build
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: ./deploy/frontend
+
+      - name: Deploy to staging
+        run: |
+          echo "🚀 Deploying to staging environment..."
+          echo "Backend JAR: ./deploy/*.jar"
+          echo "Frontend: ./deploy/frontend/"
+          # Add your deployment commands here
+          # Examples:
+          # - SCP/RSYNC to staging server
+          # - Deploy to Azure App Service
+          # - Deploy to AWS Elastic Beanstalk
+          # - Deploy to Heroku
+          # - Deploy to Docker registry
+
+      - name: Notify deployment
+        if: always()
+        run: |
+          echo "✅ Deployment to staging completed"
+          # Add notification commands here (Slack, Discord, Email, etc.)
+
+  # Job 8: Deploy to Production (manual approval)
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, load-tests, security-scan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://helpdesk.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download backend JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar
+          path: ./deploy
+
+      - name: Download frontend build
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: ./deploy/frontend
+
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying to production environment..."
+          echo "Backend JAR: ./deploy/*.jar"
+          echo "Frontend: ./deploy/frontend/"
+          # Add your production deployment commands here
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Notify deployment
+        if: always()
+        run: |
+          echo "✅ Deployment to production completed"
+          # Add notification commands here

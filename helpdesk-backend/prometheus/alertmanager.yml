@@ -1,0 +1,182 @@
+global:
+  resolve_timeout: 5m
+  # Slack webhook URL (configure com sua URL)
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+
+# Email configuration (opcional)
+# smtp_smarthost: 'smtp.gmail.com:587'
+# smtp_from: 'alerts@helpdesk.com'
+# smtp_auth_username: '${SMTP_USERNAME}'
+# smtp_auth_password: '${SMTP_PASSWORD}'
+# smtp_require_tls: true
+
+# Template de mensagens
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+# Rotas de alertas
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 12h
+  receiver: 'default-receiver'
+  
+  routes:
+    # Alertas críticos - notificação imediata
+    - match:
+        severity: critical
+      receiver: 'critical-alerts'
+      group_wait: 5s
+      repeat_interval: 4h
+      continue: true
+    
+    # Alertas de segurança
+    - match:
+        component: security
+      receiver: 'security-team'
+      group_wait: 30s
+      repeat_interval: 6h
+    
+    # Alertas de banco de dados
+    - match:
+        component: database
+      receiver: 'database-team'
+      group_wait: 1m
+      repeat_interval: 8h
+    
+    # Alertas de infraestrutura
+    - match:
+        component: infrastructure
+      receiver: 'infra-team'
+      group_wait: 5m
+      repeat_interval: 12h
+    
+    # Alertas de negócio
+    - match:
+        component: business
+      receiver: 'business-team'
+      group_wait: 10m
+      repeat_interval: 24h
+
+# Silenciamento de alertas (manutenção)
+inhibit_rules:
+  # Se a aplicação está down, não alertar sobre performance
+  - source_match:
+      severity: 'critical'
+      alertname: 'ApplicationDown'
+    target_match:
+      component: 'performance'
+    equal: ['instance']
+  
+  # Se há problema crítico de memória, não alertar sobre GC
+  - source_match:
+      severity: 'critical'
+      alertname: 'CriticalMemoryUsage'
+    target_match:
+      alertname: 'HighGCPressure'
+    equal: ['instance']
+  
+  # Se PostgreSQL está down, não alertar sobre conexões
+  - source_match:
+      alertname: 'PostgreSQLDown'
+    target_match:
+      component: 'database'
+    equal: ['instance']
+
+# Receivers (destinos de notificações)
+receivers:
+  # Receiver padrão
+  - name: 'default-receiver'
+    slack_configs:
+      - channel: '#helpdesk-alerts'
+        title: 'HelpDesk Alert: {{ .GroupLabels.alertname }}'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Severity:* {{ .Labels.severity }}
+            *Component:* {{ .Labels.component }}
+            *Description:* {{ .Annotations.description }}
+            *Instance:* {{ .Labels.instance }}
+          {{ end }}
+        send_resolved: true
+  
+  # Alertas críticos
+  - name: 'critical-alerts'
+    slack_configs:
+      - channel: '#helpdesk-critical'
+        title: '🚨 CRITICAL ALERT: {{ .GroupLabels.alertname }}'
+        text: >-
+          @here ATENÇÃO! Alerta crítico detectado!
+          {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Severity:* {{ .Labels.severity }}
+            *Component:* {{ .Labels.component }}
+            *Description:* {{ .Annotations.description }}
+            *Instance:* {{ .Labels.instance }}
+            *Runbook:* {{ .Annotations.runbook_url }}
+          {{ end }}
+        send_resolved: true
+        color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+    # Email para alertas críticos (descomentar se configurado)
+    # email_configs:
+    #   - to: 'oncall@helpdesk.com'
+    #     headers:
+    #       Subject: '[CRITICAL] HelpDesk Alert: {{ .GroupLabels.alertname }}'
+  
+  # Equipe de segurança
+  - name: 'security-team'
+    slack_configs:
+      - channel: '#security-alerts'
+        title: '🔒 Security Alert: {{ .GroupLabels.alertname }}'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Severity:* {{ .Labels.severity }}
+            *Description:* {{ .Annotations.description }}
+            *Instance:* {{ .Labels.instance }}
+            *Runbook:* {{ .Annotations.runbook_url }}
+          {{ end }}
+        send_resolved: true
+        color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+  
+  # Equipe de banco de dados
+  - name: 'database-team'
+    slack_configs:
+      - channel: '#database-alerts'
+        title: '🗄️ Database Alert: {{ .GroupLabels.alertname }}'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Severity:* {{ .Labels.severity }}
+            *Description:* {{ .Annotations.description }}
+            *Instance:* {{ .Labels.instance }}
+            *Runbook:* {{ .Annotations.runbook_url }}
+          {{ end }}
+        send_resolved: true
+  
+  # Equipe de infraestrutura
+  - name: 'infra-team'
+    slack_configs:
+      - channel: '#infra-alerts'
+        title: '⚙️ Infrastructure Alert: {{ .GroupLabels.alertname }}'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Severity:* {{ .Labels.severity }}
+            *Description:* {{ .Annotations.description }}
+            *Instance:* {{ .Labels.instance }}
+          {{ end }}
+        send_resolved: true
+  
+  # Equipe de negócio
+  - name: 'business-team'
+    slack_configs:
+      - channel: '#business-metrics'
+        title: '📊 Business Metric Alert: {{ .GroupLabels.alertname }}'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Labels.alertname }}
+            *Description:* {{ .Annotations.description }}
+          {{ end }}
+        send_resolved: true

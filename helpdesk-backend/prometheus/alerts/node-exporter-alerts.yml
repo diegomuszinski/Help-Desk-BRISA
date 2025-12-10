@@ -1,0 +1,78 @@
+groups:
+  - name: node_exporter_alerts
+    interval: 30s
+    rules:
+      # CPU Alerts
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",job="node-exporter"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High CPU usage on node"
+          description: "CPU usage is above 80% on {{ $labels.instance }} (current: {{ $value }}%)."
+
+      - alert: CriticalCPUUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle",job="node-exporter"}[5m])) * 100) > 95
+        for: 2m
+        labels:
+          severity: critical
+          component: infrastructure
+        annotations:
+          summary: "Critical CPU usage on node"
+          description: "CPU usage is above 95% on {{ $labels.instance }} (current: {{ $value }}%)."
+
+      # Memory Alerts
+      - alert: HighMemoryUsageNode
+        expr: (1 - (node_memory_MemAvailable_bytes{job="node-exporter"} / node_memory_MemTotal_bytes{job="node-exporter"})) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High memory usage on node"
+          description: "Memory usage is above 85% on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+
+      - alert: CriticalMemoryUsageNode
+        expr: (1 - (node_memory_MemAvailable_bytes{job="node-exporter"} / node_memory_MemTotal_bytes{job="node-exporter"})) > 0.95
+        for: 2m
+        labels:
+          severity: critical
+          component: infrastructure
+        annotations:
+          summary: "Critical memory usage on node"
+          description: "Memory usage is above 95% on {{ $labels.instance }} (current: {{ $value | humanizePercentage }})."
+
+      # Disk I/O Alerts
+      - alert: HighDiskIOWait
+        expr: rate(node_cpu_seconds_total{mode="iowait",job="node-exporter"}[5m]) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High disk I/O wait time"
+          description: "CPU is spending more than 50% time waiting for I/O on {{ $labels.instance }}."
+
+      # Network Alerts
+      - alert: HighNetworkErrors
+        expr: rate(node_network_receive_errs_total{job="node-exporter"}[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High network receive errors"
+          description: "More than 10 network receive errors per second on {{ $labels.instance }}."
+
+      # Load Average Alerts
+      - alert: HighLoadAverage
+        expr: node_load5{job="node-exporter"} / count without(cpu, mode) (node_cpu_seconds_total{mode="idle",job="node-exporter"}) > 2
+        for: 10m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High load average"
+          description: "Load average is more than 2x CPU cores on {{ $labels.instance }} (current: {{ $value }})."

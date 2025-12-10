@@ -1,21 +1,21 @@
-package br.com.brisabr.helpdesk_api.notification;
+package br.com.brisabr.helpdesk_api.examples;
 
 /**
  * ARQUIVO DE EXEMPLO EDUCACIONAL - Demonstra recursos do Java 21.
- * 
+ *
  * Este arquivo demonstra pattern matching, sealed interfaces e record patterns.
  * Não é usado em produção, serve apenas como referência de implementação.
- * 
+ *
  * Se o VS Code mostrar erros, ignore - o arquivo compila corretamente com Java 21.
- * 
+ *
  * Sealed interface para tipos de notificação (Java 17+).
- * 
+ *
  * Sealed interfaces/classes restringem quais classes podem implementá-las,
  * permitindo que o compilador faça exaustive checking em pattern matching.
  */
-public sealed interface NotificationEvent 
+public sealed interface NotificationEvent
     permits TicketCreatedEvent, TicketAssignedEvent, TicketClosedEvent, TicketReopenedEvent {
-    
+
     Long ticketId();
     String message();
 }
@@ -55,10 +55,10 @@ record TicketReopenedEvent(Long ticketId, String motivo, String solicitante) imp
  * Exemplo de Pattern Matching for Switch (Java 21+)
  */
 class NotificationService {
-    
+
     /**
      * Pattern Matching com type patterns e guarded patterns (Java 21+)
-     * 
+     *
      * Benefícios:
      * - Exhaustive checking: compilador garante todos os casos cobertos
      * - Type casting automático
@@ -68,30 +68,30 @@ class NotificationService {
     public String formatNotification(NotificationEvent event) {
         return switch (event) {
             // Record pattern: desconstrói o record automaticamente
-            case TicketCreatedEvent(var id, var solicitante, var categoria) 
-                when "Crítica".equals(categoria) -> 
+            case TicketCreatedEvent(var id, var solicitante, var categoria)
+                when "Crítica".equals(categoria) ->
                     String.format("🔴 URGENTE: Chamado #%d criado por %s", id, solicitante);
-                    
-            case TicketCreatedEvent e -> 
+
+            case TicketCreatedEvent e ->
                 String.format("Novo chamado #%d: %s", e.ticketId(), e.message());
-                
+
             case TicketAssignedEvent(var id, var tecnico, var prioridade)
                 when "Alta".equals(prioridade) || "Crítica".equals(prioridade) ->
                     String.format("⚠️ Chamado #%d de alta prioridade atribuído para %s", id, tecnico);
-                    
+
             case TicketAssignedEvent e ->
                 String.format("Chamado #%d: %s", e.ticketId(), e.message());
-                
+
             case TicketClosedEvent e ->
                 String.format("✅ Chamado #%d resolvido: %s", e.ticketId(), e.message());
-                
+
             case TicketReopenedEvent e ->
                 String.format("🔄 Chamado #%d reaberto: %s", e.ticketId(), e.message());
-                
+
             // Não precisa de default pois sealed interface garante exhaustiveness
         };
     }
-    
+
     /**
      * Exemplo de switch expression com null handling (Java 21+)
      */

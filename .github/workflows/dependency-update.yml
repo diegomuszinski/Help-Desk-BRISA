@@ -1,0 +1,62 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  # Backend dependency check with Dependabot-style updates
+  backend-dependencies:
+    name: Check Backend Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Check for dependency updates
+        working-directory: ./helpdesk-backend/helpdesk-api
+        run: ./gradlew dependencyUpdates -Drevision=release
+        continue-on-error: true
+
+      - name: Upload dependency report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-dependency-report
+          path: helpdesk-backend/helpdesk-api/build/dependencyUpdates/
+          retention-days: 7
+
+  # Frontend dependency check
+  frontend-dependencies:
+    name: Check Frontend Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for outdated packages
+        working-directory: ./help-desk-frontend
+        run: |
+          npm outdated > outdated.txt || true
+          cat outdated.txt
+
+      - name: Upload outdated packages report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-outdated-packages
+          path: help-desk-frontend/outdated.txt
+          retention-days: 7

@@ -1,0 +1,2857 @@
+2025-12-04 17:22:00 [background-preinit] INFO  [] [ ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-12-04 17:22:00 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Starting CategoriaControllerIntegrationTest using Java 21.0.2 with PID 16852 (started by ResTIC55 in C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api)
+2025-12-04 17:22:00 [Test worker] DEBUG [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-04 17:22:00 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - The following 1 profile is active: "dev"
+2025-12-04 17:22:02 [Test worker] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04 17:22:02 [Test worker] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 130 ms. Found 9 JPA repository interfaces.
+2025-12-04 17:22:03 [Test worker] INFO  [] [ ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04 17:22:04 [Test worker] INFO  [] [ ] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-04 17:22:04 [Test worker] INFO  [] [ ] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-04 17:22:04 [Test worker] INFO  [] [ ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04 17:22:04 [Test worker] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-04 17:22:04 [Test worker] INFO  [] [ ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4bcf08ae
+2025-12-04 17:22:04 [Test worker] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-04 17:22:04 [Test worker] WARN  [] [ ] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-04 17:22:06 [Test worker] INFO  [] [ ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04 17:22:06 [Test worker] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 17:22:07 [Test worker] INFO  [] [ ] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04 17:22:08 [Test worker] INFO  [] [ ] b.c.b.h.s.LocalFileStorageService - Diretório de storage criado: C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\uploads
+2025-12-04 17:22:09 [Test worker] WARN  [] [ ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04 17:22:10 [Test worker] INFO  [] [ ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-12-04 17:22:10 [Test worker] INFO  [] [ ] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1079496c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4bb44322, org.springframework.security.web.context.SecurityContextHolderFilter@2d3f6e6, org.springframework.security.web.header.HeaderWriterFilter@25ec2f46, org.springframework.web.filter.CorsFilter@4ddf2447, org.springframework.security.web.authentication.logout.LogoutFilter@3829bb5, br.com.brisabr.helpdesk_api.config.SecurityFilter@1314700e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ff9bed6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@66325a4d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@59a9769e, org.springframework.security.web.session.SessionManagementFilter@3730fb2f, org.springframework.security.web.access.ExceptionTranslationFilter@68437190, org.springframework.security.web.access.intercept.AuthorizationFilter@286bd902]
+2025-12-04 17:22:12 [Test worker] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Filter 'securityFilter' configured for use
+2025-12-04 17:22:12 [Test worker] INFO  [] [ ] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2025-12-04 17:22:12 [Test worker] INFO  [] [ ] o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2025-12-04 17:22:12 [Test worker] INFO  [] [ ] o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+2025-12-04 17:22:12 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Started CategoriaControllerIntegrationTest in 12.642 seconds (process running for 14.857)
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:22:13 [Test worker] WARN  [] [ ] o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/api/categorias' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:22:13 [Test worker] WARN  [9c6e71fe] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome da categoria é obrigatório}
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:22:13 [Test worker] WARN  [bb7b0a1f] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [be4ed526] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:22:13 [Test worker] DEBUG [be4ed526] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@63157033 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAuthority('ROLE_ADMIN')]
+2025-12-04 17:22:13 [Test worker] WARN  [be4ed526] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Acesso negado: Access Denied
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [174f4c9a] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:22:13 [Test worker] DEBUG [174f4c9a] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:22:13 [Test worker] INFO  [174f4c9a] [POST /api/categorias] b.c.b.h.ticket.CategoriaService - Criando nova categoria: Hardware
+2025-12-04 17:22:13 [Test worker] DEBUG [174f4c9a] [POST /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id 
+    from
+        categorias c1_0 
+    where
+        c1_0.nome=? 
+    fetch
+        first ? rows only
+2025-12-04 17:22:13 [Test worker] DEBUG [174f4c9a] [POST /api/categorias] org.hibernate.SQL - 
+    insert 
+    into
+        categorias
+        (nome) 
+    values
+        (?)
+2025-12-04 17:22:13 [Test worker] INFO  [174f4c9a] [POST /api/categorias] b.c.b.h.ticket.CategoriaService - Categoria criada com sucesso: Hardware (ID: 7)
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 17:22:13 [Test worker] DEBUG [970ed071] [GET /api/categorias] b.c.b.h.ticket.CategoriaService - Listando todas as categorias (cache miss)
+2025-12-04 17:22:13 [Test worker] DEBUG [970ed071] [GET /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.nome 
+    from
+        categorias c1_0
+2025-12-04 17:22:13 [Test worker] INFO  [] [ ] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [br.com.brisabr.helpdesk_api.ticket.PrioridadeControllerIntegrationTest]: PrioridadeControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-12-04 17:22:13 [Test worker] INFO  [] [ ] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration br.com.brisabr.helpdesk_api.HelpdeskApiApplication for test class br.com.brisabr.helpdesk_api.ticket.PrioridadeControllerIntegrationTest
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [9e57e172] [GET /api/prioridades] b.c.b.h.ticket.PrioridadeService - Listando todas as prioridades (cache miss)
+2025-12-04 17:22:13 [Test worker] DEBUG [9e57e172] [GET /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.nome 
+    from
+        prioridades p1_0
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [06095459] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:22:13 [Test worker] DEBUG [06095459] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@63157033 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAuthority('ROLE_ADMIN')]
+2025-12-04 17:22:13 [Test worker] WARN  [06095459] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Acesso negado: Access Denied
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [52ca2df5] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:22:13 [Test worker] DEBUG [52ca2df5] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:22:13 [Test worker] INFO  [52ca2df5] [POST /api/prioridades] b.c.b.h.ticket.PrioridadeService - Criando nova prioridade: Urgente
+2025-12-04 17:22:13 [Test worker] DEBUG [52ca2df5] [POST /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id 
+    from
+        prioridades p1_0 
+    where
+        p1_0.nome=? 
+    fetch
+        first ? rows only
+2025-12-04 17:22:13 [Test worker] DEBUG [52ca2df5] [POST /api/prioridades] org.hibernate.SQL - 
+    insert 
+    into
+        prioridades
+        (nome) 
+    values
+        (?)
+2025-12-04 17:22:13 [Test worker] INFO  [52ca2df5] [POST /api/prioridades] b.c.b.h.ticket.PrioridadeService - Prioridade criada com sucesso: Urgente (ID: 5)
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] WARN  [c26b40ae] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:22:13 [Test worker] WARN  [66e7b064] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) reabrindo ticket ID: 1
+2025-12-04 17:22:14 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa de reabrir ticket 1 com status inválido: Aberto
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Técnico Técnico (ID: 2) capturando ticket ID: 1
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 atribuído com sucesso para Técnico
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Admin (ID: 1) fechando ticket ID: 1
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 fechado com sucesso. Status: Resolvido
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) reabrindo ticket ID: 2
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 2 reaberto com sucesso. Motivo: Problema não foi resolvido
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Técnico (ID: 2) fechando ticket ID: 1
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 fechado com sucesso. Status: Resolvido
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Técnico Técnico (ID: 2) capturando ticket ID: 2
+2025-12-04 17:22:14 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa de capturar ticket 2 com status inválido: Resolvido
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Técnico (ID: 2) reabrindo ticket ID: 2
+2025-12-04 17:22:14 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa não autorizada de reabrir ticket 2 por usuário 2
+2025-12-04 17:22:14 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) fechando ticket ID: 1
+2025-12-04 17:22:14 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa não autorizada de fechar ticket 1 por usuário 3
+2025-12-04 17:22:14 [SpringApplicationShutdownHook] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 17:22:14 [SpringApplicationShutdownHook] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-04 17:22:14 [SpringApplicationShutdownHook] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-04 17:28:23 [background-preinit] INFO  [] [ ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-12-04 17:28:23 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Starting CategoriaControllerIntegrationTest using Java 21.0.2 with PID 20108 (started by ResTIC55 in C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api)
+2025-12-04 17:28:23 [Test worker] DEBUG [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-04 17:28:23 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - The following 1 profile is active: "dev"
+2025-12-04 17:28:25 [Test worker] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04 17:28:25 [Test worker] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 168 ms. Found 9 JPA repository interfaces.
+2025-12-04 17:28:26 [Test worker] INFO  [] [ ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04 17:28:26 [Test worker] INFO  [] [ ] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-04 17:28:26 [Test worker] INFO  [] [ ] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-04 17:28:27 [Test worker] INFO  [] [ ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04 17:28:27 [Test worker] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-04 17:28:27 [Test worker] INFO  [] [ ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4bcf08ae
+2025-12-04 17:28:27 [Test worker] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-04 17:28:27 [Test worker] WARN  [] [ ] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-04 17:28:28 [Test worker] INFO  [] [ ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04 17:28:29 [Test worker] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 17:28:29 [Test worker] INFO  [] [ ] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04 17:28:31 [Test worker] INFO  [] [ ] b.c.b.h.s.LocalFileStorageService - Diretório de storage criado: C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\uploads
+2025-12-04 17:28:31 [Test worker] WARN  [] [ ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04 17:28:32 [Test worker] INFO  [] [ ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-12-04 17:28:32 [Test worker] INFO  [] [ ] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7fa1004, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3c9b416a, org.springframework.security.web.context.SecurityContextHolderFilter@69919fed, org.springframework.security.web.header.HeaderWriterFilter@4be4680b, org.springframework.web.filter.CorsFilter@1bed8afd, org.springframework.security.web.authentication.logout.LogoutFilter@ef10390, br.com.brisabr.helpdesk_api.config.SecurityFilter@1197cd8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7bbec1cc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@648374fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4de37f33, org.springframework.security.web.session.SessionManagementFilter@56101f06, org.springframework.security.web.access.ExceptionTranslationFilter@1603d1fb, org.springframework.security.web.access.intercept.AuthorizationFilter@157eac27]
+2025-12-04 17:28:33 [Test worker] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Filter 'securityFilter' configured for use
+2025-12-04 17:28:33 [Test worker] INFO  [] [ ] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2025-12-04 17:28:33 [Test worker] INFO  [] [ ] o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2025-12-04 17:28:33 [Test worker] INFO  [] [ ] o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+2025-12-04 17:28:33 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Started CategoriaControllerIntegrationTest in 10.745 seconds (process running for 12.916)
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:28:34 [Test worker] WARN  [] [ ] o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/api/categorias' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:28:34 [Test worker] WARN  [6e9d9f00] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome da categoria é obrigatório}
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:28:34 [Test worker] WARN  [b7b0d84b] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:28:34 [Test worker] DEBUG [5241e1fc] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:28:34 [Test worker] DEBUG [5241e1fc] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@30c2a2d and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAuthority('ROLE_ADMIN')]
+2025-12-04 17:28:34 [Test worker] WARN  [5241e1fc] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Acesso negado: Access Denied
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:28:34 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:28:34 [Test worker] DEBUG [f66d43fa] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:28:34 [Test worker] DEBUG [f66d43fa] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:28:34 [Test worker] INFO  [f66d43fa] [POST /api/categorias] b.c.b.h.ticket.CategoriaService - Criando nova categoria: Hardware
+2025-12-04 17:28:34 [Test worker] DEBUG [f66d43fa] [POST /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id 
+    from
+        categorias c1_0 
+    where
+        c1_0.nome=? 
+    fetch
+        first ? rows only
+2025-12-04 17:28:35 [Test worker] DEBUG [f66d43fa] [POST /api/categorias] org.hibernate.SQL - 
+    insert 
+    into
+        categorias
+        (nome) 
+    values
+        (?)
+2025-12-04 17:28:35 [Test worker] INFO  [f66d43fa] [POST /api/categorias] b.c.b.h.ticket.CategoriaService - Categoria criada com sucesso: Hardware (ID: 8)
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 17:28:35 [Test worker] DEBUG [92a1fda2] [GET /api/categorias] b.c.b.h.ticket.CategoriaService - Listando todas as categorias (cache miss)
+2025-12-04 17:28:35 [Test worker] DEBUG [92a1fda2] [GET /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.nome 
+    from
+        categorias c1_0
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [br.com.brisabr.helpdesk_api.ticket.PrioridadeControllerIntegrationTest]: PrioridadeControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration br.com.brisabr.helpdesk_api.HelpdeskApiApplication for test class br.com.brisabr.helpdesk_api.ticket.PrioridadeControllerIntegrationTest
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [aa0fa83c] [GET /api/prioridades] b.c.b.h.ticket.PrioridadeService - Listando todas as prioridades (cache miss)
+2025-12-04 17:28:35 [Test worker] DEBUG [aa0fa83c] [GET /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.nome 
+    from
+        prioridades p1_0
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [28fe0047] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:28:35 [Test worker] DEBUG [28fe0047] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@30c2a2d and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAuthority('ROLE_ADMIN')]
+2025-12-04 17:28:35 [Test worker] WARN  [28fe0047] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Acesso negado: Access Denied
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [be3c8dc1] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:28:35 [Test worker] DEBUG [be3c8dc1] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:28:35 [Test worker] INFO  [be3c8dc1] [POST /api/prioridades] b.c.b.h.ticket.PrioridadeService - Criando nova prioridade: Urgente
+2025-12-04 17:28:35 [Test worker] DEBUG [be3c8dc1] [POST /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id 
+    from
+        prioridades p1_0 
+    where
+        p1_0.nome=? 
+    fetch
+        first ? rows only
+2025-12-04 17:28:35 [Test worker] DEBUG [be3c8dc1] [POST /api/prioridades] org.hibernate.SQL - 
+    insert 
+    into
+        prioridades
+        (nome) 
+    values
+        (?)
+2025-12-04 17:28:35 [Test worker] INFO  [be3c8dc1] [POST /api/prioridades] b.c.b.h.ticket.PrioridadeService - Prioridade criada com sucesso: Urgente (ID: 6)
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] WARN  [3d85dc15] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:28:35 [Test worker] WARN  [84507422] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) reabrindo ticket ID: 1
+2025-12-04 17:28:35 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa de reabrir ticket 1 com status inválido: Aberto
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Técnico Técnico (ID: 2) capturando ticket ID: 1
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 atribuído com sucesso para Técnico
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Admin (ID: 1) fechando ticket ID: 1
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 fechado com sucesso. Status: Resolvido
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) reabrindo ticket ID: 2
+2025-12-04 17:28:35 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 2 reaberto com sucesso. Motivo: Problema não foi resolvido
+2025-12-04 17:28:36 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Técnico (ID: 2) fechando ticket ID: 1
+2025-12-04 17:28:36 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 fechado com sucesso. Status: Resolvido
+2025-12-04 17:28:36 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Técnico Técnico (ID: 2) capturando ticket ID: 2
+2025-12-04 17:28:36 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa de capturar ticket 2 com status inválido: Resolvido
+2025-12-04 17:28:36 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Técnico (ID: 2) reabrindo ticket ID: 2
+2025-12-04 17:28:36 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa não autorizada de reabrir ticket 2 por usuário 2
+2025-12-04 17:28:36 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) fechando ticket ID: 1
+2025-12-04 17:28:36 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa não autorizada de fechar ticket 1 por usuário 3
+2025-12-04 17:28:36 [SpringApplicationShutdownHook] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 17:28:36 [SpringApplicationShutdownHook] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-04 17:28:36 [SpringApplicationShutdownHook] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-04 17:42:34 [background-preinit] INFO  [] [ ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-12-04 17:42:34 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Starting CategoriaControllerIntegrationTest using Java 21.0.2 with PID 3744 (started by ResTIC55 in C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api)
+2025-12-04 17:42:34 [Test worker] DEBUG [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-04 17:42:34 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - The following 1 profile is active: "dev"
+2025-12-04 17:42:36 [Test worker] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04 17:42:36 [Test worker] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 163 ms. Found 9 JPA repository interfaces.
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@152dbf8e
+2025-12-04 17:42:38 [Test worker] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-04 17:42:39 [Test worker] WARN  [] [ ] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-04 17:42:40 [Test worker] INFO  [] [ ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04 17:42:40 [Test worker] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 17:42:41 [Test worker] INFO  [] [ ] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04 17:42:42 [Test worker] INFO  [] [ ] b.c.b.h.s.LocalFileStorageService - Diretório de storage criado: C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\uploads
+2025-12-04 17:42:43 [Test worker] WARN  [] [ ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04 17:42:44 [Test worker] INFO  [] [ ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-12-04 17:42:44 [Test worker] INFO  [] [ ] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3a4af228, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@21e827c8, org.springframework.security.web.context.SecurityContextHolderFilter@21da6808, org.springframework.security.web.header.HeaderWriterFilter@5e9ae46f, org.springframework.web.filter.CorsFilter@6b1bacf5, org.springframework.security.web.authentication.logout.LogoutFilter@3cc8f1c, br.com.brisabr.helpdesk_api.config.SecurityFilter@2aaa5122, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@682fec32, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6e46f5c1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7aa146e5, org.springframework.security.web.session.SessionManagementFilter@17c3a3, org.springframework.security.web.access.ExceptionTranslationFilter@4463d9b7, org.springframework.security.web.access.intercept.AuthorizationFilter@170738c0]
+2025-12-04 17:42:45 [Test worker] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Filter 'securityFilter' configured for use
+2025-12-04 17:42:45 [Test worker] INFO  [] [ ] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2025-12-04 17:42:45 [Test worker] INFO  [] [ ] o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2025-12-04 17:42:45 [Test worker] INFO  [] [ ] o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+2025-12-04 17:42:46 [Test worker] INFO  [] [ ] b.c.b.h.t.CategoriaControllerIntegrationTest - Started CategoriaControllerIntegrationTest in 11.872 seconds (process running for 14.563)
+2025-12-04 17:42:46 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:42:46 [Test worker] WARN  [] [ ] o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/api/categorias' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2025-12-04 17:42:46 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:42:47 [Test worker] WARN  [0f5b339f] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome da categoria é obrigatório}
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:42:47 [Test worker] WARN  [a420caae] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [9b0cb874] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:42:47 [Test worker] DEBUG [9b0cb874] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@52760b04 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAuthority('ROLE_ADMIN')]
+2025-12-04 17:42:47 [Test worker] WARN  [9b0cb874] [POST /api/categorias] b.c.b.h.e.GlobalExceptionHandler - Acesso negado: Access Denied
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [ce9b2b9a] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:42:47 [Test worker] DEBUG [ce9b2b9a] [POST /api/categorias] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.CategoriaController.createCategoria(br.com.brisabr.helpdesk_api.dto.CategoriaCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.CategoriaController]
+2025-12-04 17:42:47 [Test worker] INFO  [ce9b2b9a] [POST /api/categorias] b.c.b.h.ticket.CategoriaService - Criando nova categoria: Hardware
+2025-12-04 17:42:47 [Test worker] DEBUG [ce9b2b9a] [POST /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id 
+    from
+        categorias c1_0 
+    where
+        c1_0.nome=? 
+    fetch
+        first ? rows only
+2025-12-04 17:42:47 [Test worker] DEBUG [ce9b2b9a] [POST /api/categorias] org.hibernate.SQL - 
+    insert 
+    into
+        categorias
+        (nome) 
+    values
+        (?)
+2025-12-04 17:42:47 [Test worker] INFO  [ce9b2b9a] [POST /api/categorias] b.c.b.h.ticket.CategoriaService - Categoria criada com sucesso: Hardware (ID: 9)
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 17:42:47 [Test worker] DEBUG [4ac42997] [GET /api/categorias] b.c.b.h.ticket.CategoriaService - Listando todas as categorias (cache miss)
+2025-12-04 17:42:47 [Test worker] DEBUG [4ac42997] [GET /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.nome 
+    from
+        categorias c1_0
+2025-12-04 17:42:47 [Test worker] INFO  [] [ ] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [br.com.brisabr.helpdesk_api.ticket.PrioridadeControllerIntegrationTest]: PrioridadeControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-12-04 17:42:47 [Test worker] INFO  [] [ ] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration br.com.brisabr.helpdesk_api.HelpdeskApiApplication for test class br.com.brisabr.helpdesk_api.ticket.PrioridadeControllerIntegrationTest
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [77501640] [GET /api/prioridades] b.c.b.h.ticket.PrioridadeService - Listando todas as prioridades (cache miss)
+2025-12-04 17:42:47 [Test worker] DEBUG [77501640] [GET /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.nome 
+    from
+        prioridades p1_0
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [b7dce230] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:42:47 [Test worker] DEBUG [b7dce230] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@52760b04 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAuthority('ROLE_ADMIN')]
+2025-12-04 17:42:47 [Test worker] WARN  [b7dce230] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Acesso negado: Access Denied
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [44c14bf1] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:42:47 [Test worker] DEBUG [44c14bf1] [POST /api/prioridades] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.ticket.PrioridadeController.createPrioridade(br.com.brisabr.helpdesk_api.dto.PrioridadeCreateDTO); target is of class [br.com.brisabr.helpdesk_api.ticket.PrioridadeController]
+2025-12-04 17:42:47 [Test worker] INFO  [44c14bf1] [POST /api/prioridades] b.c.b.h.ticket.PrioridadeService - Criando nova prioridade: Urgente
+2025-12-04 17:42:47 [Test worker] DEBUG [44c14bf1] [POST /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id 
+    from
+        prioridades p1_0 
+    where
+        p1_0.nome=? 
+    fetch
+        first ? rows only
+2025-12-04 17:42:47 [Test worker] DEBUG [44c14bf1] [POST /api/prioridades] org.hibernate.SQL - 
+    insert 
+    into
+        prioridades
+        (nome) 
+    values
+        (?)
+2025-12-04 17:42:47 [Test worker] INFO  [44c14bf1] [POST /api/prioridades] b.c.b.h.ticket.PrioridadeService - Prioridade criada com sucesso: Urgente (ID: 7)
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] WARN  [ef1e95c5] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome da prioridade é obrigatório}
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/prioridades
+2025-12-04 17:42:47 [Test worker] WARN  [783acb5b] [POST /api/prioridades] b.c.b.h.e.GlobalExceptionHandler - Erro de validação: {nome=Nome deve ter entre 3 e 50 caracteres}
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) reabrindo ticket ID: 1
+2025-12-04 17:42:48 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa de reabrir ticket 1 com status inválido: Aberto
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Técnico Técnico (ID: 2) capturando ticket ID: 1
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 atribuído com sucesso para Técnico
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Admin (ID: 1) fechando ticket ID: 1
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 fechado com sucesso. Status: Resolvido
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) reabrindo ticket ID: 2
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 2 reaberto com sucesso. Motivo: Problema não foi resolvido
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Técnico (ID: 2) fechando ticket ID: 1
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Ticket 1 fechado com sucesso. Status: Resolvido
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Técnico Técnico (ID: 2) capturando ticket ID: 2
+2025-12-04 17:42:48 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa de capturar ticket 2 com status inválido: Resolvido
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Técnico (ID: 2) reabrindo ticket ID: 2
+2025-12-04 17:42:48 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa não autorizada de reabrir ticket 2 por usuário 2
+2025-12-04 17:42:48 [Test worker] INFO  [] [ ] b.c.b.h.ticket.TicketService - Usuário Usuário (ID: 3) fechando ticket ID: 1
+2025-12-04 17:42:48 [Test worker] WARN  [] [ ] b.c.b.h.ticket.TicketService - Tentativa não autorizada de fechar ticket 1 por usuário 3
+2025-12-04 17:42:48 [SpringApplicationShutdownHook] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 17:42:48 [SpringApplicationShutdownHook] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-04 17:42:48 [SpringApplicationShutdownHook] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-04 18:18:40 [background-preinit] INFO  [] [ ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-12-04 18:18:40 [main] INFO  [] [ ] b.c.b.h.HelpdeskApiApplication - Starting HelpdeskApiApplication using Java 21.0.2 with PID 14728 (C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\build\classes\java\main started by ResTIC55 in C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api)
+2025-12-04 18:18:40 [main] DEBUG [] [ ] b.c.b.h.HelpdeskApiApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-04 18:18:40 [main] INFO  [] [ ] b.c.b.h.HelpdeskApiApplication - The following 1 profile is active: "dev"
+2025-12-04 18:18:41 [main] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04 18:18:41 [main] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 61 ms. Found 9 JPA repository interfaces.
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1983 ms
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04 18:18:42 [main] INFO  [] [ ] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-04 18:18:42 [main] INFO  [] [ ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04 18:18:42 [main] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-04 18:18:42 [main] INFO  [] [ ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@102ecb61
+2025-12-04 18:18:42 [main] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-04 18:18:42 [main] WARN  [] [ ] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-04 18:18:44 [main] INFO  [] [ ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04 18:18:44 [main] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 18:18:44 [main] INFO  [] [ ] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04 18:18:45 [main] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Filter 'securityFilter' configured for use
+2025-12-04 18:18:45 [main] INFO  [] [ ] b.c.b.h.s.LocalFileStorageService - Diretório de storage criado: C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\uploads
+2025-12-04 18:18:46 [main] WARN  [] [ ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04 18:18:46 [main] INFO  [] [ ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-12-04 18:18:46 [main] INFO  [] [ ] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1cbe3497, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5c3d91bc, org.springframework.security.web.context.SecurityContextHolderFilter@6087f264, org.springframework.security.web.header.HeaderWriterFilter@2a670af9, org.springframework.web.filter.CorsFilter@6cb84986, org.springframework.security.web.authentication.logout.LogoutFilter@1f32fb77, br.com.brisabr.helpdesk_api.config.SecurityFilter@651bec9a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2eef2fd6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4f8d98d4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@449be249, org.springframework.security.web.session.SessionManagementFilter@31809f2b, org.springframework.security.web.access.ExceptionTranslationFilter@82134e4, org.springframework.security.web.access.intercept.AuthorizationFilter@1653cc95]
+2025-12-04 18:18:47 [main] INFO  [] [ ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-12-04 18:18:47 [main] INFO  [] [ ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2025-12-04 18:18:47 [main] INFO  [] [ ] b.c.b.h.HelpdeskApiApplication - Started HelpdeskApiApplication in 7.755 seconds (process running for 8.163)
+2025-12-04 18:19:55 [background-preinit] INFO  [] [ ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-12-04 18:19:55 [main] INFO  [] [ ] b.c.b.h.HelpdeskApiApplication - Starting HelpdeskApiApplication using Java 21.0.2 with PID 22760 (C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\build\classes\java\main started by ResTIC55 in C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api)
+2025-12-04 18:19:55 [main] DEBUG [] [ ] b.c.b.h.HelpdeskApiApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-04 18:19:55 [main] INFO  [] [ ] b.c.b.h.HelpdeskApiApplication - The following 1 profile is active: "dev"
+2025-12-04 18:19:56 [main] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04 18:19:56 [main] INFO  [] [ ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 9 JPA repository interfaces.
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1955 ms
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04 18:19:57 [main] INFO  [] [ ] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-04 18:19:57 [main] INFO  [] [ ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04 18:19:57 [main] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-04 18:19:57 [main] INFO  [] [ ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@21c5c68a
+2025-12-04 18:19:57 [main] INFO  [] [ ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-04 18:19:57 [main] WARN  [] [ ] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-04 18:19:59 [main] INFO  [] [ ] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04 18:19:59 [main] INFO  [] [ ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04 18:19:59 [main] INFO  [] [ ] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04 18:19:59 [main] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Filter 'securityFilter' configured for use
+2025-12-04 18:20:00 [main] INFO  [] [ ] b.c.b.h.s.LocalFileStorageService - Diretório de storage criado: C:\Users\ResTIC55\Downloads\HelpDesk27.10\helpdesk-backend\helpdesk-api\uploads
+2025-12-04 18:20:00 [main] WARN  [] [ ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04 18:20:01 [main] INFO  [] [ ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-12-04 18:20:01 [main] INFO  [] [ ] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6ddb5117, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@761eaf72, org.springframework.security.web.context.SecurityContextHolderFilter@70dd4172, org.springframework.security.web.header.HeaderWriterFilter@ed37e52, org.springframework.web.filter.CorsFilter@237b93f5, org.springframework.security.web.authentication.logout.LogoutFilter@39a4bd89, br.com.brisabr.helpdesk_api.config.SecurityFilter@27f6854b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@536d655f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e8fabad, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@73ebf7cc, org.springframework.security.web.session.SessionManagementFilter@4e5563ef, org.springframework.security.web.access.ExceptionTranslationFilter@6880c06b, org.springframework.security.web.access.intercept.AuthorizationFilter@48c74c4f]
+2025-12-04 18:20:01 [main] INFO  [] [ ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-12-04 18:20:01 [main] INFO  [] [ ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2025-12-04 18:20:01 [main] INFO  [] [ ] b.c.b.h.HelpdeskApiApplication - Started HelpdeskApiApplication in 7.223 seconds (process running for 7.631)
+2025-12-04 18:20:04 [http-nio-8080-exec-1] INFO  [] [ ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-04 18:20:04 [http-nio-8080-exec-1] INFO  [] [ ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@48d1fcd3
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@b303504
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-12-04 18:20:04 [http-nio-8080-exec-1] INFO  [] [ ] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /actuator/health
+2025-12-04 18:20:04 [http-nio-8080-exec-1] WARN  [] [ ] o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/actuator/health' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-12-04 18:20:04 [http-nio-8080-exec-1] WARN  [] [ ] o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/actuator/health' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /error
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-12-04 18:20:04 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-12-04 18:30:50 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/auth/login
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/auth/login
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/auth/login
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] b.c.b.h.ratelimit.RateLimiter - Tentativa 1 de 5 para IP: 0:0:0:0:0:0:0:1
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] o.s.s.a.d.DaoAuthenticationProvider - Authenticated user
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] b.c.b.h.ratelimit.RateLimiter - Contador resetado para IP: 0:0:0:0:0:0:0:1
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] org.hibernate.SQL - 
+    insert 
+    into
+        refresh_tokens
+        (created_at, expiry_date, revoked, revoked_at, token, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2025-12-04 18:30:50 [http-nio-8080-exec-6] INFO  [116c91e5] [POST /api/auth/login] b.c.b.h.auth.RefreshTokenService - Refresh token criado para usuário: admin@admin.net
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] org.hibernate.SQL - 
+    insert 
+    into
+        audit_logs
+        (action, details, ip_address, status, timestamp, user_id, user_agent) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2025-12-04 18:30:50 [http-nio-8080-exec-6] INFO  [116c91e5] [POST /api/auth/login] b.c.b.h.audit.AuditService - Auditoria registrada: LOGIN - SUCCESS - admin@admin.net
+2025-12-04 18:30:50 [http-nio-8080-exec-6] INFO  [116c91e5] [POST /api/auth/login] b.c.b.h.auth.AuthController - Login realizado com sucesso: admin@admin.net
+2025-12-04 18:30:50 [http-nio-8080-exec-6] DEBUG [116c91e5] [POST /api/auth/login] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:50 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/tickets
+2025-12-04 18:30:50 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - GET "/api/tickets", parameters={}
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] b.c.b.h.ticket.TicketController - Listando tickets paginados: page=0, size=20, usuário=admin@admin.net
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    order by
+        t1_0.data_abertura desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-9] DEBUG [e379e675] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:51 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/categorias
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets
+2025-12-04 18:30:51 [http-nio-8080-exec-8] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/prioridades
+2025-12-04 18:30:51 [http-nio-8080-exec-4] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/users/technicians
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/users/technicians
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - GET "/api/tickets", parameters={}
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] b.c.b.h.ticket.TicketController - Listando tickets paginados: page=0, size=20, usuário=admin@admin.net
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/users/technicians
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - GET "/api/users/technicians", parameters={}
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [a8bdbc23] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    order by
+        t1_0.data_abertura desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [152faf1a] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [a8bdbc23] [GET /api/categorias] b.c.b.h.ticket.CategoriaService - Listando todas as categorias (cache miss)
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [152faf1a] [GET /api/prioridades] b.c.b.h.ticket.PrioridadeService - Listando todas as prioridades (cache miss)
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [a8bdbc23] [GET /api/categorias] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.nome 
+    from
+        categorias c1_0
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [152faf1a] [GET /api/prioridades] org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.nome 
+    from
+        prioridades p1_0
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-1] DEBUG [152faf1a] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:51 [http-nio-8080-exec-7] DEBUG [a8bdbc23] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Buscando lista de técnicos
+2025-12-04 18:30:51 [http-nio-8080-exec-10] DEBUG [467a3061] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        usuarios 
+    WHERE
+        perfil = ?
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Encontrados 0 técnicos
+2025-12-04 18:30:51 [http-nio-8080-exec-2] DEBUG [695ec038] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:53 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:30:53 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:30:53 [http-nio-8080-exec-6] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:53 [http-nio-8080-exec-3] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:30:53 [http-nio-8080-exec-3] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:53 [http-nio-8080-exec-6] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:30:53 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:30:53 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:30:53 [http-nio-8080-exec-3] DEBUG [9642b633] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:30:53 [http-nio-8080-exec-6] DEBUG [5a3c0141] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:30:53 [http-nio-8080-exec-3] DEBUG [9642b633] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:30:53 [http-nio-8080-exec-6] DEBUG [5a3c0141] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing POST /api/tickets
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured POST /api/tickets
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] o.s.web.servlet.DispatcherServlet - POST "/api/tickets", parameters={multipart}
+2025-12-04 18:31:12 [http-nio-8080-exec-9] INFO  [79e7e0d6] [POST /api/tickets] b.c.b.h.ticket.TicketController - Criando ticket: categoria=Toner/Cartucho, prioridade=URGENTE, anexos=0, solicitante=admin@admin.net
+2025-12-04 18:31:12 [http-nio-8080-exec-9] INFO  [79e7e0d6] [POST /api/tickets] b.c.b.h.ticket.TicketService - Criando novo ticket para usuário: Administrador do Sistema (ID: 1)
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] org.hibernate.SQL - 
+    SELECT
+        COUNT(*) 
+    FROM
+        chamados 
+    WHERE
+        EXTRACT(YEAR FROM data_abertura) = ?
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] b.c.b.h.ticket.TicketService - Número do chamado gerado: 2025-006
+2025-12-04 18:31:12 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] org.hibernate.SQL - 
+    insert 
+    into
+        chamados
+        (id_tecnico_atribuido, categoria, data_abertura, data_fechamento, descricao, foi_reaberto, numero_chamado, prioridade, id_solicitante, solucao, status) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-04 18:31:13 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] org.hibernate.SQL - 
+    insert 
+    into
+        historico_chamados
+        (id_autor, comentario, data_ocorrencia, id_chamado) 
+    values
+        (?, ?, ?, ?)
+2025-12-04 18:31:13 [http-nio-8080-exec-9] INFO  [79e7e0d6] [POST /api/tickets] b.c.b.h.ticket.TicketService - Ticket criado com sucesso: 2025-006 - ID: 6, Anexos: 0
+2025-12-04 18:31:13 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    left join
+        anexos_chamados a1_0 
+            on t1_0.id=a1_0.id_chamado 
+    where
+        t1_0.id=?
+2025-12-04 18:31:13 [http-nio-8080-exec-9] DEBUG [79e7e0d6] [POST /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
+2025-12-04 18:31:13 [http-nio-8080-exec-8] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/tickets/6
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/users/technicians
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets/6
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/users/technicians
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - GET "/api/users/technicians", parameters={}
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Buscando lista de técnicos
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        usuarios 
+    WHERE
+        perfil = ?
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Encontrados 0 técnicos
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets/6
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [9e07497e] [GET /api/tickets/6] o.s.web.servlet.DispatcherServlet - GET "/api/tickets/6", parameters={}
+2025-12-04 18:31:13 [http-nio-8080-exec-5] DEBUG [5f81cb69] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [9e07497e] [GET /api/tickets/6] b.c.b.h.ticket.TicketController - Buscando ticket por ID: 6
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [9e07497e] [GET /api/tickets/6] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    left join
+        anexos_chamados a1_0 
+            on t1_0.id=a1_0.id_chamado 
+    where
+        t1_0.id=?
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [9e07497e] [GET /api/tickets/6] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [9e07497e] [GET /api/tickets/6] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:13 [http-nio-8080-exec-4] DEBUG [9e07497e] [GET /api/tickets/6] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/users/technicians
+2025-12-04 18:31:17 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets
+2025-12-04 18:31:17 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:31:17 [http-nio-8080-exec-7] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:17 [http-nio-8080-exec-10] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:17 [http-nio-8080-exec-7] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:17 [http-nio-8080-exec-10] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:17 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:31:17 [http-nio-8080-exec-7] DEBUG [50325c2d] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:31:17 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:31:17 [http-nio-8080-exec-10] DEBUG [6986b34c] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/users/technicians
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - GET "/api/users/technicians", parameters={}
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:17 [http-nio-8080-exec-7] DEBUG [50325c2d] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - GET "/api/tickets", parameters={}
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Buscando lista de técnicos
+2025-12-04 18:31:17 [http-nio-8080-exec-10] DEBUG [6986b34c] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        usuarios 
+    WHERE
+        perfil = ?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] b.c.b.h.ticket.TicketController - Listando tickets paginados: page=0, size=20, usuário=admin@admin.net
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Encontrados 0 técnicos
+2025-12-04 18:31:17 [http-nio-8080-exec-2] DEBUG [6105c7d7] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    order by
+        t1_0.data_abertura desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:17 [http-nio-8080-exec-1] DEBUG [0b331c1b] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:19 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:31:19 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:31:19 [http-nio-8080-exec-3] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:19 [http-nio-8080-exec-6] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:19 [http-nio-8080-exec-3] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:19 [http-nio-8080-exec-6] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:19 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:31:19 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:31:19 [http-nio-8080-exec-3] DEBUG [68f289fb] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:31:19 [http-nio-8080-exec-6] DEBUG [e54e7c3b] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:31:19 [http-nio-8080-exec-3] DEBUG [68f289fb] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:19 [http-nio-8080-exec-6] DEBUG [e54e7c3b] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/users/technicians
+2025-12-04 18:31:20 [http-nio-8080-exec-8] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets
+2025-12-04 18:31:20 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:20 [http-nio-8080-exec-5] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:20 [http-nio-8080-exec-8] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:20 [http-nio-8080-exec-8] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:20 [http-nio-8080-exec-5] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:20 [http-nio-8080-exec-8] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:31:20 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:31:20 [http-nio-8080-exec-8] DEBUG [e63ffceb] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/users/technicians
+2025-12-04 18:31:20 [http-nio-8080-exec-5] DEBUG [28bc9040] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - GET "/api/users/technicians", parameters={}
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - GET "/api/tickets", parameters={}
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Buscando lista de técnicos
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        usuarios 
+    WHERE
+        perfil = ?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] b.c.b.h.ticket.TicketController - Listando tickets paginados: page=0, size=20, usuário=admin@admin.net
+2025-12-04 18:31:20 [http-nio-8080-exec-8] DEBUG [e63ffceb] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:20 [http-nio-8080-exec-5] DEBUG [28bc9040] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Encontrados 0 técnicos
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    order by
+        t1_0.data_abertura desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-04 18:31:20 [http-nio-8080-exec-4] DEBUG [caf37b45] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:20 [http-nio-8080-exec-9] DEBUG [6227e56b] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:21 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:31:21 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:31:21 [http-nio-8080-exec-7] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:21 [http-nio-8080-exec-10] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:21 [http-nio-8080-exec-10] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:21 [http-nio-8080-exec-7] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:21 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:31:21 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:31:21 [http-nio-8080-exec-7] DEBUG [ffed27cf] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:31:21 [http-nio-8080-exec-10] DEBUG [07115013] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:31:21 [http-nio-8080-exec-10] DEBUG [07115013] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:21 [http-nio-8080-exec-7] DEBUG [ffed27cf] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:22 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:31:22 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/users/technicians
+2025-12-04 18:31:22 [http-nio-8080-exec-1] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:22 [http-nio-8080-exec-6] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:22 [http-nio-8080-exec-1] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:22 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets
+2025-12-04 18:31:22 [http-nio-8080-exec-6] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:22 [http-nio-8080-exec-1] DEBUG [b2e255a5] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - GET "/api/tickets", parameters={}
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/users/technicians
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - GET "/api/users/technicians", parameters={}
+2025-12-04 18:31:22 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:31:22 [http-nio-8080-exec-6] DEBUG [4c56a9d0] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] b.c.b.h.ticket.TicketController - Listando tickets paginados: page=0, size=20, usuário=admin@admin.net
+2025-12-04 18:31:22 [http-nio-8080-exec-1] DEBUG [b2e255a5] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Buscando lista de técnicos
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        usuarios 
+    WHERE
+        perfil = ?
+2025-12-04 18:31:22 [http-nio-8080-exec-6] DEBUG [4c56a9d0] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    order by
+        t1_0.data_abertura desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Encontrados 0 técnicos
+2025-12-04 18:31:22 [http-nio-8080-exec-3] DEBUG [aa83eba0] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:22 [http-nio-8080-exec-2] DEBUG [3d1012b4] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:24 [http-nio-8080-exec-8] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/dashboard/stats
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/dashboard/stats
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/dashboard/stats
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/stats", parameters={}
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.DashboardController.getDashboardStats(); target is of class [br.com.brisabr.helpdesk_api.controller.DashboardController]
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.DashboardController.getDashboardStats(); target is of class [br.com.brisabr.helpdesk_api.controller.DashboardController]
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    SELECT
+        COUNT(*) 
+    FROM
+        chamados 
+    WHERE
+        status = ? 
+        AND id_tecnico_atribuido IS NULL
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    SELECT
+        u.nome as nomeAnalista,
+        COUNT(t.id) as totalChamados 
+    FROM
+        chamados t 
+    JOIN
+        usuarios u 
+            ON t.id_tecnico_atribuido = u.id 
+    WHERE
+        (
+            ? IS NULL 
+            OR EXTRACT(YEAR FROM t.data_abertura) = ?
+        ) 
+        AND (
+            ? IS NULL 
+            OR EXTRACT(MONTH FROM t.data_abertura) = ?
+        ) 
+    GROUP BY
+        u.nome
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:24 [http-nio-8080-exec-5] DEBUG [8167d127] [GET /api/dashboard/stats] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:25 [http-nio-8080-exec-4] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing OPTIONS /api/reports/by-analyst?
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/reports/by-analyst?
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/reports/by-analyst?
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [16fc11b5] [GET /api/reports/by-analyst] o.s.web.servlet.DispatcherServlet - GET "/api/reports/by-analyst", parameters={}
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [16fc11b5] [GET /api/reports/by-analyst] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.ReportController.getChamadosPorAnalista(java.lang.Integer,java.lang.Integer); target is of class [br.com.brisabr.helpdesk_api.controller.ReportController]
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [16fc11b5] [GET /api/reports/by-analyst] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.ReportController.getChamadosPorAnalista(java.lang.Integer,java.lang.Integer); target is of class [br.com.brisabr.helpdesk_api.controller.ReportController]
+2025-12-04 18:31:25 [http-nio-8080-exec-9] INFO  [16fc11b5] [GET /api/reports/by-analyst] b.c.b.h.service.ReportService - Gerando relatório de chamados por analista - Ano: null, Mês: null
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [16fc11b5] [GET /api/reports/by-analyst] org.hibernate.SQL - 
+    SELECT
+        u.nome as nomeAnalista,
+        COUNT(t.id) as totalChamados 
+    FROM
+        chamados t 
+    JOIN
+        usuarios u 
+            ON t.id_tecnico_atribuido = u.id 
+    WHERE
+        (
+            ? IS NULL 
+            OR EXTRACT(YEAR FROM t.data_abertura) = ?
+        ) 
+        AND (
+            ? IS NULL 
+            OR EXTRACT(MONTH FROM t.data_abertura) = ?
+        ) 
+    GROUP BY
+        u.nome
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [16fc11b5] [GET /api/reports/by-analyst] b.c.b.h.service.ReportService - Relatório gerado com 2 analistas
+2025-12-04 18:31:25 [http-nio-8080-exec-9] DEBUG [16fc11b5] [GET /api/reports/by-analyst] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/reports/by-analyst?
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/reports/by-analyst?
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [88c4f73d] [GET /api/reports/by-analyst] o.s.web.servlet.DispatcherServlet - GET "/api/reports/by-analyst", parameters={}
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [88c4f73d] [GET /api/reports/by-analyst] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.ReportController.getChamadosPorAnalista(java.lang.Integer,java.lang.Integer); target is of class [br.com.brisabr.helpdesk_api.controller.ReportController]
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [88c4f73d] [GET /api/reports/by-analyst] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.ReportController.getChamadosPorAnalista(java.lang.Integer,java.lang.Integer); target is of class [br.com.brisabr.helpdesk_api.controller.ReportController]
+2025-12-04 18:31:26 [http-nio-8080-exec-7] INFO  [88c4f73d] [GET /api/reports/by-analyst] b.c.b.h.service.ReportService - Gerando relatório de chamados por analista - Ano: null, Mês: null
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [88c4f73d] [GET /api/reports/by-analyst] org.hibernate.SQL - 
+    SELECT
+        u.nome as nomeAnalista,
+        COUNT(t.id) as totalChamados 
+    FROM
+        chamados t 
+    JOIN
+        usuarios u 
+            ON t.id_tecnico_atribuido = u.id 
+    WHERE
+        (
+            ? IS NULL 
+            OR EXTRACT(YEAR FROM t.data_abertura) = ?
+        ) 
+        AND (
+            ? IS NULL 
+            OR EXTRACT(MONTH FROM t.data_abertura) = ?
+        ) 
+    GROUP BY
+        u.nome
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [88c4f73d] [GET /api/reports/by-analyst] b.c.b.h.service.ReportService - Relatório gerado com 2 analistas
+2025-12-04 18:31:26 [http-nio-8080-exec-7] DEBUG [88c4f73d] [GET /api/reports/by-analyst] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/dashboard/stats
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/dashboard/stats
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/stats", parameters={}
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.DashboardController.getDashboardStats(); target is of class [br.com.brisabr.helpdesk_api.controller.DashboardController]
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.controller.DashboardController.getDashboardStats(); target is of class [br.com.brisabr.helpdesk_api.controller.DashboardController]
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    SELECT
+        COUNT(*) 
+    FROM
+        chamados 
+    WHERE
+        status = ? 
+        AND id_tecnico_atribuido IS NULL
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    SELECT
+        u.nome as nomeAnalista,
+        COUNT(t.id) as totalChamados 
+    FROM
+        chamados t 
+    JOIN
+        usuarios u 
+            ON t.id_tecnico_atribuido = u.id 
+    WHERE
+        (
+            ? IS NULL 
+            OR EXTRACT(YEAR FROM t.data_abertura) = ?
+        ) 
+        AND (
+            ? IS NULL 
+            OR EXTRACT(MONTH FROM t.data_abertura) = ?
+        ) 
+    GROUP BY
+        u.nome
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:28 [http-nio-8080-exec-10] DEBUG [3ca8aff2] [GET /api/dashboard/stats] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:32 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/prioridades
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/users/technicians
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/tickets
+2025-12-04 18:31:32 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Securing GET /api/categorias
+2025-12-04 18:31:32 [http-nio-8080-exec-6] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:32 [http-nio-8080-exec-3] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:32 [http-nio-8080-exec-6] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [] [ ] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-12-04 18:31:32 [http-nio-8080-exec-3] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:32 [http-nio-8080-exec-6] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/categorias
+2025-12-04 18:31:32 [http-nio-8080-exec-6] DEBUG [e79df86f] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - GET "/api/categorias", parameters={}
+2025-12-04 18:31:32 [http-nio-8080-exec-3] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/prioridades
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/users/technicians
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - GET "/api/users/technicians", parameters={}
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [] [ ] b.c.b.h.config.SecurityFilter - Usuário 'admin@admin.net' autenticado com permissões: [ROLE_ADMIN, ROLE_MANAGER, ROLE_TECHNICIAN, ROLE_USER]
+2025-12-04 18:31:32 [http-nio-8080-exec-3] DEBUG [b707c534] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - GET "/api/prioridades", parameters={}
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [] [ ] o.s.security.web.FilterChainProxy - Secured GET /api/tickets
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] o.s.s.a.m.AuthorizationManagerBeforeMethodInterceptor - Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity br.com.brisabr.helpdesk_api.user.UserController.getTechnicians(); target is of class [br.com.brisabr.helpdesk_api.user.UserController]
+2025-12-04 18:31:32 [http-nio-8080-exec-6] DEBUG [e79df86f] [GET /api/categorias] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - GET "/api/tickets", parameters={}
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Buscando lista de técnicos
+2025-12-04 18:31:32 [http-nio-8080-exec-3] DEBUG [b707c534] [GET /api/prioridades] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        usuarios 
+    WHERE
+        perfil = ?
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] b.c.b.h.ticket.TicketController - Listando tickets paginados: page=0, size=20, usuário=admin@admin.net
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] b.c.b.helpdesk_api.user.UserService - Encontrados 0 técnicos
+2025-12-04 18:31:32 [http-nio-8080-exec-2] DEBUG [f68d5077] [GET /api/users/technicians] o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-12-04 18:31:32 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.id_tecnico_atribuido,
+        t1_0.categoria,
+        t1_0.data_abertura,
+        t1_0.data_fechamento,
+        t1_0.descricao,
+        t1_0.foi_reaberto,
+        t1_0.numero_chamado,
+        t1_0.prioridade,
+        t1_0.id_solicitante,
+        t1_0.solucao,
+        t1_0.status 
+    from
+        chamados t1_0 
+    order by
+        t1_0.data_abertura desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.data_criacao,
+        u1_0.email,
+        u1_0.id_equipe,
+        u1_0.nome,
+        u1_0.perfil,
+        u1_0.senha 
+    from
+        usuarios u1_0 
+    where
+        u1_0.id=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        h1_0.id_chamado,
+        h1_0.id,
+        h1_0.id_autor,
+        h1_0.comentario,
+        h1_0.data_ocorrencia 
+    from
+        historico_chamados h1_0 
+    where
+        h1_0.id_chamado=? 
+    order by
+        h1_0.data_ocorrencia desc
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] org.hibernate.SQL - 
+    select
+        a1_0.id_chamado,
+        a1_0.id,
+        a1_0.dados,
+        a1_0.data_upload,
+        a1_0.nome_arquivo,
+        a1_0.tipo_arquivo 
+    from
+        anexos_chamados a1_0 
+    where
+        a1_0.id_chamado=?
+2025-12-04 18:31:33 [http-nio-8080-exec-1] DEBUG [61a9c431] [GET /api/tickets] o.s.web.servlet.DispatcherServlet - Completed 200 OK

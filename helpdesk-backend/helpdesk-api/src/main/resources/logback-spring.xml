@@ -1,60 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    
-    <!-- Definir propriedades -->
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%X{requestId}] [%X{requestMethod} %X{requestUri}] %logger{36} - %msg%n"/>
-    <property name="LOG_FILE" value="logs/helpdesk-api.log"/>
-    
-    <!-- Console Appender - desenvolvimento -->
+    <!-- Include default Spring Boot logging configuration -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Define properties -->
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/helpdesk.log}"/>
+    <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
+
+    <!-- Console appender for development (human-readable) -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${LOG_PATTERN}</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
         </encoder>
     </appender>
-    
-    <!-- File Appender - produção -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}</file>
-        <encoder>
-            <pattern>${LOG_PATTERN}</pattern>
+
+    <!-- Console appender for production (JSON format) -->
+    <appender name="CONSOLE_JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdcKeyName>requestId</includeMdcKeyName>
+            <includeMdcKeyName>userId</includeMdcKeyName>
+            <includeMdcKeyName>username</includeMdcKeyName>
+            <includeMdcKeyName>ipAddress</includeMdcKeyName>
+            <includeMdcKeyName>userAgent</includeMdcKeyName>
+            <includeMdcKeyName>endpoint</includeMdcKeyName>
+            <includeMdcKeyName>method</includeMdcKeyName>
+            <includeMdcKeyName>duration</includeMdcKeyName>
+
+            <customFields>{"application":"helpdesk-api","environment":"${SPRING_PROFILES_ACTIVE:-dev}"}</customFields>
+
+            <fieldNames>
+                <timestamp>timestamp</timestamp>
+                <version>version</version>
+                <message>message</message>
+                <logger>logger</logger>
+                <thread>thread</thread>
+                <level>level</level>
+                <levelValue>level_value</levelValue>
+            </fieldNames>
+
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <maxLength>4096</maxLength>
+                <shortenedClassNameLength>40</shortenedClassNameLength>
+                <rootCauseFirst>true</rootCauseFirst>
+            </throwableConverter>
         </encoder>
-        
-        <!-- Política de rotação: arquivo diário, mantém 30 dias -->
+    </appender>
+
+    <!-- File appender for all logs (JSON format) -->
+    <appender name="FILE_JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/helpdesk-json.log</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdcKeyName>requestId</includeMdcKeyName>
+            <includeMdcKeyName>userId</includeMdcKeyName>
+            <includeMdcKeyName>username</includeMdcKeyName>
+            <includeMdcKeyName>ipAddress</includeMdcKeyName>
+            <includeMdcKeyName>userAgent</includeMdcKeyName>
+            <includeMdcKeyName>endpoint</includeMdcKeyName>
+            <includeMdcKeyName>method</includeMdcKeyName>
+            <includeMdcKeyName>duration</includeMdcKeyName>
+
+            <customFields>{"application":"helpdesk-api","environment":"${SPRING_PROFILES_ACTIVE:-dev}"}</customFields>
+        </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/helpdesk-api.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/helpdesk-json.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
     </appender>
-    
-    <!-- Logger específico para o nosso pacote -->
-    <logger name="br.com.brisabr.helpdesk_api" level="INFO"/>
-    
-    <!-- Logger para Spring Security (útil para debug de permissões) -->
-    <logger name="org.springframework.security" level="WARN"/>
-    
-    <!-- Logger para Hibernate (desabilitar SQL em produção) -->
-    <logger name="org.hibernate.SQL" level="WARN"/>
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="WARN"/>
-    
-    <!-- Root logger -->
-    <root level="INFO">
+
+    <!-- File appender for error logs only (JSON format) -->
+    <appender name="ERROR_FILE_JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/helpdesk-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdcKeyName>requestId</includeMdcKeyName>
+            <includeMdcKeyName>userId</includeMdcKeyName>
+            <includeMdcKeyName>username</includeMdcKeyName>
+            <includeMdcKeyName>ipAddress</includeMdcKeyName>
+            <includeMdcKeyName>userAgent</includeMdcKeyName>
+            <includeMdcKeyName>endpoint</includeMdcKeyName>
+            <includeMdcKeyName>method</includeMdcKeyName>
+            <includeMdcKeyName>duration</includeMdcKeyName>
+
+            <customFields>{"application":"helpdesk-api","environment":"${SPRING_PROFILES_ACTIVE:-dev}","severity":"error"}</customFields>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/helpdesk-error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Async wrappers for better performance -->
+    <appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
-    </root>
-    
-    <!-- Profile específico para desenvolvimento -->
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <appender name="ASYNC_CONSOLE_JSON" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="CONSOLE_JSON"/>
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <appender name="ASYNC_FILE_JSON" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE_JSON"/>
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <appender name="ASYNC_ERROR_FILE_JSON" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="ERROR_FILE_JSON"/>
+        <queueSize>256</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <!-- Development profile: human-readable console logs -->
     <springProfile name="dev">
-        <logger name="br.com.brisabr.helpdesk_api" level="DEBUG"/>
+        <root level="INFO">
+            <appender-ref ref="ASYNC_CONSOLE"/>
+        </root>
+
+        <logger name="br.com.helpdesk" level="DEBUG"/>
+        <logger name="org.springframework.web" level="DEBUG"/>
         <logger name="org.springframework.security" level="DEBUG"/>
-        <logger name="org.hibernate.SQL" level="DEBUG"/>
     </springProfile>
-    
-    <!-- Profile específico para produção -->
+
+    <!-- Production profile: JSON structured logs -->
     <springProfile name="prod">
-        <logger name="br.com.brisabr.helpdesk_api" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="ASYNC_CONSOLE_JSON"/>
+            <appender-ref ref="ASYNC_FILE_JSON"/>
+            <appender-ref ref="ASYNC_ERROR_FILE_JSON"/>
+        </root>
+
+        <logger name="br.com.helpdesk" level="INFO"/>
+        <logger name="org.springframework.web" level="WARN"/>
         <logger name="org.springframework.security" level="WARN"/>
-        <logger name="org.hibernate.SQL" level="WARN"/>
+        <logger name="org.hibernate" level="WARN"/>
     </springProfile>
-    
+
+    <!-- Staging profile: JSON logs with more details -->
+    <springProfile name="staging">
+        <root level="INFO">
+            <appender-ref ref="ASYNC_CONSOLE_JSON"/>
+            <appender-ref ref="ASYNC_FILE_JSON"/>
+            <appender-ref ref="ASYNC_ERROR_FILE_JSON"/>
+        </root>
+
+        <logger name="br.com.helpdesk" level="DEBUG"/>
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springframework.security" level="INFO"/>
+    </springProfile>
 </configuration>

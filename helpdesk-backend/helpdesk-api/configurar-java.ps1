@@ -1,24 +1,25 @@
-# Script para configurar Java 17 para este terminal
-# Execute antes de rodar o projeto: .\configurar-java.ps1
+# Script para configurar Java 21 para o projeto HelpDesk
+# Execute este script antes de rodar o backend
 
-$javaHome = 'C:\Program Files\Eclipse Adoptium\jdk-17.0.16.8-hotspot'
+Write-Host "=== Configurando Java 21 para HelpDesk ===" -ForegroundColor Cyan
 
-Write-Host "🔧 Configurando Java 17..." -ForegroundColor Cyan
+# Caminho do Java 21
+$JAVA21_PATH = "C:\Users\ResTIC55\scoop\apps\openjdk21\21.0.2-13"
 
-# Configurar para sessão atual
-$env:JAVA_HOME = $javaHome
+# Verificar se Java 21 existe
+if (-not (Test-Path $JAVA21_PATH)) {
+    Write-Host "ERRO: Java 21 não encontrado em $JAVA21_PATH" -ForegroundColor Red
+    Write-Host "Instale o Java 21 usando: scoop install openjdk21" -ForegroundColor Yellow
+    exit 1
+}
+
+# Configurar variáveis de ambiente para a sessão atual
+$env:JAVA_HOME = $JAVA21_PATH
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 
-# Configurar para usuário (permanente sem admin)
-[System.Environment]::SetEnvironmentVariable('JAVA_HOME', $javaHome, 'User')
-
-Write-Host "✅ Java configurado com sucesso!" -ForegroundColor Green
-Write-Host ""
-
 # Verificar versão
-Write-Host "📋 Versão do Java:" -ForegroundColor Yellow
+Write-Host "`nJava configurado:" -ForegroundColor Green
 java -version
 
-Write-Host ""
-Write-Host "💡 Agora você pode executar:" -ForegroundColor Cyan
-Write-Host "   .\gradlew.bat bootRun" -ForegroundColor White
+Write-Host "`nJAVA_HOME = $env:JAVA_HOME" -ForegroundColor Green
+Write-Host "`nAgora você pode executar o backend com: .\gradlew bootRun" -ForegroundColor Cyan

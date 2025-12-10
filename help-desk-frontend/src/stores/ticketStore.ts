@@ -148,8 +148,10 @@ export const useTicketStore = defineStore('tickets', () => {
       return
     }
     try {
-      const response = await api.get('/api/tickets')
-      tickets.value = response.data.map(mapTicketFromApi)
+      const response = await api.get('/api/tickets?size=1000')
+      // O backend retorna Page<TicketResponseDTO>, então usamos response.data.content
+      const ticketsData = response.data.content || response.data
+      tickets.value = ticketsData.map(mapTicketFromApi)
     } catch (error) {
       console.error('Erro ao buscar chamados:', error)
       tickets.value = []
@@ -268,13 +270,17 @@ export const useTicketStore = defineStore('tickets', () => {
     })),
   )
   const openTickets = computed(() =>
-    ticketsWithSla.value.filter((t) => t.status === 'Aberto'),
+    ticketsWithSla.value.filter((t) => t.status?.toUpperCase() === 'ABERTO' || t.status === 'Aberto'),
   )
   const inProgressTickets = computed(() =>
-    ticketsWithSla.value.filter((t) => t.status === 'Em Andamento'),
+    ticketsWithSla.value.filter((t) => t.status?.toUpperCase() === 'EM ANDAMENTO' || t.status === 'Em Andamento'),
   )
   const closedTickets = computed(() =>
-    ticketsWithSla.value.filter((t) => ['Resolvido', 'Fechado', 'Cancelado'].includes(t.status)),
+    ticketsWithSla.value.filter((t) => {
+      const statusUpper = t.status?.toUpperCase()
+      return ['RESOLVIDO', 'FECHADO', 'CANCELADO', 'ENCERRADO'].includes(statusUpper) ||
+             ['Resolvido', 'Fechado', 'Cancelado', 'Encerrado'].includes(t.status)
+    }),
   )
   const myOpenTickets = computed(() =>
     ticketsWithSla.value.filter(

@@ -9,11 +9,9 @@ import br.com.brisabr.helpdesk_api.exception.UserNotFoundException;
 import br.com.brisabr.helpdesk_api.user.User;
 import br.com.brisabr.helpdesk_api.user.UserRepository;
 import br.com.brisabr.helpdesk_api.util.FileValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,24 +27,27 @@ import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(TicketService.class);
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
+    private final HistoricoChamadoRepository historicoChamadoRepository;
+    private final AnexoChamadoRepository anexoChamadoRepository;
+    private final UserRepository userRepository;
+    private final FileValidator fileValidator;
 
-    @Autowired
-    private HistoricoChamadoRepository historicoChamadoRepository;
-
-    @Autowired
-    private AnexoChamadoRepository anexoChamadoRepository;
-
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private FileValidator fileValidator;
+    public TicketService(
+            TicketRepository ticketRepository,
+            HistoricoChamadoRepository historicoChamadoRepository,
+            AnexoChamadoRepository anexoChamadoRepository,
+            UserRepository userRepository,
+            FileValidator fileValidator) {
+        this.ticketRepository = ticketRepository;
+        this.historicoChamadoRepository = historicoChamadoRepository;
+        this.anexoChamadoRepository = anexoChamadoRepository;
+        this.userRepository = userRepository;
+        this.fileValidator = fileValidator;
+    }
 
     @Transactional(readOnly = true)
     public AnexoChamado getAnexoById(Long id) {
@@ -57,14 +58,14 @@ public class TicketService {
     @Transactional
     public Ticket createTicket(TicketCreateDTO data, User solicitante, List<MultipartFile> anexos) throws IOException {
         logger.info("Criando novo ticket para usuário: {} (ID: {})", solicitante.getNome(), solicitante.getId());
-        
+
         // Validar arquivos ANTES de processar
         fileValidator.validateFiles(anexos);
-        
+
         Ticket newTicket = new Ticket();
         long countThisYear = ticketRepository.countByYear(Year.now().getValue());
         String numeroChamado = Year.now().getValue() + "-" + "%03d".formatted(countThisYear + 1);
-        
+
         logger.debug("Número do chamado gerado: {}", numeroChamado);
 
         newTicket.setNumeroChamado(numeroChamado);
@@ -88,8 +89,8 @@ public class TicketService {
 
         Ticket savedTicket = ticketRepository.saveAndFlush(newTicket);
         createHistoryEntry(savedTicket, solicitante, "Chamado criado.");
-        
-        logger.info("Ticket criado com sucesso: {} - ID: {}, Anexos: {}", 
+
+        logger.info("Ticket criado com sucesso: {} - ID: {}, Anexos: {}",
                     numeroChamado, savedTicket.getId(), anexos != null ? anexos.size() : 0);
 
         return ticketRepository.findByIdWithAnexos(savedTicket.getId()).orElse(savedTicket);
@@ -104,9 +105,9 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO reopenTicket(Long ticketId, TicketReopenDTO data, User currentUser) {
-        logger.info("Usuário {} (ID: {}) reabrindo ticket ID: {}", 
+        logger.info("Usuário {} (ID: {}) reabrindo ticket ID: {}",
                     currentUser.getNome(), currentUser.getId(), ticketId);
-        
+
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         if (!Objects.equals(ticket.getSolicitante().getId(), currentUser.getId())) {
             logger.warn("Tentativa não autorizada de reabrir ticket {} por usuário {}", ticketId, currentUser.getId());
@@ -122,7 +123,7 @@ public class TicketService {
         ticket.setSolucao(null);
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado reaberto. Motivo: " + data.getMotivo());
-        
+
         logger.info("Ticket {} reaberto com sucesso. Motivo: {}", ticketId, data.getMotivo());
         return new TicketResponseDTO(ticket);
     }
@@ -130,7 +131,7 @@ public class TicketService {
     @Transactional(readOnly = true)
     public Page<TicketResponseDTO> getAllTicketsPaginated(Pageable pageable, User user) {
         String perfil = user.getPerfil().toLowerCase();
-        
+
         Page<Ticket> ticketPage;
         switch (perfil) {
             case "admin":
@@ -148,31 +149,8 @@ public class TicketService {
                 ticketPage = Page.empty(pageable);
                 break;
         }
-        
-        return ticketPage.map(TicketResponseDTO::new);
-    }
 
-    @Transactional(readOnly = true)
-    public List<TicketResponseDTO> getAllTickets() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        List<Ticket> tickets;
-        String perfil = user.getPerfil().toLowerCase(); // Converter para minúsculo para comparação
-        switch (perfil) {
-            case "admin":
-            case "manager":
-            case "technician":
-                tickets = ticketRepository.findAll();
-                break;
-            case "user":
-                tickets = ticketRepository.findAllBySolicitanteId(user.getId());
-                break;
-            default:
-                tickets = List.of();
-                break;
-        }
-        
-        return tickets.stream().map(TicketResponseDTO::new).collect(Collectors.toList());
+        return ticketPage.map(TicketResponseDTO::new);
     }
 
     @Transactional
@@ -188,9 +166,9 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO assignTicketToSelf(Long ticketId, User currentUser) {
-        logger.info("Técnico {} (ID: {}) capturando ticket ID: {}", 
+        logger.info("Técnico {} (ID: {}) capturando ticket ID: {}",
                     currentUser.getNome(), currentUser.getId(), ticketId);
-        
+
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         if (!"Aberto".equals(ticket.getStatus())) {
             logger.warn("Tentativa de capturar ticket {} com status inválido: {}", ticketId, ticket.getStatus());
@@ -200,34 +178,34 @@ public class TicketService {
         ticket.setStatus("Em Andamento");
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado atribuído a " + currentUser.getNome() + ".");
-        
+
         logger.info("Ticket {} atribuído com sucesso para {}", ticketId, currentUser.getNome());
         return new TicketResponseDTO(ticket);
     }
-    
-    
+
+
     @Transactional
     public TicketResponseDTO assignTicketToTechnician(Long ticketId, Long technicianId, User currentUser) {
         // Validação de permissão agora é feita via @PreAuthorize no Controller
-        
+
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new TicketNotFoundException(ticketId));
 
-        
+
         if (!"Aberto".equals(ticket.getStatus())) {
             throw new InvalidTicketStateException("Este chamado não está mais aberto para atribuição.");
         }
 
-        
+
         User technician = userRepository.findById(technicianId)
                 .orElseThrow(() -> new UserNotFoundException(technicianId));
 
-        
+
         ticket.setAtribuido(technician);
         ticket.setStatus("Em Andamento");
         Ticket updatedTicket = ticketRepository.save(ticket);
 
-        
+
         String assignerName = currentUser.getNome();
         createHistoryEntry(updatedTicket, currentUser, "Chamado atribuído para " + technician.getNome() + " por " + assignerName + ".");
 
@@ -236,9 +214,9 @@ public class TicketService {
 
     @Transactional
     public TicketResponseDTO closeTicket(Long ticketId, CloseTicketDTO data, User currentUser) {
-        logger.info("Usuário {} (ID: {}) fechando ticket ID: {}", 
+        logger.info("Usuário {} (ID: {}) fechando ticket ID: {}",
                     currentUser.getNome(), currentUser.getId(), ticketId);
-        
+
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
         boolean isAdminOrManager = "admin".equals(currentUser.getPerfil()) || "manager".equals(currentUser.getPerfil());
         boolean isOwner = ticket.getAtribuido() != null && Objects.equals(ticket.getAtribuido().getId(), currentUser.getId());
@@ -251,7 +229,7 @@ public class TicketService {
         ticket.setDataFechamento(LocalDateTime.now());
         Ticket updatedTicket = ticketRepository.save(ticket);
         createHistoryEntry(updatedTicket, currentUser, "Chamado Resolvido. Solução: " + data.getSolucao());
-        
+
         logger.info("Ticket {} fechado com sucesso. Status: Resolvido", ticketId);
         return new TicketResponseDTO(ticket);
     }

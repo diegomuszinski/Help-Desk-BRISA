@@ -1,5 +1,6 @@
 package br.com.brisabr.helpdesk_api.user;
 
+import br.com.brisabr.helpdesk_api.ratelimit.RateLimit;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 /**
  * Controller REST para gerenciamento de usuários.
- * 
+ *
  * Endpoints protegidos por permissões específicas.
  */
 @RestController
@@ -25,14 +26,15 @@ public class UserController {
 
     /**
      * Registra um novo usuário no sistema.
-     * 
+     *
      * Apenas administradores podem criar novos usuários.
      * A senha fornecida será automaticamente criptografada.
-     * 
+     *
      * @param registrationDTO Dados do novo usuário
      * @return Usuário criado
      * @throws IllegalArgumentException se email já existe
      */
+    @RateLimit(requestsPerMinute = 20, type = RateLimit.LimitType.PER_IP)
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public User registerNewUser(@RequestBody @Valid UserRegistrationDTO registrationDTO) {
@@ -41,10 +43,10 @@ public class UserController {
 
     /**
      * Lista todos os técnicos disponíveis.
-     * 
+     *
      * Utilizado para atribuição de chamados.
      * Acesso permitido para ADMIN e MANAGER.
-     * 
+     *
      * @return Lista simplificada de técnicos (ID e nome)
      */
     @GetMapping("/technicians")

@@ -9,6 +9,7 @@
       "@/*": ["src/*"]
     },
     "module": "ESNext",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "types": ["node"]
   }
 }

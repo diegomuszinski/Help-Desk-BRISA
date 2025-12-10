@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'helpdesk-monitor'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "/etc/prometheus/alerts/*.yml"
+
+scrape_configs:
+  - job_name: 'helpdesk-api'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+        labels:
+          application: 'helpdesk-api'
+          environment: 'dev'
+
+  - job_name: 'zipkin'
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['zipkin:9411']
