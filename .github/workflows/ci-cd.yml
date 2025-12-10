@@ -7,6 +7,11 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 env:
   JAVA_VERSION: '21'
   NODE_VERSION: '20'
@@ -332,6 +337,13 @@ jobs:
           format: 'sarif'
           output: 'trivy-backend-results.sarif'
 
+      - name: Upload Trivy results for Backend to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        with:
+          sarif_file: 'trivy-backend-results.sarif'
+          category: 'trivy-backend'
+
       - name: Run Trivy vulnerability scanner (Frontend)
         uses: aquasecurity/trivy-action@master
         with:
@@ -340,11 +352,12 @@ jobs:
           format: 'sarif'
           output: 'trivy-frontend-results.sarif'
 
-      - name: Upload Trivy results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+      - name: Upload Trivy results for Frontend to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
-          sarif_file: '.'
+          sarif_file: 'trivy-frontend-results.sarif'
+          category: 'trivy-frontend'
 
   # Job 6: Code Quality Analysis
   code-quality:
