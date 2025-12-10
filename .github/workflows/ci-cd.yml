@@ -177,7 +177,7 @@ jobs:
         run: |
           echo "Starting backend server..."
           ls -la
-          nohup java -jar *.jar > backend.log 2>&1 &
+          nohup java -jar *-SNAPSHOT.jar > backend.log 2>&1 &
           echo $! > backend.pid
           echo "Backend PID: $(cat backend.pid)"
           sleep 5
@@ -286,7 +286,7 @@ jobs:
         run: |
           echo "Starting backend server..."
           ls -la
-          nohup java -jar *.jar > backend.log 2>&1 &
+          nohup java -jar *-SNAPSHOT.jar > backend.log 2>&1 &
           echo $! > backend.pid
           echo "Backend PID: $(cat backend.pid)"
           sleep 5
