@@ -27,7 +27,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: helpdesk_test
+          POSTGRES_DB: helpdesk
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -138,7 +138,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: helpdesk_test
+          POSTGRES_DB: helpdesk
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -191,9 +191,9 @@ jobs:
             exit 1
           fi
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/helpdesk_test
-          SPRING_DATASOURCE_USERNAME: postgres
-          SPRING_DATASOURCE_PASSWORD: postgres
+          DB_URL: jdbc:postgresql://localhost:5432/helpdesk
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
           SERVER_PORT: 8080
 
@@ -254,7 +254,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: helpdesk_test
+          POSTGRES_DB: helpdesk
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -300,7 +300,7 @@ jobs:
             exit 1
           fi
         env:
-          DB_URL: jdbc:postgresql://localhost:5432/helpdesk_test
+          DB_URL: jdbc:postgresql://localhost:5432/helpdesk
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
