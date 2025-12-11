@@ -172,44 +172,16 @@ jobs:
           name: backend-jar
           path: ./backend-jar
 
-      - name: Clean up any existing Java processes
-        run: |
-          echo "Killing any existing Java processes..."
-          pkill -9 java || echo "No Java processes found"
-          
-          # Wait and verify port 18080 is released
-          echo "Waiting for port 18080 to be released..."
-          for i in {1..30}; do
-            if ! ss -ltn | grep ':18080' > /dev/null; then
-              echo "✅ Port 18080 is free after $i seconds"
-              break
-            fi
-            echo "⏳ Waiting for port 18080 to be released... ($i/30)"
-            # Try force killing again
-            fuser -k 18080/tcp 2>/dev/null || true
-            sleep 1
-          done
-          
-          # Final verification
-          if ss -ltn | grep ':18080' > /dev/null; then
-            echo "❌ ERROR: Port 18080 still in use after 30 seconds!"
-            echo "Processes using port 18080:"
-            ss -ltnp | grep ':18080' || true
-            fuser -v 18080/tcp 2>&1 || true
-            echo ""
-            echo "All listening ports:"
-            ss -ltn | head -20
-            exit 1
-          fi
-          
-          echo "✅ Port 18080 is confirmed free, ready to start backend"
-
       - name: Start backend server (let it create tables first)
         working-directory: ./backend-jar
         run: |
-          echo "Starting backend server to create database schema..."
-          ls -la
-          nohup java -jar *-SNAPSHOT.jar > backend.log 2>&1 &
+          # Use a random high port to avoid conflicts
+          BACKEND_PORT=$((20000 + RANDOM % 10000))
+          echo "Using random backend port: $BACKEND_PORT"
+          echo "BACKEND_PORT=$BACKEND_PORT" >> $GITHUB_ENV
+          
+          echo "Starting backend server..."
+          nohup java -jar *-SNAPSHOT.jar --server.port=$BACKEND_PORT > backend.log 2>&1 &
           echo $! > backend.pid
           echo "Backend PID: $(cat backend.pid)"
           echo "Waiting for backend to initialize and create tables..."
@@ -229,35 +201,26 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 18080
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
         run: |
-          echo "Waiting for backend health check..."
+          echo "Waiting for backend on port ${{ env.BACKEND_PORT }}..."
           for i in {1..60}; do
-            # Try liveness probe first (more lenient)
-            if curl -f http://localhost:18080/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:${{ env.BACKEND_PORT }}/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
-              # Now try full health check
-              if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:${{ env.BACKEND_PORT }}/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 break
-              else
-                echo "⚠️ Liveness OK but full health failing, retrying..."
               fi
             fi
             echo "⏳ Waiting for backend... ($i/60)"
             sleep 3
           done
           
-          if ! curl -f http://localhost:18080/actuator/health 2>/dev/null; then
-            echo "❌ Backend failed to start within timeout"
-            echo "=== Backend logs ==="
+          if ! curl -f http://localhost:${{ env.BACKEND_PORT }}/actuator/health 2>/dev/null; then
+            echo "❌ Backend failed to start"
             cat ./backend-jar/backend.log
-            echo ""
-            echo "=== Checking if backend is listening on port 8081 ==="
-            netstat -tuln | grep 8081 || echo "Port 8081 is not open"
             exit 1
           fi
           
@@ -373,60 +336,6 @@ jobs:
           echo ""
           echo "✅ Database is properly initialized and ready!"
 
-      - name: Start backend server
-        working-directory: ./backend-jar
-        run: |
-          echo "Starting backend server..."
-          ls -la
-          nohup java -jar *-SNAPSHOT.jar > backend.log 2>&1 &
-          echo $! > backend.pid
-          echo "Backend PID: $(cat backend.pid)"
-          echo "Waiting for backend to initialize..."
-          sleep 15
-          if ps -p $(cat backend.pid) > /dev/null; then
-            echo "✅ Backend process is running"
-            echo "Initial logs:"
-            head -n 100 backend.log
-          else
-            echo "❌ Backend process failed to start!"
-            echo "Full logs:"
-            cat backend.log
-            exit 1
-          fi
-        env:
-          DB_URL: jdbc:postgresql://localhost:5432/helpdesk
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-          JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 18080
-          SPRING_PROFILES_ACTIVE: dev
-
-      - name: Wait for backend to be ready
-        run: |
-          echo "Waiting for backend health check..."
-          for i in {1..60}; do
-            # Try liveness probe first (more lenient)
-            if curl -f http://localhost:18080/actuator/health/liveness 2>/dev/null; then
-              echo "✅ Backend liveness probe passed!"
-              # Now try full health check
-              if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
-                echo "✅ Backend full health check passed!"
-                exit 0
-              else
-                echo "⚠️ Liveness OK but full health failing, retrying..."
-              fi
-            fi
-            echo "⏳ Waiting for backend... ($i/60)"
-            sleep 3
-          done
-          echo "❌ Backend failed to start within timeout"
-          echo "=== Backend logs ==="
-          cat ./backend-jar/backend.log
-          echo ""
-          echo "=== Checking if backend is listening on port 8080 ==="
-          netstat -tuln | grep 8080 || echo "Port 8080 is not open"
-          exit 1
-
       - name: Install frontend dependencies
         working-directory: ./help-desk-frontend
         run: npm ci
@@ -440,7 +349,7 @@ jobs:
         run: |
           echo "Starting frontend dev server..."
           echo "Creating .env.local with CI configuration..."
-          echo "VITE_API_BASE_URL=http://localhost:18080" > .env.local
+          echo "VITE_API_BASE_URL=http://localhost:${{ env.BACKEND_PORT }}" > .env.local
           cat .env.local
           echo ""
           echo "Starting Vite dev server..."
@@ -479,7 +388,7 @@ jobs:
           echo "=== Testing backend connectivity ==="
           
           echo "1. Testing health endpoint..."
-          if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
+          if curl -f http://localhost:${{ env.BACKEND_PORT }}/actuator/health 2>/dev/null; then
             echo "✅ Health endpoint responding"
           else
             echo "❌ Health endpoint not responding"
@@ -490,7 +399,7 @@ jobs:
           
           echo ""
           echo "2. Testing login endpoint with POST request..."
-          response=$(curl -X POST http://localhost:18080/api/auth/login \
+          response=$(curl -X POST http://localhost:${{ env.BACKEND_PORT }}/api/auth/login \
             -H "Content-Type: application/json" \
             -d '{"email":"usuario@teste.net","senha":"123456"}' \
             -w "\n%{http_code}" \
@@ -516,7 +425,7 @@ jobs:
           
           echo ""
           echo "3. Checking if frontend can reach backend..."
-          if curl -f http://localhost:5173 -s | grep -q "localhost:18080\|VITE_API"; then
+          if curl -f http://localhost:5173 -s | grep -q "localhost:${{ env.BACKEND_PORT }}\|VITE_API"; then
             echo "✅ Frontend may be configured with backend URL"
           else
             echo "⚠️ Could not detect backend URL in frontend"
@@ -530,7 +439,7 @@ jobs:
         run: npm run test:e2e
         env:
           BASE_URL: http://localhost:5173
-          API_URL: http://localhost:18080
+          API_URL: http://localhost:${{ env.BACKEND_PORT }}
 
       - name: Upload Playwright report
         if: always()
