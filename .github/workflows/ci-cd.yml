@@ -172,6 +172,26 @@ jobs:
           name: backend-jar
           path: ./backend-jar
 
+      - name: Initialize database with test data
+        run: |
+          echo "Initializing database with test users and data..."
+          
+          # Wait for PostgreSQL to be fully ready
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 2
+          done
+          
+          # Execute the initialization script
+          PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -f init-database.sql
+          
+          echo "✅ Database initialized successfully!"
+          
+          # Verify users were created
+          echo ""
+          echo "Verifying test users..."
+          PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -c "SELECT id, nome, email, perfil FROM usuarios ORDER BY id;"
+
       - name: Start backend server
         working-directory: ./backend-jar
         run: |
