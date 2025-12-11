@@ -172,46 +172,6 @@ jobs:
           name: backend-jar
           path: ./backend-jar
 
-      - name: Kill any process using port 8080
-        run: |
-          echo "Checking for processes using port 8080..."
-          
-          # Try multiple methods to find and kill process on port 8080
-          # Method 1: Using fuser (most reliable on Ubuntu)
-          if command -v fuser >/dev/null 2>&1; then
-            echo "Using fuser..."
-            fuser -k 8080/tcp 2>/dev/null || echo "No process found on port 8080 (fuser)"
-          fi
-          
-          # Method 2: Using lsof (fallback)
-          if command -v lsof >/dev/null 2>&1; then
-            echo "Using lsof..."
-            lsof -ti:8080 | xargs -r kill -9 2>/dev/null || echo "No process found on port 8080 (lsof)"
-          fi
-          
-          # Method 3: Using ss and grep (most portable)
-          echo "Using ss to find PIDs..."
-          pids=$(ss -lptn 'sport = :8080' | grep -oP '(?<=pid=)[0-9]+' | sort -u)
-          if [ -n "$pids" ]; then
-            echo "Found PIDs: $pids"
-            echo "$pids" | xargs -r kill -9
-            echo "Killed processes"
-          else
-            echo "No process found on port 8080 (ss)"
-          fi
-          
-          # Wait for port to be released
-          sleep 3
-          
-          # Verify port is free
-          if ss -ltn 'sport = :8080' | grep -q 8080; then
-            echo "❌ ERROR: Port 8080 is still in use!"
-            ss -ltnp 'sport = :8080'
-            exit 1
-          else
-            echo "✅ Port 8080 is confirmed free"
-          fi
-
       - name: Start backend server (let it create tables first)
         working-directory: ./backend-jar
         run: |
@@ -237,7 +197,7 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 8080
+          SERVER_PORT: 8081
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
@@ -245,10 +205,10 @@ jobs:
           echo "Waiting for backend health check..."
           for i in {1..60}; do
             # Try liveness probe first (more lenient)
-            if curl -f http://localhost:8080/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:8081/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
               # Now try full health check
-              if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 break
               else
@@ -259,13 +219,13 @@ jobs:
             sleep 3
           done
           
-          if ! curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+          if ! curl -f http://localhost:8081/actuator/health 2>/dev/null; then
             echo "❌ Backend failed to start within timeout"
             echo "=== Backend logs ==="
             cat ./backend-jar/backend.log
             echo ""
-            echo "=== Checking if backend is listening on port 8080 ==="
-            netstat -tuln | grep 8080 || echo "Port 8080 is not open"
+            echo "=== Checking if backend is listening on port 8081 ==="
+            netstat -tuln | grep 8081 || echo "Port 8081 is not open"
             exit 1
           fi
           
@@ -406,7 +366,7 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 8080
+          SERVER_PORT: 8081
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
@@ -414,10 +374,10 @@ jobs:
           echo "Waiting for backend health check..."
           for i in {1..60}; do
             # Try liveness probe first (more lenient)
-            if curl -f http://localhost:8080/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:8081/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
               # Now try full health check
-              if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 exit 0
               else
@@ -448,7 +408,7 @@ jobs:
         run: |
           echo "Starting frontend dev server..."
           echo "Creating .env.local with CI configuration..."
-          echo "VITE_API_BASE_URL=http://localhost:8080" > .env.local
+          echo "VITE_API_BASE_URL=http://localhost:8081" > .env.local
           cat .env.local
           echo ""
           echo "Starting Vite dev server..."
@@ -487,7 +447,7 @@ jobs:
           echo "=== Testing backend connectivity ==="
           
           echo "1. Testing health endpoint..."
-          if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+          if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
             echo "✅ Health endpoint responding"
           else
             echo "❌ Health endpoint not responding"
@@ -498,7 +458,7 @@ jobs:
           
           echo ""
           echo "2. Testing login endpoint with POST request..."
-          response=$(curl -X POST http://localhost:8080/api/auth/login \
+          response=$(curl -X POST http://localhost:8081/api/auth/login \
             -H "Content-Type: application/json" \
             -d '{"email":"usuario@teste.net","senha":"123456"}' \
             -w "\n%{http_code}" \
@@ -524,7 +484,7 @@ jobs:
           
           echo ""
           echo "3. Checking if frontend can reach backend..."
-          if curl -f http://localhost:5173 -s | grep -q "localhost:8080\|VITE_API"; then
+          if curl -f http://localhost:5173 -s | grep -q "localhost:8081\|VITE_API"; then
             echo "✅ Frontend may be configured with backend URL"
           else
             echo "⚠️ Could not detect backend URL in frontend"
@@ -538,7 +498,7 @@ jobs:
         run: npm run test:e2e
         env:
           BASE_URL: http://localhost:5173
-          API_URL: http://localhost:8080
+          API_URL: http://localhost:8081
 
       - name: Upload Playwright report
         if: always()
@@ -625,7 +585,7 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 8080
+          SERVER_PORT: 8081
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
@@ -633,10 +593,10 @@ jobs:
           echo "Waiting for backend health check..."
           for i in {1..60}; do
             # Try liveness probe first (more lenient)
-            if curl -f http://localhost:8080/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:8081/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
               # Now try full health check
-              if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 exit 0
               else
@@ -666,7 +626,7 @@ jobs:
         working-directory: ./helpdesk-backend/k6-tests
         run: k6 run load-test.js
         env:
-          BASE_URL: http://localhost:8080
+          BASE_URL: http://localhost:8081
 
       - name: Upload K6 results
         if: always()
