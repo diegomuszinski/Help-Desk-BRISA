@@ -249,6 +249,8 @@ jobs:
             cat frontend.log
             exit 1
           fi
+        env:
+          VITE_API_BASE_URL: http://localhost:8080
 
       - name: Wait for frontend to be ready
         run: |
