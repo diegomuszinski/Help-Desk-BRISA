@@ -176,25 +176,33 @@ jobs:
         run: |
           echo "Killing any existing Java processes..."
           pkill -9 java || echo "No Java processes found"
-          sleep 2
           
-          # Verify ports 8080 and 8081 are free
-          echo "Verifying ports are free..."
-          if ss -ltn | grep -E ':(8080|8081)' > /dev/null; then
-            echo "Ports still in use, forcing cleanup..."
+          # Wait and verify port 18080 is released
+          echo "Waiting for port 18080 to be released..."
+          for i in {1..30}; do
+            if ! ss -ltn | grep ':18080' > /dev/null; then
+              echo "✅ Port 18080 is free after $i seconds"
+              break
+            fi
+            echo "⏳ Waiting for port 18080 to be released... ($i/30)"
+            # Try force killing again
             fuser -k 18080/tcp 2>/dev/null || true
-            fuser -k 18080/tcp 2>/dev/null || true
-            sleep 2
-          fi
+            sleep 1
+          done
           
           # Final verification
-          if ss -ltn | grep -E ':(8080|8081)' > /dev/null; then
-            echo "❌ ERROR: Ports 8080/8081 still in use after cleanup!"
-            ss -ltnp | grep -E ':(8080|8081)'
+          if ss -ltn | grep ':18080' > /dev/null; then
+            echo "❌ ERROR: Port 18080 still in use after 30 seconds!"
+            echo "Processes using port 18080:"
+            ss -ltnp | grep ':18080' || true
+            fuser -v 18080/tcp 2>&1 || true
+            echo ""
+            echo "All listening ports:"
+            ss -ltn | head -20
             exit 1
           fi
           
-          echo "✅ All Java processes killed, ports are free"
+          echo "✅ Port 18080 is confirmed free, ready to start backend"
 
       - name: Start backend server (let it create tables first)
         working-directory: ./backend-jar
