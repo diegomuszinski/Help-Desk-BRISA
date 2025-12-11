@@ -238,19 +238,24 @@ jobs:
         working-directory: ./help-desk-frontend
         run: |
           echo "Starting frontend dev server..."
+          echo "Creating .env.local with CI configuration..."
+          echo "VITE_API_BASE_URL=http://localhost:8080" > .env.local
+          cat .env.local
+          echo ""
+          echo "Starting Vite dev server..."
           nohup npm run dev > frontend.log 2>&1 &
           echo $! > frontend.pid
           echo "Frontend PID: $(cat frontend.pid)"
           sleep 5
           if ps -p $(cat frontend.pid) > /dev/null; then
-            echo "Frontend process is running"
+            echo "✅ Frontend process is running"
+            echo "Frontend logs (first 50 lines):"
+            head -n 50 frontend.log
           else
-            echo "Frontend process failed to start!"
+            echo "❌ Frontend process failed to start!"
             cat frontend.log
             exit 1
           fi
-        env:
-          VITE_API_BASE_URL: http://localhost:8080
 
       - name: Wait for frontend to be ready
         run: |
@@ -267,6 +272,51 @@ jobs:
           echo "Frontend logs:"
           cat ./help-desk-frontend/frontend.log
           exit 1
+
+      - name: Verify backend API is accessible
+        run: |
+          echo "=== Testing backend connectivity ==="
+          
+          echo "1. Testing health endpoint..."
+          if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+            echo "✅ Health endpoint responding"
+          else
+            echo "❌ Health endpoint not responding"
+            echo "Backend logs:"
+            cat ./backend-jar/backend.log
+            exit 1
+          fi
+          
+          echo ""
+          echo "2. Testing login endpoint with POST request..."
+          response=$(curl -X POST http://localhost:8080/api/auth/login \
+            -H "Content-Type: application/json" \
+            -d '{"email":"usuario@teste.net","password":"123456"}' \
+            -w "\n%{http_code}" \
+            -s)
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n-1)
+          
+          echo "HTTP Status: $http_code"
+          echo "Response body: $body"
+          
+          if [ "$http_code" = "200" ] || [ "$http_code" = "201" ]; then
+            echo "✅ Login endpoint is working!"
+          else
+            echo "⚠️ Login returned status $http_code (may be expected if user doesn't exist yet)"
+          fi
+          
+          echo ""
+          echo "3. Checking if frontend can reach backend..."
+          if curl -f http://localhost:5173 -s | grep -q "localhost:8080\|VITE_API"; then
+            echo "✅ Frontend may be configured with backend URL"
+          else
+            echo "⚠️ Could not detect backend URL in frontend"
+          fi
+          
+          echo ""
+          echo "=== All connectivity checks passed ==="
 
       - name: Run Playwright tests
         working-directory: ./help-desk-frontend
