@@ -175,12 +175,41 @@ jobs:
       - name: Kill any process using port 8080
         run: |
           echo "Checking for processes using port 8080..."
-          if lsof -ti:8080 > /dev/null 2>&1; then
-            echo "Found process on port 8080, killing it..."
-            lsof -ti:8080 | xargs kill -9 || true
-            sleep 2
+          
+          # Try multiple methods to find and kill process on port 8080
+          # Method 1: Using fuser (most reliable on Ubuntu)
+          if command -v fuser >/dev/null 2>&1; then
+            echo "Using fuser..."
+            fuser -k 8080/tcp 2>/dev/null || echo "No process found on port 8080 (fuser)"
+          fi
+          
+          # Method 2: Using lsof (fallback)
+          if command -v lsof >/dev/null 2>&1; then
+            echo "Using lsof..."
+            lsof -ti:8080 | xargs -r kill -9 2>/dev/null || echo "No process found on port 8080 (lsof)"
+          fi
+          
+          # Method 3: Using ss and grep (most portable)
+          echo "Using ss to find PIDs..."
+          pids=$(ss -lptn 'sport = :8080' | grep -oP '(?<=pid=)[0-9]+' | sort -u)
+          if [ -n "$pids" ]; then
+            echo "Found PIDs: $pids"
+            echo "$pids" | xargs -r kill -9
+            echo "Killed processes"
           else
-            echo "✅ Port 8080 is free"
+            echo "No process found on port 8080 (ss)"
+          fi
+          
+          # Wait for port to be released
+          sleep 3
+          
+          # Verify port is free
+          if ss -ltn 'sport = :8080' | grep -q 8080; then
+            echo "❌ ERROR: Port 8080 is still in use!"
+            ss -ltnp 'sport = :8080'
+            exit 1
+          else
+            echo "✅ Port 8080 is confirmed free"
           fi
 
       - name: Start backend server (let it create tables first)
