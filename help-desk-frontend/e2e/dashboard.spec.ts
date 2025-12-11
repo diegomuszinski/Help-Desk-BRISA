@@ -66,11 +66,9 @@ test.describe('Dashboard - Admin View', () => {
 
   test('should load metrics data', async ({ page }) => {
     // Setup API request interception to verify metrics endpoint is called
-    let metricsCalled = false;
-
     page.on('response', response => {
       if (response.url().includes('/api/metrics')) {
-        metricsCalled = true;
+        // Metrics endpoint called
       }
     });
 
@@ -90,7 +88,7 @@ test.describe('Dashboard - Admin View', () => {
 
     // Look for analyst performance chart
     const analystChart = page.locator('[data-testid="analyst-performance"], .analyst-performance');
-    const chartExists = await analystChart.isVisible().catch(() => false);
+    await analystChart.isVisible().catch(() => false);
 
     // Chart might exist depending on data
     expect(true).toBeTruthy(); // Flexible assertion
@@ -103,7 +101,7 @@ test.describe('Dashboard - Admin View', () => {
 
     // Look for monthly tickets chart
     const monthlyChart = page.locator('[data-testid="tickets-per-month"], .tickets-per-month');
-    const chartExists = await monthlyChart.isVisible().catch(() => false);
+    await monthlyChart.isVisible().catch(() => false);
 
     expect(true).toBeTruthy(); // Flexible assertion
   });
@@ -115,7 +113,7 @@ test.describe('Dashboard - Admin View', () => {
 
     // Look for SLA alerts section
     const slaAlerts = page.locator('[data-testid="sla-alerts"], .sla-alerts, .alerts');
-    const alertsExist = await slaAlerts.isVisible().catch(() => false);
+    await slaAlerts.isVisible().catch(() => false);
 
     expect(true).toBeTruthy(); // Flexible assertion
   });
@@ -143,7 +141,7 @@ test.describe('Dashboard - Manager View', () => {
 
     // Look for detailed ticket table
     const table = page.locator('table, .ticket-table, [data-testid="ticket-table"]');
-    const tableExists = await table.isVisible().catch(() => false);
+    await table.isVisible().catch(() => false);
 
     expect(true).toBeTruthy(); // Flexible assertion
   });

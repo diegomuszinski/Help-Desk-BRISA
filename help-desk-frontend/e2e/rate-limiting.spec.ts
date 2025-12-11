@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { setupAuthenticatedContext, testUsers } from './fixtures/auth';
+import { setupAuthenticatedContext } from './fixtures/auth';
 
 // Skip all rate limiting tests - backend does not implement rate limiting
 test.describe.skip('Rate Limiting', () => {

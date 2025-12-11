@@ -96,8 +96,6 @@ test.describe('Authentication Flow', () => {
   test('should remember user session on page reload', async ({ page }) => {
     await login(page, testUsers.user);
 
-    const urlBeforeReload = page.url();
-
     // Reload page
     await page.reload();
 
