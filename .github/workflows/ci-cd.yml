@@ -221,6 +221,38 @@ jobs:
         working-directory: ./help-desk-frontend
         run: npx playwright install --with-deps chromium
 
+      - name: Start frontend dev server
+        working-directory: ./help-desk-frontend
+        run: |
+          echo "Starting frontend dev server..."
+          nohup npm run dev > frontend.log 2>&1 &
+          echo $! > frontend.pid
+          echo "Frontend PID: $(cat frontend.pid)"
+          sleep 5
+          if ps -p $(cat frontend.pid) > /dev/null; then
+            echo "Frontend process is running"
+          else
+            echo "Frontend process failed to start!"
+            cat frontend.log
+            exit 1
+          fi
+
+      - name: Wait for frontend to be ready
+        run: |
+          echo "Waiting for frontend to be ready..."
+          for i in {1..30}; do
+            if curl -f http://localhost:5173 2>/dev/null; then
+              echo "✅ Frontend is ready!"
+              exit 0
+            fi
+            echo "⏳ Waiting for frontend... ($i/30)"
+            sleep 2
+          done
+          echo "❌ Frontend failed to start within timeout"
+          echo "Frontend logs:"
+          cat ./help-desk-frontend/frontend.log
+          exit 1
+
       - name: Run Playwright tests
         working-directory: ./help-desk-frontend
         run: npm run test:e2e
@@ -235,6 +267,13 @@ jobs:
           name: playwright-report
           path: help-desk-frontend/playwright-report/
           retention-days: 7
+
+      - name: Stop frontend server
+        if: always()
+        run: |
+          if [ -f help-desk-frontend/frontend.pid ]; then
+            kill $(cat help-desk-frontend/frontend.pid) || true
+          fi
 
       - name: Stop backend server
         if: always()
