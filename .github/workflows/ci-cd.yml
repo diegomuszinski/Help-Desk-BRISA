@@ -172,6 +172,17 @@ jobs:
           name: backend-jar
           path: ./backend-jar
 
+      - name: Kill any process using port 8080
+        run: |
+          echo "Checking for processes using port 8080..."
+          if lsof -ti:8080 > /dev/null 2>&1; then
+            echo "Found process on port 8080, killing it..."
+            lsof -ti:8080 | xargs kill -9 || true
+            sleep 2
+          else
+            echo "✅ Port 8080 is free"
+          fi
+
       - name: Start backend server (let it create tables first)
         working-directory: ./backend-jar
         run: |
