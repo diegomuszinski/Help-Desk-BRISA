@@ -311,7 +311,7 @@ jobs:
           echo "2. Testing login endpoint with POST request..."
           response=$(curl -X POST http://localhost:8080/api/auth/login \
             -H "Content-Type: application/json" \
-            -d '{"email":"usuario@teste.net","password":"123456"}' \
+            -d '{"email":"usuario@teste.net","senha":"123456"}' \
             -w "\n%{http_code}" \
             -s)
           
@@ -322,9 +322,15 @@ jobs:
           echo "Response body: $body"
           
           if [ "$http_code" = "200" ] || [ "$http_code" = "201" ]; then
-            echo "✅ Login endpoint is working!"
+            echo "✅ Login endpoint is working! Authentication successful!"
+            # Extract token to verify it's valid JSON
+            if echo "$body" | grep -q "token"; then
+              echo "✅ JWT token received in response"
+            fi
           else
-            echo "⚠️ Login returned status $http_code (may be expected if user doesn't exist yet)"
+            echo "❌ Login failed with status $http_code"
+            echo "This will cause E2E test failures!"
+            exit 1
           fi
           
           echo ""
