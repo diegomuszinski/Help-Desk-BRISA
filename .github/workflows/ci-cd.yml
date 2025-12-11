@@ -214,6 +214,44 @@ jobs:
           
           echo "✅ All test users verified!"
 
+      - name: Verify database initialization was successful
+        run: |
+          echo "=== Double-checking database state before starting backend ==="
+          
+          # Check if tables exist
+          echo "1. Checking if tables exist..."
+          table_count=$(PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';")
+          echo "Found $table_count tables in database"
+          
+          if [ "$table_count" -lt 5 ]; then
+            echo "❌ ERROR: Expected at least 5 tables, found $table_count"
+            echo "Tables found:"
+            PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -c "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE' ORDER BY table_name;"
+            exit 1
+          fi
+          
+          # Check specific user exists with correct email
+          echo ""
+          echo "2. Checking if usuario@teste.net exists..."
+          user_exists=$(PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -t -c "SELECT COUNT(*) FROM usuarios WHERE email = 'usuario@teste.net';")
+          
+          if [ "$user_exists" -eq 0 ]; then
+            echo "❌ ERROR: User usuario@teste.net does not exist!"
+            echo "All users in database:"
+            PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -c "SELECT id, nome, email FROM usuarios;"
+            exit 1
+          fi
+          
+          echo "✅ User usuario@teste.net exists"
+          
+          # Show the password hash for debugging
+          echo ""
+          echo "3. Checking password hash..."
+          PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -c "SELECT id, email, LEFT(senha, 20) || '...' as senha_hash, perfil FROM usuarios WHERE email = 'usuario@teste.net';"
+          
+          echo ""
+          echo "✅ Database is properly initialized and ready!"
+
       - name: Start backend server
         working-directory: ./backend-jar
         run: |
