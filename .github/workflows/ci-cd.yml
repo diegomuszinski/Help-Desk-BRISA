@@ -182,8 +182,8 @@ jobs:
           echo "Verifying ports are free..."
           if ss -ltn | grep -E ':(8080|8081)' > /dev/null; then
             echo "Ports still in use, forcing cleanup..."
-            fuser -k 8080/tcp 2>/dev/null || true
-            fuser -k 8081/tcp 2>/dev/null || true
+            fuser -k 18080/tcp 2>/dev/null || true
+            fuser -k 18080/tcp 2>/dev/null || true
             sleep 2
           fi
           
@@ -221,7 +221,7 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 8081
+          SERVER_PORT: 18080
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
@@ -229,10 +229,10 @@ jobs:
           echo "Waiting for backend health check..."
           for i in {1..60}; do
             # Try liveness probe first (more lenient)
-            if curl -f http://localhost:8081/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:18080/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
               # Now try full health check
-              if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 break
               else
@@ -243,7 +243,7 @@ jobs:
             sleep 3
           done
           
-          if ! curl -f http://localhost:8081/actuator/health 2>/dev/null; then
+          if ! curl -f http://localhost:18080/actuator/health 2>/dev/null; then
             echo "❌ Backend failed to start within timeout"
             echo "=== Backend logs ==="
             cat ./backend-jar/backend.log
@@ -390,7 +390,7 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 8081
+          SERVER_PORT: 18080
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
@@ -398,10 +398,10 @@ jobs:
           echo "Waiting for backend health check..."
           for i in {1..60}; do
             # Try liveness probe first (more lenient)
-            if curl -f http://localhost:8081/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:18080/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
               # Now try full health check
-              if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 exit 0
               else
@@ -432,7 +432,7 @@ jobs:
         run: |
           echo "Starting frontend dev server..."
           echo "Creating .env.local with CI configuration..."
-          echo "VITE_API_BASE_URL=http://localhost:8081" > .env.local
+          echo "VITE_API_BASE_URL=http://localhost:18080" > .env.local
           cat .env.local
           echo ""
           echo "Starting Vite dev server..."
@@ -471,7 +471,7 @@ jobs:
           echo "=== Testing backend connectivity ==="
           
           echo "1. Testing health endpoint..."
-          if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
+          if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
             echo "✅ Health endpoint responding"
           else
             echo "❌ Health endpoint not responding"
@@ -482,7 +482,7 @@ jobs:
           
           echo ""
           echo "2. Testing login endpoint with POST request..."
-          response=$(curl -X POST http://localhost:8081/api/auth/login \
+          response=$(curl -X POST http://localhost:18080/api/auth/login \
             -H "Content-Type: application/json" \
             -d '{"email":"usuario@teste.net","senha":"123456"}' \
             -w "\n%{http_code}" \
@@ -508,7 +508,7 @@ jobs:
           
           echo ""
           echo "3. Checking if frontend can reach backend..."
-          if curl -f http://localhost:5173 -s | grep -q "localhost:8081\|VITE_API"; then
+          if curl -f http://localhost:5173 -s | grep -q "localhost:18080\|VITE_API"; then
             echo "✅ Frontend may be configured with backend URL"
           else
             echo "⚠️ Could not detect backend URL in frontend"
@@ -522,7 +522,7 @@ jobs:
         run: npm run test:e2e
         env:
           BASE_URL: http://localhost:5173
-          API_URL: http://localhost:8081
+          API_URL: http://localhost:18080
 
       - name: Upload Playwright report
         if: always()
@@ -609,7 +609,7 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-secret-key-minimum-32-characters-long-for-testing' }}
-          SERVER_PORT: 8081
+          SERVER_PORT: 18080
           SPRING_PROFILES_ACTIVE: dev
 
       - name: Wait for backend to be ready
@@ -617,10 +617,10 @@ jobs:
           echo "Waiting for backend health check..."
           for i in {1..60}; do
             # Try liveness probe first (more lenient)
-            if curl -f http://localhost:8081/actuator/health/liveness 2>/dev/null; then
+            if curl -f http://localhost:18080/actuator/health/liveness 2>/dev/null; then
               echo "✅ Backend liveness probe passed!"
               # Now try full health check
-              if curl -f http://localhost:8081/actuator/health 2>/dev/null; then
+              if curl -f http://localhost:18080/actuator/health 2>/dev/null; then
                 echo "✅ Backend full health check passed!"
                 exit 0
               else
@@ -650,7 +650,7 @@ jobs:
         working-directory: ./helpdesk-backend/k6-tests
         run: k6 run load-test.js
         env:
-          BASE_URL: http://localhost:8081
+          BASE_URL: http://localhost:18080
 
       - name: Upload K6 results
         if: always()
