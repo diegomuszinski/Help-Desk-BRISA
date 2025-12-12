@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    
+    <!-- Definir propriedades -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%X{requestId}] [%X{requestMethod} %X{requestUri}] %logger{36} - %msg%n"/>
+    <property name="LOG_FILE" value="logs/helpdesk-api.log"/>
+    
+    <!-- Console Appender - desenvolvimento -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- File Appender - produção -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        
+        <!-- Política de rotação: arquivo diário, mantém 30 dias -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/helpdesk-api.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- Logger específico para o nosso pacote -->
+    <logger name="br.com.brisabr.helpdesk_api" level="INFO"/>
+    
+    <!-- Logger para Spring Security (útil para debug de permissões) -->
+    <logger name="org.springframework.security" level="WARN"/>
+    
+    <!-- Logger para Hibernate (desabilitar SQL em produção) -->
+    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="WARN"/>
+    
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+    
+    <!-- Profile específico para desenvolvimento -->
+    <springProfile name="dev">
+        <logger name="br.com.brisabr.helpdesk_api" level="DEBUG"/>
+        <logger name="org.springframework.security" level="DEBUG"/>
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+    </springProfile>
+    
+    <!-- Profile específico para produção -->
+    <springProfile name="prod">
+        <logger name="br.com.brisabr.helpdesk_api" level="INFO"/>
+        <logger name="org.springframework.security" level="WARN"/>
+        <logger name="org.hibernate.SQL" level="WARN"/>
+    </springProfile>
+    
+</configuration>
