@@ -56,7 +56,7 @@ O backend estará disponível em: **http://localhost:8080**
 
 **Credenciais do Banco** (já configuradas no `application.properties`):
 - Username: `postgres`
-- Password: `admin`
+- Password: `teste`
 - Database: `helpdesk`
 
 ---
@@ -124,7 +124,7 @@ O script `init-database.sql` cria automaticamente:
 - Vue Router
 
 ### Backend
-- Java 17+
+- Java 21+
 - Spring Boot
 - Spring Security + JWT
 - PostgreSQL
@@ -212,7 +212,7 @@ psql -U postgres -c "CREATE DATABASE helpdesk WITH ENCODING 'UTF8';"
 
 ### Pré-requisitos
 - **Node.js** 18+ (para o frontend)
-- **Java** 17+ (para o backend)
+- **Java** 21+ (para o backend)
 - **PostgreSQL** 12+ (banco de dados)
 - **Gradle** (incluído via wrapper)
 
