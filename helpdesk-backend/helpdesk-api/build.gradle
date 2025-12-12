@@ -22,8 +22,8 @@ dependencies {
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8' // Caffeine cache (usado por Spring Cache e Rate Limiter)
 	implementation 'com.github.ben-manes.caffeine:jcache:3.1.8' // JCache API para Hibernate second-level cache
-	implementation 'com.bucket4j:bucket4j-core:8.7.0' // Bucket4j para rate limiting
-	implementation 'com.bucket4j:bucket4j-caffeine:8.7.0' // Integração Bucket4j com Caffeine
+	implementation 'com.bucket4j:bucket4j-core:8.10.1' // Bucket4j para rate limiting
+	implementation 'com.bucket4j:bucket4j-caffeine:8.10.1' // Integração Bucket4j com Caffeine
 
 	// Swagger/OpenAPI para documentacao automatica da API
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
