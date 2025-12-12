@@ -26,7 +26,7 @@ dependencies {
 	implementation 'com.bucket4j:bucket4j-caffeine:8.7.0' // Integração Bucket4j com Caffeine
 
 	// Swagger/OpenAPI para documentacao automatica da API
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 
 	// Logstash Logback Encoder para logs estruturados em JSON
 	implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
