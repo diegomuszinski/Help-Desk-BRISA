@@ -284,10 +284,10 @@ jobs:
           
           -- Insert test users
           INSERT INTO usuarios (id, nome, email, senha, perfil, id_equipe) VALUES
-          (1, 'Administrador do Sistema', 'admin@admin.net', '$2a$10$N9qo8uLOickgx2ZMRZoMye6J4Qf8mKvjeyELCtU3xbGQEUzLe6T7e', 'ADMIN', NULL),
+          (1, 'Administrador do Sistema', 'admin@admin.net', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi', 'ADMIN', NULL),
           (2, 'Sônia Lima', 'sonia.lima@gestor.net', '$2a$10$3Lkj8vFqNHnLMnXbXKYB0eDVYBfQxX5z5qVzKQl5N/B3Q8XCxqh2O', 'MANAGER', 1),
-          (3, 'Mariana Silva', 'mariana@tecnico.net', '$2a$10$N9qo8uLOickgx2ZMRZoMye6J4Qf8mKvjeyELCtU3xbGQEUzLe6T7e', 'TECHNICIAN', 1),
-          (4, 'Usuário de Teste', 'usuario@teste.net', '$2a$10$N9qo8uLOickgx2ZMRZoMye6J4Qf8mKvjeyELCtU3xbGQEUzLe6T7e', 'USER', NULL)
+          (3, 'Mariana Silva', 'mariana@tecnico.net', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi', 'TECHNICIAN', 1),
+          (4, 'Usuário de Teste', 'usuario@teste.net', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi', 'USER', NULL)
           ON CONFLICT (id) DO NOTHING;
           
           -- Update team manager
