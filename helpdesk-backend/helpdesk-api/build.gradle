@@ -33,7 +33,7 @@ dependencies {
 
 	// Micrometer Tracing para distributed tracing
 	implementation 'io.micrometer:micrometer-tracing-bridge-brave:1.3.0'
-	implementation 'io.zipkin.reporter2:zipkin-reporter-brave:3.4.0'
+	implementation 'io.zipkin.reporter2:zipkin-reporter-brave:3.5.1'
 
 	compileOnly 'org.projectlombok:lombok:1.18.42'
 	annotationProcessor 'org.projectlombok:lombok:1.18.42'
