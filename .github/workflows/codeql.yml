@@ -39,7 +39,13 @@ jobs:
         languages: ${{ matrix.language }}
         queries: security-extended,security-and-quality
 
+    - name: Build Java project with Gradle
+      if: matrix.language == 'java'
+      working-directory: ./helpdesk-backend/helpdesk-api
+      run: ./gradlew build -x test --no-daemon
+
     - name: Autobuild
+      if: matrix.language != 'java'
       uses: github/codeql-action/autobuild@v3
 
     - name: Perform CodeQL Analysis
