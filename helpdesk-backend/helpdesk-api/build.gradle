@@ -20,8 +20,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache' // Spring Cache
 	implementation 'com.auth0:java-jwt:4.4.0'
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
-	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8' // Caffeine cache (usado por Spring Cache e Rate Limiter)
-	implementation 'com.github.ben-manes.caffeine:jcache:3.1.8' // JCache API para Hibernate second-level cache
+	implementation 'com.github.ben-manes.caffeine:caffeine:3.2.3' // Caffeine cache (usado por Spring Cache e Rate Limiter)
+	implementation 'com.github.ben-manes.caffeine:jcache:3.2.3' // JCache API para Hibernate second-level cache
 	implementation 'com.bucket4j:bucket4j-core:8.7.0' // Bucket4j para rate limiting
 	implementation 'com.bucket4j:bucket4j-caffeine:8.7.0' // Integração Bucket4j com Caffeine
 
