@@ -321,6 +321,37 @@ jobs:
           
           echo "✅ All test users verified!"
 
+      - name: Reset all passwords using backend endpoint
+        run: |
+          echo "=== Resetting passwords using backend BCrypt encoder ==="
+          
+          # Use the backend's /api/test/reset-all-passwords endpoint (dev profile only)
+          response=$(curl -X POST http://localhost:${{ env.BACKEND_PORT }}/api/test/reset-all-passwords \
+            -H "Content-Type: application/json" \
+            -w "\n%{http_code}" \
+            -s)
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n-1)
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          
+          if [ "$http_code" = "200" ]; then
+            echo "✅ Passwords reset successfully using backend's BCrypt!"
+            echo "All users now have password: 123456"
+            
+            # Verify the new hash was applied
+            echo ""
+            echo "Verifying new password hash..."
+            PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d helpdesk -c "SELECT email, LEFT(senha, 30) || '...' as senha_hash FROM usuarios ORDER BY id;"
+          else
+            echo "❌ Failed to reset passwords"
+            echo "Backend logs:"
+            tail -n 50 ./backend-jar/backend.log
+            exit 1
+          fi
+
       - name: Install frontend dependencies
         working-directory: ./help-desk-frontend
         run: npm ci
