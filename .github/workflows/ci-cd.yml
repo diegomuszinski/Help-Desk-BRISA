@@ -167,7 +167,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Download backend JAR
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: backend-jar
           path: ./backend-jar
@@ -496,7 +496,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Download backend JAR
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: backend-jar
           path: ./backend-jar
@@ -674,13 +674,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download backend JAR
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: backend-jar
           path: ./deploy
 
       - name: Download frontend build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: frontend-dist
           path: ./deploy/frontend
@@ -719,13 +719,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download backend JAR
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: backend-jar
           path: ./deploy
 
       - name: Download frontend build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: frontend-dist
           path: ./deploy/frontend
