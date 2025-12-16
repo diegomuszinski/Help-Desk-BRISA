@@ -139,7 +139,7 @@ INSERT INTO public.equipes (id, nome_equipe, id_gestor) VALUES
 -- Inserir usuários de teste
 -- ADMIN: admin@admin.net (senha: 123456)
 INSERT INTO public.usuarios (id, nome, email, senha, perfil, id_equipe) VALUES
-(1, 'Administrador do Sistema', 'admin@admin.net', '$2a$10$N9qo8uLOickgx2ZMRZoMye6J4Qf8mKvjeyELCtU3xbGQEUzLe6T7e', 'ADMIN', NULL);
+(1, 'Administrador do Sistema', 'admin@admin.net', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN', NULL);
 
 -- MANAGER: sonia.lima@gestor.net (senha: 1234546)
 INSERT INTO public.usuarios (id, nome, email, senha, perfil, id_equipe) VALUES
@@ -147,11 +147,11 @@ INSERT INTO public.usuarios (id, nome, email, senha, perfil, id_equipe) VALUES
 
 -- TECHNICIAN: mariana@tecnico.net (senha: 123456)
 INSERT INTO public.usuarios (id, nome, email, senha, perfil, id_equipe) VALUES
-(3, 'Mariana Silva', 'mariana@tecnico.net', '$2a$10$N9qo8uLOickgx2ZMRZoMye6J4Qf8mKvjeyELCtU3xbGQEUzLe6T7e', 'TECHNICIAN', 1);
+(3, 'Mariana Silva', 'mariana@tecnico.net', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'TECHNICIAN', 1);
 
 -- USER: usuario@teste.net (senha: 123456)
 INSERT INTO public.usuarios (id, nome, email, senha, perfil, id_equipe) VALUES
-(4, 'Usuário de Teste', 'usuario@teste.net', '$2a$10$N9qo8uLOickgx2ZMRZoMye6J4Qf8mKvjeyELCtU3xbGQEUzLe6T7e', 'USER', NULL);
+(4, 'Usuário de Teste', 'usuario@teste.net', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'USER', NULL);
 
 -- Atualizar o gestor da equipe
 UPDATE public.equipes SET id_gestor = 2 WHERE id = 1;
