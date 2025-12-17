@@ -180,8 +180,10 @@ jobs:
           echo "Using random backend port: $BACKEND_PORT"
           echo "BACKEND_PORT=$BACKEND_PORT" >> $GITHUB_ENV
           
-          echo "Starting backend server..."
-          nohup java -jar *-SNAPSHOT.jar --server.port=$BACKEND_PORT > backend.log 2>&1 &
+          echo "Starting backend server with dev profile..."
+          nohup java -jar *-SNAPSHOT.jar \
+            --server.port=$BACKEND_PORT \
+            --spring.profiles.active=dev > backend.log 2>&1 &
           echo $! > backend.pid
           echo "Backend PID: $(cat backend.pid)"
           echo "Waiting for backend to initialize and create tables..."
@@ -520,9 +522,9 @@ jobs:
       - name: Start backend server
         working-directory: ./backend-jar
         run: |
-          echo "Starting backend server..."
+          echo "Starting backend server with dev profile..."
           ls -la
-          nohup java -jar *-SNAPSHOT.jar > backend.log 2>&1 &
+          nohup java -jar *-SNAPSHOT.jar --spring.profiles.active=dev > backend.log 2>&1 &
           echo $! > backend.pid
           echo "Backend PID: $(cat backend.pid)"
           echo "Waiting for backend to initialize..."
