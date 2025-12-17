@@ -28,10 +28,19 @@ export const testUsers = {
  * Helper function to perform login
  */
 export async function login(page: Page, credentials: Credentials) {
-  await page.goto('/login', { timeout: 60000 });
+  // Clear any existing session first
+  await page.evaluate(() => {
+    sessionStorage.clear();
+    localStorage.clear();
+  });
+
+  await page.goto('/login', { timeout: 60000, waitUntil: 'domcontentloaded' });
 
   // Wait for login form to be visible
   await page.waitForSelector('input[type="email"]', { state: 'visible', timeout: 60000 });
+
+  // Wait a bit for any JS to load
+  await page.waitForTimeout(500);
 
   // Focus on email field to remove readonly attribute
   await page.click('input[type="email"]');
@@ -45,11 +54,29 @@ export async function login(page: Page, credentials: Credentials) {
   // Fill password field
   await page.fill('input[type="password"]', credentials.password);
 
+  // Wait for form to be ready
+  await page.waitForTimeout(500);
+
+  // Setup response listener before clicking submit
+  const responsePromise = page.waitForResponse(
+    response => response.url().includes('/api/auth/login') && response.status() === 200,
+    { timeout: 60000 }
+  );
+
   // Submit form
   await page.click('button[type="submit"]');
 
-  // Wait for navigation or authentication to complete
-  await page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 30000 });
+  try {
+    // Wait for successful API response
+    await responsePromise;
+
+    // Wait for navigation or authentication to complete with longer timeout
+    await page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 60000 });
+  } catch (error) {
+    // Check if there's an error message on the page
+    const errorMessage = await page.locator('.error, .alert-danger, [role="alert"]').textContent().catch(() => null);
+    throw new Error(`Login failed: ${errorMessage || error}`);
+  }
 
   // Verify sessionStorage has token (frontend uses sessionStorage not localStorage)
   const token = await page.evaluate(() => sessionStorage.getItem('token'));
