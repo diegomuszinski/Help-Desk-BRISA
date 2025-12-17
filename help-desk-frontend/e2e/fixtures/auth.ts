@@ -28,13 +28,14 @@ export const testUsers = {
  * Helper function to perform login
  */
 export async function login(page: Page, credentials: Credentials) {
-  // Clear any existing session first
+  // Navigate to login page first
+  await page.goto('/login', { timeout: 60000, waitUntil: 'domcontentloaded' });
+
+  // Clear any existing session after navigation
   await page.evaluate(() => {
     sessionStorage.clear();
     localStorage.clear();
   });
-
-  await page.goto('/login', { timeout: 60000, waitUntil: 'domcontentloaded' });
 
   // Wait for login form to be visible
   await page.waitForSelector('input[type="email"]', { state: 'visible', timeout: 60000 });
