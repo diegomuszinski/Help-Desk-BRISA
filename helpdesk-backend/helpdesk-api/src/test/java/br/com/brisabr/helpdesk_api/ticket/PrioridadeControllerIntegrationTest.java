@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect"
 })
 @Disabled("Temporarily disabled - H2 configuration issue in CI environment")
+@SuppressWarnings("null")
 class PrioridadeControllerIntegrationTest {
 
     @Autowired

@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/categorias")
+@SuppressWarnings("null")
 public class CategoriaController {
 
     private final CategoriaService categoriaService;

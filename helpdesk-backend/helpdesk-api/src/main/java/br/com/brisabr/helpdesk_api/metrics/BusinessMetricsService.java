@@ -23,12 +23,11 @@ public class BusinessMetricsService {
     private static final Logger logger = LoggerFactory.getLogger(BusinessMetricsService.class);
 
     private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
 
     public BusinessMetricsService(TicketRepository ticketRepository,
                                   UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
+        // userRepository não é usado diretamente no momento
     }
 
     /**

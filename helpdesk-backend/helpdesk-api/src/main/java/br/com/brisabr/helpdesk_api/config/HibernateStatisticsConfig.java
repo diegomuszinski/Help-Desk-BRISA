@@ -26,11 +26,10 @@ import jakarta.persistence.EntityManagerFactory;
 public class HibernateStatisticsConfig {
 
     private final EntityManagerFactory entityManagerFactory;
-    private final MeterRegistry meterRegistry;
 
     public HibernateStatisticsConfig(EntityManagerFactory entityManagerFactory, MeterRegistry meterRegistry) {
         this.entityManagerFactory = entityManagerFactory;
-        this.meterRegistry = meterRegistry;
+        // meterRegistry não é usado diretamente, mas é necessário no construtor
     }
 
     @Bean

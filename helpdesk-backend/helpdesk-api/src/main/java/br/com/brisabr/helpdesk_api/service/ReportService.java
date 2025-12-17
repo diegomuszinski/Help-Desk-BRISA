@@ -16,13 +16,14 @@ import java.util.List;
 
 /**
  * Service para geração de relatórios e analytics do HelpDesk.
- * 
+ *
  * Fornece estatísticas agregadas sobre chamados, desempenho de analistas
  * e tempos médios por categoria.
  */
 @Service
+@SuppressWarnings("null")
 public class ReportService {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ReportService.class);
 
     private final TicketRepository ticketRepository;
@@ -33,7 +34,7 @@ public class ReportService {
 
     /**
      * Obtém estatísticas de chamados por analista.
-     * 
+     *
      * @param ano Ano para filtrar (null = todos)
      * @param mes Mês para filtrar (null = todos)
      * @return Lista com estatísticas por analista
@@ -47,7 +48,7 @@ public class ReportService {
 
     /**
      * Calcula tempo médio de resolução por categoria.
-     * 
+     *
      * @param ano Ano para filtrar (null = todos)
      * @param mes Mês para filtrar (null = todos)
      * @return Lista com tempo médio por categoria
@@ -61,7 +62,7 @@ public class ReportService {
 
     /**
      * Obtém quantidade de chamados agrupados por mês.
-     * 
+     *
      * @param ano Ano para filtrar (null = todos)
      * @return Lista com quantidade de chamados por mês
      */
@@ -71,10 +72,10 @@ public class ReportService {
         logger.debug("Relatório gerado com {} meses", resultado.size());
         return resultado;
     }
-    
+
     /**
      * Gera relatório detalhado de chamados com filtros avançados.
-     * 
+     *
      * @param dataInicial Data inicial do período
      * @param dataFinal Data final do período
      * @param tipoData Tipo de data (abertura/fechamento)
@@ -90,10 +91,10 @@ public class ReportService {
     public List<Ticket> getDetailedReport(
             LocalDate dataInicial, LocalDate dataFinal, String tipoData, String status,
             String categoria, String unidade, String local, Long solicitanteId, Long tecnicoId, String ordenarPor) {
-        
-        logger.info("Gerando relatório detalhado - Período: {} a {}, Status: {}, Categoria: {}", 
+
+        logger.info("Gerando relatório detalhado - Período: {} a {}, Status: {}, Categoria: {}",
                     dataInicial, dataFinal, status, categoria);
-        
+
         Specification<Ticket> spec = TicketSpecification.withFilters(
             dataInicial, dataFinal, tipoData, status, categoria, unidade, local, solicitanteId, tecnicoId
         );

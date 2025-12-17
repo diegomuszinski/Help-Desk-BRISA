@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.io.IOException;
 
 @Configuration
+@SuppressWarnings("null")
 public class WebConfig implements WebMvcConfigurer {
 
     @Value("${cors.allowed.origins:http://localhost:5173}")
@@ -26,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .maxAge(3600);
     }
-    
+
     /**
      * Filtro para adicionar headers de segurança a todas as respostas.
      * Protege contra XSS, Clickjacking, MIME sniffing, etc.
@@ -37,11 +38,11 @@ public class WebConfig implements WebMvcConfigurer {
             @Override
             public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
                     throws IOException, ServletException {
-                
+
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
-                
+
                 // Content-Security-Policy: Previne XSS e injeção de código
-                httpResponse.setHeader("Content-Security-Policy", 
+                httpResponse.setHeader("Content-Security-Policy",
                     "default-src 'self'; " +
                     "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
                     "style-src 'self' 'unsafe-inline'; " +
@@ -49,26 +50,26 @@ public class WebConfig implements WebMvcConfigurer {
                     "font-src 'self' data:; " +
                     "connect-src 'self'; " +
                     "frame-ancestors 'none'");
-                
+
                 // X-Frame-Options: Previne Clickjacking
                 httpResponse.setHeader("X-Frame-Options", "DENY");
-                
+
                 // X-Content-Type-Options: Previne MIME sniffing
                 httpResponse.setHeader("X-Content-Type-Options", "nosniff");
-                
+
                 // X-XSS-Protection: Ativa proteção XSS do navegador
                 httpResponse.setHeader("X-XSS-Protection", "1; mode=block");
-                
+
                 // Strict-Transport-Security: Força HTTPS (apenas em produção)
                 // httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-                
+
                 // Referrer-Policy: Controla informações de referrer
                 httpResponse.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-                
+
                 // Permissions-Policy: Controla features do navegador
-                httpResponse.setHeader("Permissions-Policy", 
+                httpResponse.setHeader("Permissions-Policy",
                     "geolocation=(), microphone=(), camera=()");
-                
+
                 chain.doFilter(request, response);
             }
         };

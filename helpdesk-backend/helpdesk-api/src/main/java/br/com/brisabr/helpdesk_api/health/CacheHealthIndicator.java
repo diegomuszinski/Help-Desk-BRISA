@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  * Verifica hit rate, tamanho e performance do cache.
  */
 @Component
+@SuppressWarnings("null")
 public class CacheHealthIndicator implements HealthIndicator {
 
     private static final Logger logger = LoggerFactory.getLogger(CacheHealthIndicator.class);

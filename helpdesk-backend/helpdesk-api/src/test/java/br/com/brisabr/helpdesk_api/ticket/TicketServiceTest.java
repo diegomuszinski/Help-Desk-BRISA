@@ -23,11 +23,12 @@ import static org.mockito.Mockito.*;
 
 /**
  * Testes unitários para TicketService.
- * 
+ *
  * Utiliza Mockito para isolar as dependências e testar apenas a lógica do serviço.
  */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("TicketService - Testes Unitários")
+@SuppressWarnings("null")
 class TicketServiceTest {
 
     @Mock

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Aplica o interceptor em todas as rotas da aplicação.
  */
 @Configuration
+@SuppressWarnings("null")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final RateLimitInterceptor rateLimitInterceptor;

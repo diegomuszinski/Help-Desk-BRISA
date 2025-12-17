@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@SuppressWarnings("null")
 public class TicketService {
 
     private static final Logger logger = LoggerFactory.getLogger(TicketService.class);

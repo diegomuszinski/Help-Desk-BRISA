@@ -36,6 +36,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/tickets")
+@SuppressWarnings("null")
 public class TicketController {
 
     private static final Logger logger = LoggerFactory.getLogger(TicketController.class);

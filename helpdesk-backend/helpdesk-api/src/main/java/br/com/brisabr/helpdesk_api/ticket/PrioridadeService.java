@@ -18,6 +18,7 @@ import java.util.List;
  * @author HelpDesk Team
  */
 @Service
+@SuppressWarnings("null")
 public class PrioridadeService {
 
     private static final Logger logger = LoggerFactory.getLogger(PrioridadeService.class);

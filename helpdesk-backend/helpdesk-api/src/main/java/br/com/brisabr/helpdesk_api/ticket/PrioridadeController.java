@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/prioridades")
+@SuppressWarnings("null")
 public class PrioridadeController {
 
     private final PrioridadeService prioridadeService;

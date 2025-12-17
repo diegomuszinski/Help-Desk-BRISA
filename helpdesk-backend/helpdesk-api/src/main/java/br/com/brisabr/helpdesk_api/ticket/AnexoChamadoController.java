@@ -24,6 +24,7 @@ import java.util.Base64;
  */
 @RestController
 @RequestMapping("/api/anexos")
+@SuppressWarnings("null")
 public class AnexoChamadoController {
 
     private static final Logger logger = LoggerFactory.getLogger(AnexoChamadoController.class);
