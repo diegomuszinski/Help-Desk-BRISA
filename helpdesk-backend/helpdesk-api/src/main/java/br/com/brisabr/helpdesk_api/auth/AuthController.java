@@ -8,6 +8,7 @@ import br.com.brisabr.helpdesk_api.user.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseCookie;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -202,22 +203,24 @@ public class AuthController {
         boolean isProduction = "prod".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
 
         // Access token cookie (2 horas)
-        Cookie accessCookie = new Cookie("accessToken", accessToken);
-        accessCookie.setHttpOnly(true);
-        accessCookie.setSecure(isProduction); // true em produção com HTTPS
-        accessCookie.setPath("/");
-        accessCookie.setMaxAge(2 * 60 * 60); // 2 horas
-        accessCookie.setSameSite("Strict"); // Proteção contra CSRF
-        response.addCookie(accessCookie);
+        ResponseCookie accessCookie = ResponseCookie.from("accessToken", accessToken)
+                .httpOnly(true)
+                .secure(isProduction)
+                .path("/")
+                .maxAge(2 * 60 * 60)
+                .sameSite("Strict")
+                .build();
+        response.addHeader("Set-Cookie", accessCookie.toString());
 
         // Refresh token cookie (7 dias)
-        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(isProduction); // true em produção com HTTPS
-        refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7 dias
-        refreshCookie.setSameSite("Strict"); // Proteção contra CSRF
-        response.addCookie(refreshCookie);
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(isProduction)
+                .path("/")
+                .maxAge(7 * 24 * 60 * 60)
+                .sameSite("Strict")
+                .build();
+        response.addHeader("Set-Cookie", refreshCookie.toString());
     }
 
     /**
@@ -226,19 +229,23 @@ public class AuthController {
     private void clearAuthCookies(HttpServletResponse response) {
         boolean isProduction = "prod".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
 
-        Cookie accessCookie = new Cookie("accessToken", null);
-        accessCookie.setHttpOnly(true);
-        accessCookie.setSecure(isProduction);
-        accessCookie.setPath("/");
-        accessCookie.setMaxAge(0);
-        response.addCookie(accessCookie);
+        ResponseCookie accessCookie = ResponseCookie.from("accessToken", "")
+                .httpOnly(true)
+                .secure(isProduction)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+        response.addHeader("Set-Cookie", accessCookie.toString());
 
-        Cookie refreshCookie = new Cookie("refreshToken", null);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(isProduction);
-        refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(0);
-        response.addCookie(refreshCookie);
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(isProduction)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+        response.addHeader("Set-Cookie", refreshCookie.toString());
     }
 
     @PostMapping("/register")
