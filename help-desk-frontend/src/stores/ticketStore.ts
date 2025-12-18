@@ -407,7 +407,6 @@ export const useTicketStore = defineStore('tickets', () => {
 
   return {
     currentUser,
-    token,
     tickets,
     activeTicket,
     categories,

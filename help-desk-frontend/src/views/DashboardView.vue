@@ -42,7 +42,7 @@ const filteredTickets = computed(() => {
 
   if (!baseList) return []
 
-  return baseList.filter((ticket) => {
+  return baseList.filter((ticket: any) => {
     const isManagerOrAdmin = ['admin', 'manager'].includes(ticketStore.currentUser.role || '')
 
     const categoryMatch =

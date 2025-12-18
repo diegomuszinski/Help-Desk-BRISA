@@ -7,7 +7,7 @@ import AppSidebar from './components/AppSidebar.vue'
 const ticketStore = useTicketStore()
 
 const showSidebar = computed(() => {
-  return !!ticketStore.token
+  return !!ticketStore.currentUser.email
 })
 </script>
 

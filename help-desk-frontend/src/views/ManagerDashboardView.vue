@@ -30,7 +30,7 @@ const stats = computed(() => ticketStore.dashboardStats)
         <KPICard
           title="Total em Atendimento"
           :value="
-            stats.chamadosPorAnalista.reduce((total, analista) => total + analista.totalChamados, 0)
+            stats.chamadosPorAnalista.reduce((total: number, analista: any) => total + analista.totalChamados, 0)
           "
         />
       </div>

@@ -155,7 +155,7 @@ function exportReportAsCsv(
           <button
             @click="
               exportReportAsCsv(
-                Object.fromEntries(ticketStore.analystPerformanceReport.map(item => [item.nomeAnalista, item.totalChamados])),
+                Object.fromEntries(ticketStore.analystPerformanceReport.map((item: any) => [item.nomeAnalista, item.totalChamados])),
                 'dashboard_por_analista',
                 ['Analista', 'Chamados Atendidos']
               )
@@ -184,7 +184,7 @@ function exportReportAsCsv(
           <button
             @click="
               exportReportAsCsv(
-                Object.fromEntries(ticketStore.avgResolutionTimeByCategoryReport.map(item => [item.categoria, item.tempoMedioHoras])),
+                Object.fromEntries(ticketStore.avgResolutionTimeByCategoryReport.map((item: any) => [item.categoria, item.tempoMedioHoras])),
                 'dashboard_por_categoria',
                 ['Categoria', 'Tempo Médio (horas)']
               )
@@ -211,7 +211,7 @@ function exportReportAsCsv(
           <button
             @click="
               exportReportAsCsv(
-                Object.fromEntries(ticketStore.ticketsPerMonthReport.map(item => [`Mês ${item.mes}`, item.totalChamados])),
+                Object.fromEntries(ticketStore.ticketsPerMonthReport.map((item: any) => [`Mês ${item.mes}`, item.totalChamados])),
                 'dashboard_por_mes',
                 ['Mês/Ano', 'Total de Chamados']
               )

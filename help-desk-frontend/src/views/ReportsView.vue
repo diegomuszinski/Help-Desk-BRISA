@@ -25,7 +25,7 @@ const reportResults = ref<Ticket[]>([])
 const searchPerformed = ref(false)
 
 const allUsers = computed(() => {
-  const userNames = ticketStore.tickets.map((t) => t.user)
+  const userNames = ticketStore.tickets.map((t: any) => t.user)
   return [...new Set(userNames)].sort()
 })
 
@@ -184,7 +184,7 @@ function exportPdf() {
             <label for="usuario">Usuário:</label
             ><select id="usuario" v-model="filters.usuario">
               <option value="Todos">Todos</option>
-              <option v-for="user in allUsers" :key="user" :value="user">{{ user }}</option>
+              <option v-for="user in allUsers" :key="String(user)" :value="user">{{ user }}</option>
             </select>
           </div>
           <div class="form-group">
