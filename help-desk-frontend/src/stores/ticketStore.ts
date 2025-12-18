@@ -45,7 +45,6 @@ export function calculateSlaDeadline(openedAt: string, priority: Ticket['priorit
 
 export const useTicketStore = defineStore('tickets', () => {
   const currentUser = ref<User>({ name: '', email: '', role: null })
-  const token = ref(sessionStorage.getItem('token') || '')
   const tickets = ref<Ticket[]>([])
   const activeTicket = ref<Ticket | null>(null)
   const categories = ref<Category[]>([])
@@ -60,21 +59,9 @@ export const useTicketStore = defineStore('tickets', () => {
       currentUser.value.name = decoded.name || 'Usuário'
       currentUser.value.role = (decoded.role || 'user').toLowerCase() as User['role']
       currentUser.value.email = decoded.sub
-      api.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`
     } catch (error) {
       console.error('Erro ao decodificar token:', error)
-      sessionStorage.clear()
-      token.value = ''
       throw error
-    }
-  }
-
-  // Inicializar currentUser do token se existir
-  if (token.value) {
-    try {
-      setUserFromToken(token.value)
-    } catch (error) {
-      // Token inválido, limpar estado
     }
   }
   const mapTicketFromApi = (ticketData: ApiTicket): Ticket => ({
@@ -152,10 +139,6 @@ export const useTicketStore = defineStore('tickets', () => {
     return newTicket
   }
   async function fetchTickets() {
-    if (!token.value) {
-      console.warn('⚠️ fetchTickets: Sem token!')
-      return
-    }
     try {
       const response = await api.get('/api/tickets?size=1000')
       // O backend retorna Page<TicketResponseDTO>, então usamos response.data.content
@@ -186,13 +169,8 @@ export const useTicketStore = defineStore('tickets', () => {
   }
   async function login(credentials: { email: string; senha: string }) {
     const response = await api.post('/api/auth/login', credentials)
-    // Backend retorna TokenPairDTO com accessToken e refreshToken
+    // Backend retorna TokenPairDTO e define cookies HttpOnly automaticamente
     const accessToken: string = response.data.accessToken
-    const refreshToken: string = response.data.refreshToken
-
-    token.value = accessToken
-    sessionStorage.setItem('token', accessToken)
-    sessionStorage.setItem('refreshToken', refreshToken)
 
     // Decodificar e configurar usuário usando helper function
     setUserFromToken(accessToken)
@@ -200,23 +178,15 @@ export const useTicketStore = defineStore('tickets', () => {
     await fetchTickets()
   }
   async function logout() {
-    // Revogar refresh token no backend
-    const refreshToken = sessionStorage.getItem('refreshToken')
-    if (refreshToken) {
-      try {
-        await api.post('/api/auth/logout', { refreshToken })
-      } catch (error) {
-        console.error('Erro ao revogar refresh token:', error)
-      }
+    // Revogar refresh token no backend (enviado via cookie)
+    try {
+      await api.post('/api/auth/logout', {})
+    } catch (error) {
+      console.error('Erro ao revogar refresh token:', error)
     }
 
-    // Limpar estado
+    // Limpar estado (cookies são limpos pelo backend)
     currentUser.value = { name: '', email: '', role: null }
-    token.value = ''
-    sessionStorage.removeItem('token')
-    sessionStorage.removeItem('refreshToken')
-    sessionStorage.clear() // Garante limpeza completa
-    api.defaults.headers.common['Authorization'] = ''
     tickets.value = []
     activeTicket.value = null
     dashboardStats.value = null

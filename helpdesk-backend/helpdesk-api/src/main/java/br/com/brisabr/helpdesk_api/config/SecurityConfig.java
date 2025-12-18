@@ -28,7 +28,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
+                // Habilitar CSRF para endpoints mutáveis, exceto auth endpoints
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(
+                                "/api/auth/**",
+                                "/v1/api/auth/**",
+                                "/v1/api/users",
+                                "/actuator/**"
+                        )
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         // Auth endpoints - públicos (sem versão)

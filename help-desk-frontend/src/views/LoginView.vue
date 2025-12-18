@@ -13,8 +13,24 @@ const errorMessage = ref('')
 const showPassword = ref(false)
 const isLoading = ref(false)
 
+// Validação de senha
+function validatePassword(password: string): string | null {
+  if (password.length < 6) {
+    return 'A senha deve ter no mínimo 6 caracteres'
+  }
+  return null
+}
+
 async function handleLogin() {
   errorMessage.value = ''
+
+  // Validar senha antes de enviar
+  const passwordError = validatePassword(password.value)
+  if (passwordError) {
+    errorMessage.value = passwordError
+    return
+  }
+
   isLoading.value = true
 
   try {

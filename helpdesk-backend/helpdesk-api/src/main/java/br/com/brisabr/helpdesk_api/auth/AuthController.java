@@ -5,7 +5,9 @@ import br.com.brisabr.helpdesk_api.ratelimit.RateLimiter;
 import br.com.brisabr.helpdesk_api.user.User;
 import br.com.brisabr.helpdesk_api.user.UserRegistrationDTO;
 import br.com.brisabr.helpdesk_api.user.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,10 +52,14 @@ public class AuthController {
 
     /**
      * Login com geração de access token + refresh token
+     * Tokens são armazenados em cookies HttpOnly para maior segurança
      * Rate limited: 5 tentativas por minuto
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO data, HttpServletRequest request){
+    public ResponseEntity<?> login(
+            @RequestBody @Valid LoginRequestDTO data,
+            HttpServletRequest request,
+            HttpServletResponse response){
         // Verificar rate limit
         if (!rateLimiter.isAllowed(request)) {
             int remaining = rateLimiter.getRemainingAttempts(request);
@@ -77,6 +83,9 @@ public class AuthController {
             // Gerar refresh token
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
+            // Definir cookies HttpOnly
+            setAuthCookies(response, accessToken, refreshToken.getToken());
+
             // Registrar auditoria
             auditService.logLogin(user);
 
@@ -91,11 +100,31 @@ public class AuthController {
 
     /**
      * Renovar access token usando refresh token
+     * Tokens são armazenados em cookies HttpOnly
      */
     @PostMapping("/refresh")
-    public ResponseEntity<TokenPairDTO> refreshToken(@RequestBody @Valid RefreshTokenRequestDTO request) {
+    public ResponseEntity<TokenPairDTO> refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        // Obter refreshToken do cookie
+        String refreshTokenValue = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refreshToken".equals(cookie.getName())) {
+                    refreshTokenValue = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (refreshTokenValue == null) {
+            logger.warn("Tentativa de refresh sem cookie de refresh token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         // Validar refresh token
-        RefreshToken refreshToken = refreshTokenService.validateRefreshToken(request.getRefreshToken());
+        RefreshToken refreshToken = refreshTokenService.validateRefreshToken(refreshTokenValue);
         User user = refreshToken.getUser();
 
         // Gerar novo access token
@@ -105,19 +134,40 @@ public class AuthController {
         refreshTokenService.revokeRefreshToken(refreshToken.getToken());
         RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user);
 
+        // Atualizar cookies
+        setAuthCookies(response, newAccessToken, newRefreshToken.getToken());
+
         logger.info("Tokens renovados para usuário: {}", user.getEmail());
         return ResponseEntity.ok(new TokenPairDTO(newAccessToken, newRefreshToken.getToken()));
     }
 
     /**
-     * Logout (revoga refresh token)
+     * Logout (revoga refresh token e limpa cookies)
      */
     @PostMapping("/logout")
     public ResponseEntity<String> logout(
-            @RequestBody RefreshTokenRequestDTO request,
-            @AuthenticationPrincipal User user) {
+            HttpServletRequest request,
+            @AuthenticationPrincipal User user,
+            HttpServletResponse response) {
 
-        refreshTokenService.revokeRefreshToken(request.getRefreshToken());
+        // Obter refreshToken do cookie
+        String refreshTokenValue = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refreshToken".equals(cookie.getName())) {
+                    refreshTokenValue = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (refreshTokenValue != null) {
+            refreshTokenService.revokeRefreshToken(refreshTokenValue);
+        }
+
+        // Limpar cookies
+        clearAuthCookies(response);
 
         if (user != null) {
             auditService.logLogout(user);
@@ -131,11 +181,57 @@ public class AuthController {
      * Logout de todos os dispositivos (revoga todos os refresh tokens do usuário)
      */
     @PostMapping("/logout-all")
-    public ResponseEntity<String> logoutAll(@AuthenticationPrincipal User user) {
+    public ResponseEntity<String> logoutAll(
+            @AuthenticationPrincipal User user,
+            HttpServletResponse response) {
         refreshTokenService.revokeAllUserTokens(user);
+
+        // Limpar cookies
+        clearAuthCookies(response);
+
         auditService.logLogout(user);
         logger.info("Logout de todos os dispositivos: {}", user.getEmail());
         return ResponseEntity.ok("Logout realizado em todos os dispositivos");
+    }
+
+    /**
+     * Define cookies HttpOnly para access e refresh tokens
+     */
+    private void setAuthCookies(HttpServletResponse response, String accessToken, String refreshToken) {
+        // Access token cookie (2 horas)
+        Cookie accessCookie = new Cookie("accessToken", accessToken);
+        accessCookie.setHttpOnly(true);
+        accessCookie.setSecure(false); // Mudar para true em produção com HTTPS
+        accessCookie.setPath("/");
+        accessCookie.setMaxAge(2 * 60 * 60); // 2 horas
+        response.addCookie(accessCookie);
+
+        // Refresh token cookie (7 dias)
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(false); // Mudar para true em produção com HTTPS
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7 dias
+        response.addCookie(refreshCookie);
+    }
+
+    /**
+     * Limpa cookies de autenticação
+     */
+    private void clearAuthCookies(HttpServletResponse response) {
+        Cookie accessCookie = new Cookie("accessToken", null);
+        accessCookie.setHttpOnly(true);
+        accessCookie.setSecure(false);
+        accessCookie.setPath("/");
+        accessCookie.setMaxAge(0);
+        response.addCookie(accessCookie);
+
+        Cookie refreshCookie = new Cookie("refreshToken", null);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(false);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(0);
+        response.addCookie(refreshCookie);
     }
 
     @PostMapping("/register")

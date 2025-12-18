@@ -2,15 +2,14 @@ import axios from 'axios'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+  withCredentials: true, // Necessário para enviar/receber cookies HttpOnly
 })
 
-// Interceptor de REQUEST: Adiciona Authorization header
+// Interceptor de REQUEST: Com cookies HttpOnly, não é mais necessário adicionar token manualmente
+// O navegador envia automaticamente os cookies em cada requisição
 api.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
+    // Cookies são enviados automaticamente pelo navegador
     return config
   },
   (error) => {
@@ -29,35 +28,19 @@ api.interceptors.response.use(
       originalRequest._retry = true
 
       try {
-        const refreshToken = sessionStorage.getItem('refreshToken')
-
-        if (!refreshToken) {
-          // Sem refresh token, redirecionar para login
-          sessionStorage.clear()
-          window.location.href = '/login'
-          return Promise.reject(error)
-        }
-
-        // Tentar renovar tokens usando baseURL configurada
+        // Tentar renovar tokens (refreshToken será enviado automaticamente via cookie)
         const baseURL = api.defaults.baseURL || 'http://localhost:8080'
-        const response = await axios.post(`${baseURL}/api/auth/refresh`, {
-          refreshToken
-        })
+        await axios.post(
+          `${baseURL}/api/auth/refresh`,
+          {}, // Body vazio, refreshToken vem do cookie
+          { withCredentials: true } // Garantir que cookies sejam enviados
+        )
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data
-
-        // Salvar novos tokens
-        sessionStorage.setItem('token', accessToken)
-        sessionStorage.setItem('refreshToken', newRefreshToken)
-
-        // Atualizar header da requisição original
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`
-
+        // Backend já atualizou os cookies automaticamente
         // Retentar requisição original
         return api(originalRequest)
       } catch (refreshError) {
         // Falha no refresh, fazer logout
-        sessionStorage.clear()
         window.location.href = '/login'
         return Promise.reject(refreshError)
       }
