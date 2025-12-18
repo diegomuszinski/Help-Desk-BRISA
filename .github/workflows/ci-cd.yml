@@ -360,7 +360,7 @@ jobs:
 
       - name: Install Playwright browsers
         working-directory: ./help-desk-frontend
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps
 
       - name: Start frontend dev server
         working-directory: ./help-desk-frontend
