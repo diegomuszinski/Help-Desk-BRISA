@@ -38,8 +38,9 @@ api.interceptors.response.use(
           return Promise.reject(error)
         }
 
-        // Tentar renovar tokens
-        const response = await axios.post('http://localhost:8080/api/auth/refresh', {
+        // Tentar renovar tokens usando baseURL configurada
+        const baseURL = api.defaults.baseURL || 'http://localhost:8080'
+        const response = await axios.post(`${baseURL}/api/auth/refresh`, {
           refreshToken
         })
 

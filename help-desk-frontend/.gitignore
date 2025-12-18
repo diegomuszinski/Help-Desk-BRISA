@@ -28,3 +28,17 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Environment variables - NEVER commit these!
+.env
+.env.local
+.env.production
+.env.*.local
+.env.development
+.env.test
+*.env
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/

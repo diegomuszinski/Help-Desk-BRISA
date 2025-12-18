@@ -42,9 +42,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/v1/api/test/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/api/test/**").permitAll()
 
-                        // Test endpoints - público apenas em dev (profile dev)
-                        .requestMatchers(HttpMethod.GET, "/api/test/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/test/**").permitAll()
+                        // Test endpoints - REMOVED: should be protected and @Profile("dev") annotated
+                        // Use @Profile("dev") annotation on test controllers instead
 
                         // Health checks e actuator endpoints - públicos para monitoramento
                         .requestMatchers("/actuator/**").permitAll()
