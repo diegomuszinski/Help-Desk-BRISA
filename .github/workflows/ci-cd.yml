@@ -41,13 +41,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
-        timeout-minutes: 5
 
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b # v4.5.0
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
@@ -103,13 +102,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
-        timeout-minutes: 5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -160,20 +158,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
-        timeout-minutes: 5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
           cache-dependency-path: help-desk-frontend/package-lock.json
 
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b # v4.5.0
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
@@ -664,13 +661,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          fetch-depth: 0
-          timeout-minutes: 5  # Shallow clones should be disabled for better analysis
+          fetch-depth: 0  # Shallow clones should be disabled for better analysis
 
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b # v4.5.0
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
