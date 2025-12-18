@@ -1,5 +1,7 @@
 package br.com.brisabr.helpdesk_api.ticket;
 
+import br.com.brisabr.helpdesk_api.exception.DuplicateResourceException;
+import br.com.brisabr.helpdesk_api.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -58,7 +60,7 @@ public class CategoriaService {
         // Verificar duplicidade
         if (categoriaRepository.existsByNome(dto.nome())) {
             logger.warn("Tentativa de criar categoria duplicada: {}", dto.nome());
-            throw new RuntimeException("Categoria com nome '" + dto.nome() + "' já existe");
+            throw new DuplicateResourceException("Categoria com nome '" + dto.nome() + "' já existe");
         }
 
         Categoria categoria = new Categoria();
@@ -81,7 +83,7 @@ public class CategoriaService {
         return categoriaRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Categoria não encontrada: {}", id);
-                    return new RuntimeException("Categoria não encontrada: " + id);
+                    return new ResourceNotFoundException("Categoria não encontrada: " + id);
                 });
     }
 }

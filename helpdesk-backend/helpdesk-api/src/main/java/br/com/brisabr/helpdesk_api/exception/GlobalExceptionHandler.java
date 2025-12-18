@@ -114,6 +114,46 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Trata recurso duplicado (categoria, prioridade, etc)
+     */
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateResourceException(
+            DuplicateResourceException ex,
+            WebRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Recurso duplicado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Recurso duplicado: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    /**
+     * Trata recurso não encontrado genérico
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+            ResourceNotFoundException ex,
+            WebRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Recurso não encontrado",
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        logger.warn("Recurso não encontrado: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    /**
      * Trata upload de arquivo muito grande
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)

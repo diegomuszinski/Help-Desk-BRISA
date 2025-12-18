@@ -1,5 +1,7 @@
 package br.com.brisabr.helpdesk_api.ticket;
 
+import br.com.brisabr.helpdesk_api.exception.DuplicateResourceException;
+import br.com.brisabr.helpdesk_api.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -58,7 +60,7 @@ public class PrioridadeService {
         // Verificar duplicidade
         if (prioridadeRepository.existsByNome(dto.nome())) {
             logger.warn("Tentativa de criar prioridade duplicada: {}", dto.nome());
-            throw new RuntimeException("Prioridade com nome '" + dto.nome() + "' já existe");
+            throw new DuplicateResourceException("Prioridade com nome '" + dto.nome() + "' já existe");
         }
 
         Prioridade prioridade = new Prioridade();
@@ -81,7 +83,7 @@ public class PrioridadeService {
         return prioridadeRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.warn("Prioridade não encontrada: {}", id);
-                    return new RuntimeException("Prioridade não encontrada: " + id);
+                    return new ResourceNotFoundException("Prioridade não encontrada: " + id);
                 });
     }
 }
