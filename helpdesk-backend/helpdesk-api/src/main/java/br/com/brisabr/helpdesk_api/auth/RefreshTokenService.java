@@ -1,5 +1,6 @@
 package br.com.brisabr.helpdesk_api.auth;
 
+import br.com.brisabr.helpdesk_api.exception.InvalidRefreshTokenException;
 import br.com.brisabr.helpdesk_api.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,16 +54,16 @@ public class RefreshTokenService {
      *
      * @param token Token a ser validado
      * @return RefreshToken válido
-     * @throws RuntimeException se o token for inválido ou expirado
+     * @throws InvalidRefreshTokenException se o token for inválido ou expirado
      */
     @Transactional(readOnly = true)
     public RefreshToken validateRefreshToken(String token) {
         RefreshToken refreshToken = refreshTokenRepository.findByTokenAndRevokedFalse(token)
-                .orElseThrow(() -> new RuntimeException("Refresh token inválido ou revogado"));
+                .orElseThrow(() -> new InvalidRefreshTokenException("Refresh token inválido ou revogado"));
 
         if (refreshToken.isExpired()) {
             logger.warn("Tentativa de usar refresh token expirado: {}", token.substring(0, 8));
-            throw new RuntimeException("Refresh token expirado");
+            throw new InvalidRefreshTokenException("Refresh token expirado");
         }
 
         logger.debug("Refresh token validado para usuário: {}", refreshToken.getUser().getEmail());

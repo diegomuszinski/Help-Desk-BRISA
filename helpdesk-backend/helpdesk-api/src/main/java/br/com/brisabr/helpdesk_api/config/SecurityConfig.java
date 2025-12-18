@@ -33,8 +33,7 @@ public class SecurityConfig {
                         .ignoringRequestMatchers(
                                 "/api/auth/**",
                                 "/v1/api/auth/**",
-                                "/v1/api/users",
-                                "/actuator/**"
+                                "/v1/api/users"
                         )
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -86,8 +86,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const ticketStore = useTicketStore()
-  // Verificar token tanto no store quanto no sessionStorage
-  const isLoggedIn = !!ticketStore.token && !!sessionStorage.getItem('token')
+  // Com cookies HttpOnly, verificar apenas se há usuário logado
+  const isLoggedIn = !!ticketStore.currentUser.email
 
   const requiredAdminRole = ['management']
   if (requiredAdminRole.includes(to.name as string) && ticketStore.currentUser.role !== 'admin') {
@@ -96,8 +96,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.name !== 'login' && !isLoggedIn) {
-    // Limpar qualquer resto de sessão antes de redirecionar
-    sessionStorage.clear()
+    // Usuário não autenticado, redirecionar para login
     next({ name: 'login' })
   } else if (to.name === 'login' && isLoggedIn) {
     if (ticketStore.currentUser.role === 'user') {

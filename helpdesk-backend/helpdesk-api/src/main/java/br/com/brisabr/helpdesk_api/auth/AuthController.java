@@ -198,20 +198,25 @@ public class AuthController {
      * Define cookies HttpOnly para access e refresh tokens
      */
     private void setAuthCookies(HttpServletResponse response, String accessToken, String refreshToken) {
+        // Determinar se está em produção (HTTPS)
+        boolean isProduction = "prod".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
+
         // Access token cookie (2 horas)
         Cookie accessCookie = new Cookie("accessToken", accessToken);
         accessCookie.setHttpOnly(true);
-        accessCookie.setSecure(false); // Mudar para true em produção com HTTPS
+        accessCookie.setSecure(isProduction); // true em produção com HTTPS
         accessCookie.setPath("/");
         accessCookie.setMaxAge(2 * 60 * 60); // 2 horas
+        accessCookie.setSameSite("Strict"); // Proteção contra CSRF
         response.addCookie(accessCookie);
 
         // Refresh token cookie (7 dias)
         Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
         refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(false); // Mudar para true em produção com HTTPS
+        refreshCookie.setSecure(isProduction); // true em produção com HTTPS
         refreshCookie.setPath("/");
         refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7 dias
+        refreshCookie.setSameSite("Strict"); // Proteção contra CSRF
         response.addCookie(refreshCookie);
     }
 
@@ -219,16 +224,18 @@ public class AuthController {
      * Limpa cookies de autenticação
      */
     private void clearAuthCookies(HttpServletResponse response) {
+        boolean isProduction = "prod".equals(System.getenv("SPRING_PROFILES_ACTIVE"));
+
         Cookie accessCookie = new Cookie("accessToken", null);
         accessCookie.setHttpOnly(true);
-        accessCookie.setSecure(false);
+        accessCookie.setSecure(isProduction);
         accessCookie.setPath("/");
         accessCookie.setMaxAge(0);
         response.addCookie(accessCookie);
 
         Cookie refreshCookie = new Cookie("refreshToken", null);
         refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(false);
+        refreshCookie.setSecure(isProduction);
         refreshCookie.setPath("/");
         refreshCookie.setMaxAge(0);
         response.addCookie(refreshCookie);
