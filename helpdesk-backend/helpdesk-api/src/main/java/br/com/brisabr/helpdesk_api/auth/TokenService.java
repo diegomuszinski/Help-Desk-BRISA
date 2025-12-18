@@ -24,7 +24,7 @@ public class TokenService {
                     .withIssuer("helpdesk-api")
                     .withSubject(user.getEmail())
                     .withExpiresAt(genExpirationDate())
-                    
+
                     .withClaim("name", user.getNome())
                     .withClaim("role", user.getPerfil())
                     .sign(algorithm);
@@ -48,6 +48,7 @@ public class TokenService {
     }
 
     private Instant genExpirationDate(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        // Use UTC for token expiration to avoid timezone issues
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.UTC);
     }
 }

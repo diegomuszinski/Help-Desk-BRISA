@@ -53,19 +53,28 @@ export const useTicketStore = defineStore('tickets', () => {
   const analysts = ref<Analyst[]>([])
   const dashboardStats = ref<DashboardStats | null>(null)
 
-  // Inicializar currentUser do token se existir
-  if (token.value) {
+  // Helper function to decode and set user from token
+  const setUserFromToken = (jwtToken: string) => {
     try {
-      const decoded: { sub: string; name?: string; role?: User['role']; roles?: string } = jwtDecode(token.value)
+      const decoded: { sub: string; name?: string; role?: string } = jwtDecode(jwtToken)
       currentUser.value.name = decoded.name || 'Usuário'
-      // Backend usa 'roles' (plural) então verificar ambos
-      const roleFromToken = (decoded.roles || decoded.role || 'user').toLowerCase()
-      currentUser.value.role = roleFromToken as User['role']
+      currentUser.value.role = (decoded.role || 'user').toLowerCase() as User['role']
       currentUser.value.email = decoded.sub
-      api.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`
     } catch (error) {
       console.error('Erro ao decodificar token:', error)
       sessionStorage.clear()
+      token.value = ''
+      throw error
+    }
+  }
+
+  // Inicializar currentUser do token se existir
+  if (token.value) {
+    try {
+      setUserFromToken(token.value)
+    } catch (error) {
+      // Token inválido, limpar estado
     }
   }
   const mapTicketFromApi = (ticketData: ApiTicket): Ticket => ({
@@ -175,19 +184,6 @@ export const useTicketStore = defineStore('tickets', () => {
       activeTicket.value = null
     }
   }
-  if (token.value) {
-    try {
-      const decoded: { sub: string; name?: string; role?: User['role'] } = jwtDecode(token.value)
-      currentUser.value.name = decoded.name || 'Usuário'
-      currentUser.value.role = decoded.role || 'user'
-      currentUser.value.email = decoded.sub
-      api.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
-    } catch (error) {
-      console.error('Erro ao decodificar token:', error)
-      sessionStorage.removeItem('token')
-      token.value = ''
-    }
-  }
   async function login(credentials: { email: string; senha: string }) {
     const response = await api.post('/api/auth/login', credentials)
     // Backend retorna TokenPairDTO com accessToken e refreshToken
@@ -198,14 +194,8 @@ export const useTicketStore = defineStore('tickets', () => {
     sessionStorage.setItem('token', accessToken)
     sessionStorage.setItem('refreshToken', refreshToken)
 
-    api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-
-    const decoded: { sub: string; name?: string; role?: User['role']; roles?: string } = jwtDecode(accessToken)
-    currentUser.value.name = decoded.name || 'Usuário'
-    // Backend usa 'roles' (plural) então verificar ambos
-    const roleFromToken = (decoded.roles || decoded.role || 'user').toLowerCase()
-    currentUser.value.role = roleFromToken as User['role']
-    currentUser.value.email = decoded.sub
+    // Decodificar e configurar usuário usando helper function
+    setUserFromToken(accessToken)
 
     await fetchTickets()
   }
