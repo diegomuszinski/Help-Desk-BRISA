@@ -28,7 +28,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload dependency report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: backend-dependency-report
           path: helpdesk-backend/helpdesk-api/build/dependencyUpdates/
@@ -55,7 +55,7 @@ jobs:
           cat outdated.txt
 
       - name: Upload outdated packages report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: frontend-outdated-packages
           path: help-desk-frontend/outdated.txt
